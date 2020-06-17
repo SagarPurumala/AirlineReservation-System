@@ -1,0 +1,5 @@
+package com.capgemini.airlinereservationsystem.dto;
+
+public class BookingStatus {
+
+}

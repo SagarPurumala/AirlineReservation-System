@@ -1,0 +1,5 @@
+package com.capgemini.airlinereservationsystem.validation;
+
+public class Validation {
+
+}
