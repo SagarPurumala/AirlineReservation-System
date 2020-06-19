@@ -8,7 +8,7 @@
 <fullyQualifiedTypeName name="com.capgemini.airlinereservationsystem.dto.FlightDetails"/>
 <fullyQualifiedTypeName name="com.capgemini.airlinereservationsystem.dto.UserInfo"/>
 <fullyQualifiedTypeName name="java.sql.Time"/>
-<fullyQualifiedTypeName name="java.time.LocalDateTime"/>
 <fullyQualifiedTypeName name="java.time.Month"/>
+<fullyQualifiedTypeName name="java.time.LocalDateTime"/>
 <fullyQualifiedTypeName name="com.capgemini.airlinereservationsystem.dto.BookingStatus"/>
 </qualifiedTypeNameHistroy>

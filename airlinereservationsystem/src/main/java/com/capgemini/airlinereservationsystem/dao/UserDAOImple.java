@@ -96,38 +96,39 @@ public class UserDAOImple implements UserDAO {
 	}
 
 	@Override
-	public BookingStatus bookRequest(UserInfo user,FlightDetails fSource, FlightDetails fDestination) {
+	public BookingStatus bookRequest(UserInfo user,FlightDetails flight) {
 		// TODO Auto-generated method stub
 		       boolean flag = false, 
 				isRequestExists = false;
           		BookingStatus bookingStatus = new BookingStatus();
                  UserInfo userInfo2 = new UserInfo();
                  FlightDetails flightDetails2 = new FlightDetails();
-				for (BookingStatus bookingStatus2 : AirlineRepository.STATUS) {
- 			       if (fSource.getSource() == bookingStatus2.getFlightDetails().getSource()) {
- 			    	      
- 			    		  isRequestExists = true; 
-				    }
-                }
-				for (BookingStatus bookingStatus3 : AirlineRepository.STATUS) {
-				 if(fDestination.getDestination()==bookingStatus3.getFlightDetails().getDestination()) {
-		    		  isRequestExists = true; 
-		    	   }
-				}
-                 if (!isRequestExists) {
-               	for (UserInfo userBean : AirlineRepository.USER_INFOS) {
-  					if (user.getUserId() == userBean.getUserId()) {
-							for (FlightDetails filght1 : AirlineRepository.FLIGHT_DETAILS) {
-							if (filght1.getSource() == filght1.getSource()&&filght1.getDestination()==filght1.getDestination()) {
-							    userInfo2= userBean;
-								flightDetails2 = filght1;
-									flag = true;
-							}
-						}
-						}
+     			for (BookingStatus bookingStatus1 : AirlineRepository.STATUS) {
+					if (flight.getFlightId() ==  bookingStatus1.getFlightDetails().getFlightId()) {
+						isRequestExists = true;
 					}
+				} 
+     			if(!isRequestExists) {
+     				for (UserInfo userBean :  AirlineRepository.USER_INFOS) {
+						if (user.getUserId() == userBean.getUserId()) {
+							for (FlightDetails flight1 : AirlineRepository.FLIGHT_DETAILS) {
+								if (flight1.getFlightId() == flight.getFlightId()) {
+									userInfo2= userBean;
+									flightDetails2 = flight1;
+									
+										flag = true;
+								     }
+									
+							       }
+							   }
+							    
+							
+     				}
+				
+              
 					if (flag == true) {
 						bookingStatus.setFlightDetails(flightDetails2);;
+						
 						bookingStatus.setUserInfo(userInfo2);;
 						AirlineRepository.STATUS.add(bookingStatus);
 					return bookingStatus;
@@ -137,4 +138,4 @@ public class UserDAOImple implements UserDAO {
 		
 	}
 
-}
+	}

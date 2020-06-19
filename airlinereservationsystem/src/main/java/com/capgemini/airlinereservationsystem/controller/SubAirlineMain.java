@@ -1,5 +1,6 @@
 package com.capgemini.airlinereservationsystem.controller;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -35,7 +36,8 @@ public class SubAirlineMain {
 		String flightSource = null;
 		String flightDestination = null;
 	    int noofSeatsAvailable = 0;
-
+	    LocalDateTime arrivalDateTime=null;
+	    LocalDateTime departureDateTime=null;
 		Validation validation = new Validation();
 
 		@SuppressWarnings("resource")
@@ -159,7 +161,7 @@ public class SubAirlineMain {
 							System.out.println("Enter registered Password to login : ");
 							String password = scanner.next();
 							try {
-								
+								@SuppressWarnings("unused")
 								AdminInfo authBean = service.authenticateAdmin(email, password);
 								System.out.println("You have logged in successfully");
 								System.out.println("Now you can perform the following operations:-");
@@ -245,11 +247,39 @@ public class SubAirlineMain {
 												System.out.println("Enter No.of seat Available in the Flight : ");
 												noofSeatsAvailable = scanner.nextInt();
 												try {
-													validation.validatedId(noofSeatsAvailable);
+													//validation.validatedId(noofSeatsAvailable);
 													flag = true;
 												} catch (InputMismatchException e) {
 													flag = false;
 													System.err.println("noofSeatsAvailable should contains only digits");
+												} catch (ARSException e) {
+													flag = false;
+													System.err.println(e.getMessage());
+												}
+											} while (!flag);
+											do {
+												System.out.println("Enter  Flight Arrival Date Time : ");
+												 arrivalDateTime=LocalDateTime.of(scanner.nextInt(), scanner.nextInt(), scanner.nextInt(), scanner.nextInt(), scanner.nextInt());
+												try {
+													//validation.validatedId(noofSeatsAvailable);
+													flag = true;
+												} catch (InputMismatchException e) {
+													flag = false;
+													System.err.println("its should contains only digits");
+												} catch (ARSException e) {
+													flag = false;
+													System.err.println(e.getMessage());
+												}
+											} while (!flag);
+											do {
+												System.out.println("Enter  Flight departure Date Time : ");
+												 departureDateTime=LocalDateTime.of(scanner.nextInt(), scanner.nextInt(), scanner.nextInt(), scanner.nextInt(), scanner.nextInt());
+												try {
+													//validation.validatedId(noofSeatsAvailable);
+													flag = true;
+												} catch (InputMismatchException e) {
+													flag = false;
+													System.err.println("its should contains only digits");
 												} catch (ARSException e) {
 													flag = false;
 													System.err.println(e.getMessage());
@@ -261,6 +291,8 @@ public class SubAirlineMain {
 											bean1.setSource(flightSource);
 											bean1.setDestination(flightDestination);
 											bean1.setNoofseatsavailable(noofSeatsAvailable);
+											bean1.setArrivalDateTime(arrivalDateTime);
+											bean1.setDepartureDateTime(departureDateTime);
 											boolean check2 = service.addFlights(bean1);
 											if (check2) {
 												System.out.println("Flight added of id = " + flightId);
@@ -599,19 +631,13 @@ public class SubAirlineMain {
 										case 5:
 											System.out.println("Enter User Id : ");
 											int userId2 = scanner.nextInt();
-
+                                             
 										     UserInfo userBean = new UserInfo();
 											userBean.setUserId(userId2);
-											System.out.println("Enter Source : ");
-									
-                                             String source2=scanner.next();
-                                             System.out.println("Enter Destination : ");
-                                             String destination2=scanner.next();
-                                             
-                                             FlightDetails flightDetails1 = new FlightDetails();
-                                             flightDetails1.setSource(source2);
-                                             FlightDetails flightDetails2 = new FlightDetails();
-                                             flightDetails2.setDestination(destination2);
+											System.out.println("Enter Flight Id : ");
+											int flightId2 = scanner.nextInt();
+                                             FlightDetails flightDetails1 = new FlightDetails();                                    
+                                             flightDetails1.setFlightId(flightId2);
                                              System.out.println("Enter No of seats : ");
                                              int seats=scanner.nextInt();
                                              BookingStatus bookingStatus=new BookingStatus();
@@ -619,7 +645,7 @@ public class SubAirlineMain {
                                              
                                              
 											try {
-												BookingStatus request = service1.bookRequest(userBean, flightDetails1, flightDetails2);
+												BookingStatus request = service1.bookRequest(userBean, flightDetails1);
 												System.out.println("Request placed to Airline Management ");
 												System.out.println(
 														"<--------------------------------------------------------------------->");

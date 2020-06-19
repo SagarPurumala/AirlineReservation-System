@@ -6,7 +6,6 @@ import java.io.Serializable;
 public class AdminInfo implements Serializable{
 	private int id = (int)Math.random();
 	private String name;
-	
 	private String emailId;
 	private String password;
 	private long mobileNo;
@@ -50,11 +49,6 @@ public class AdminInfo implements Serializable{
 	}
 	public void setMobileNo(long mobileNo) {
 		this.mobileNo = mobileNo;
-	}
-	@Override
-	public String toString() {
-		return "AdminInfo [id=" + id + ", name=" + name + ", emailId=" + emailId + ", password=" + password
-				+ ", mobileNo=" + mobileNo + "]";
 	}
 	
 	

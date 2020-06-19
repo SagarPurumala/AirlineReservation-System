@@ -19,6 +19,6 @@ public interface UserDAO {
 
 	ArrayList<FlightDetails> getFlightDetails();
 
-	BookingStatus bookRequest(UserInfo user,FlightDetails fSource, FlightDetails fDestination);
+	BookingStatus bookRequest(UserInfo user,FlightDetails Flight);
 
 }

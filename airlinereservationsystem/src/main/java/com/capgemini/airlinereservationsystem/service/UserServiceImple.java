@@ -48,9 +48,9 @@ public class UserServiceImple implements UserService {
 	}
 
 	@Override
-	public BookingStatus bookRequest(UserInfo user,FlightDetails fSource, FlightDetails fDestination) {
+	public BookingStatus bookRequest(UserInfo user,FlightDetails flight) {
 		// TODO Auto-generated method stub
-		return dao.bookRequest(user,fSource, fDestination);
+		return dao.bookRequest(user,flight);
 	}
 
 }
