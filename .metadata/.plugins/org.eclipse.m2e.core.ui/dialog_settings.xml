@@ -2,6 +2,7 @@
 <section name="Workbench">
 	<section name="MavenProjectWizardLocationPage">
 		<list key="location">
+			<item value="C:\Users\Sagar\Desktop\Airline Reservation System"/>
 			<item value="C:\Users\Sagar\Desktop\Airline Reservation Sytem"/>
 		</list>
 		<list key="projectNameTemplate">
@@ -26,12 +27,14 @@
 	</section>
 	<section name="Maven2ProjectWizardArchifactPage">
 		<list key="package">
+			<item value="com.capgemini.airlinereservationsystemjdbc"/>
 			<item value="com.capgemini.airlinereservationsystem"/>
 		</list>
 		<list key="groupId">
 			<item value="com.capgemini"/>
 		</list>
 		<list key="artifactId">
+			<item value="airlinereservationsystemjdbc"/>
 			<item value="airlinereservationsystem"/>
 		</list>
 		<list key="projectNameTemplate">
