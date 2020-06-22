@@ -22,7 +22,7 @@ import com.capgemini.airlinereservationsystem.validation.Validation;
 public class SubAirlineMain {
 	public static void airlineOperations() {
 
-		AirlineRepository.addToDataBase();
+		
 
 		boolean flag = false;
 		int checkId = 0;
@@ -310,7 +310,7 @@ public class SubAirlineMain {
 											System.out.println(
 													"<--------------------------------------------------------------------->");
 											System.out.println(String.format("%-10s %-10s %-13s %-15s %-20s %-20s %s", "FlightId",
-													"FlightName", "Source", "Destination","ArrivalDateTime","DepartureDateTime", "NoofSeatAvailable"));
+													"Fligh tName", "Source", "Destination","Arrival Date Time","Departure Date Time", "NoofSeatAvailable"));
 											for (FlightDetails flightBean : flightSource1) {
 												if (flightBean != null) {
 													System.out.println(String.format("%-10s %-10s %-13s %-15s %-20s %-20s %s", flightBean.getFlightId(),
@@ -330,8 +330,8 @@ public class SubAirlineMain {
 											ArrayList<FlightDetails> flightDestination1 = service.searchFlightByDestination(destination);
 											System.out.println(
 													"<<--------------------------------------------------------------------->>");
-											System.out.println(String.format("%-10s %-10s %-13s %-15s %-20s %-20s %s", "FlightId",
-													"FlightName", "Source", "Destination","ArrivalDateTime","DepartureDateTime", "NoofSeatAvailable"));
+											System.out.println(String.format("%-10s %-10s %-13s %-15s %-20s %-20s %s", "Flight Id",
+													"Flight Name", "Source", "Destination","Arrival Date Time","Departure Date Time", "NoofSeatAvailable"));
 											for (FlightDetails flightBean : flightDestination1) {
 												if (flightBean != null) {
 													System.out.println(String.format("%-10s %-10s %-13s %-15s %-20s %-20s %s", flightBean.getFlightId(),
@@ -398,11 +398,11 @@ public class SubAirlineMain {
 											airlineOperations();
 
 										default:
-											System.out.println("Invalid Choice");
+											System.out.println("Invalid Choice please provide 1 or 2 or 3 or 4 or 5 or 6  or 9");
 											break;
 										}
 									} catch (InputMismatchException e) {
-										System.err.println("Invalid entry please provide only positive integer");
+										System.err.println("Invalid entry please provide 1 or 2 or 3 or 4 or 5 or 6  or 9");
 										scanner.nextLine();
 									}
 								} while (true);
@@ -415,11 +415,11 @@ public class SubAirlineMain {
 							break;
 
 						default:
-							System.out.println("Invalid Choice");
+							System.out.println("Invalid Choice please provide 1 or 2 or 3");
 							break;
 						}
 					} catch (InputMismatchException e) {
-						System.err.println("Invalid entry please provide only positive integer");
+						System.err.println("Invalid entry please provide 1 or 2 or 3");
 						scanner.nextLine();
 					}
 				} while (true);
@@ -670,10 +670,11 @@ public class SubAirlineMain {
 											airlineOperations();
 
 										default:
+											System.err.println("Invalid entry please provide 1 or 2 or 3 or 4 or 5 or 7");
 											break;
 										}
 									} catch (InputMismatchException e) {
-										System.err.println("Invalid entry please provide only positive integer");
+										System.err.println("Invalid entry please provide 1 or 2 or 3 or 4 or 5 or 7");
 										scanner.nextLine();
 									}
 								} while (true);
@@ -687,18 +688,25 @@ public class SubAirlineMain {
 
 						default:
 							System.out.println("Invalid Choice");
-							System.err.println("Choice must be 1 or 2");
+							System.err.println("Choice must be 1 or 2 or 3");
 							break;
 						}
 					} catch (InputMismatchException e) { // if we give string in 1 n 2 n 3
-						System.err.println("Invalid entry please provide only positive integer");
+						System.err.println("Invalid entry please provide 1 or 2 or 3");
 						scanner.nextLine();
 					}
 				} while (true);
-			}
+			
+			default:
+				System.out.println("Invalid Choice");
+				System.err.println("Choice must be 1 or 2 ");
+				break;
+				}
 		} catch (InputMismatchException e) { //// if we give string in 1 n 2
-			System.err.println("Invalid entry please provide only positive integer");
+			System.err.println("Invalid entry please provide 1 or 2");
 			scanner.nextLine();
+		}catch (Exception e) {
+			System.err.println("Invalid Credentials");
 		}
 	} while (true);
 }
