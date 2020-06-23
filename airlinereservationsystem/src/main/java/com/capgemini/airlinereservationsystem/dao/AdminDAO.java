@@ -1,6 +1,7 @@
 package com.capgemini.airlinereservationsystem.dao;
 
-import java.util.ArrayList;
+
+import java.util.List;
 
 import com.capgemini.airlinereservationsystem.dto.AdminInfo;
 import com.capgemini.airlinereservationsystem.dto.FlightDetails;
@@ -16,13 +17,13 @@ public interface AdminDAO {
 
 	boolean removeFlight(int flightId);
 
-	ArrayList<FlightDetails> searchFlightByName(String flightname);
+	List<FlightDetails> searchFlightByName(String flightname);
 
-	ArrayList<FlightDetails> searchFlightBySource(String source);
+	List<FlightDetails> searchFlightBySource(String source);
 
-	ArrayList<FlightDetails> searchFlightByDestination(String destination);
+	List<FlightDetails> searchFlightByDestination(String destination);
 
-	ArrayList<FlightDetails> getFlightDetails();
+	List<FlightDetails> getFlightDetails();
 
 	boolean bookingStatus(UserInfo user, FlightDetails flightDetails);
 

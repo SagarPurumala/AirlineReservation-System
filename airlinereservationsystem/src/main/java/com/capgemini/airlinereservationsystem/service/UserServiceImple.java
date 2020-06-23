@@ -1,6 +1,7 @@
 package com.capgemini.airlinereservationsystem.service;
 
-import java.util.ArrayList;
+
+import java.util.List;
 
 import com.capgemini.airlinereservationsystem.dao.UserDAO;
 import com.capgemini.airlinereservationsystem.dao.UserDAOImple;
@@ -24,25 +25,25 @@ public class UserServiceImple implements UserService {
 	}
 
 	@Override
-	public ArrayList<FlightDetails> searchFlightByName(String flightname) {
+	public List<FlightDetails> searchFlightByName(String flightname) {
 		// TODO Auto-generated method stub
 		return dao.searchFlightByName(flightname);
 	}
 
 	@Override
-	public ArrayList<FlightDetails> searchFlightBySource(String source) {
+	public List<FlightDetails> searchFlightBySource(String source) {
 		// TODO Auto-generated method stub
 		return dao.searchFlightBySource(source);
 	}
 
 	@Override
-	public ArrayList<FlightDetails> searchFlightByDestination(String destination) {
+	public List<FlightDetails> searchFlightByDestination(String destination) {
 		// TODO Auto-generated method stub
 		return dao.searchFlightByDestination(destination);
 	}
 
 	@Override
-	public ArrayList<FlightDetails> getFlightDetails() {
+	public List<FlightDetails> getFlightDetails() {
 		// TODO Auto-generated method stub
 		return dao.getFlightDetails();
 	}

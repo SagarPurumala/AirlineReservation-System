@@ -1,6 +1,7 @@
 package com.capgemini.airlinereservationsystem.service;
 
-import java.util.ArrayList;
+
+import java.util.List;
 
 import com.capgemini.airlinereservationsystem.dto.BookingStatus;
 import com.capgemini.airlinereservationsystem.dto.FlightDetails;
@@ -12,13 +13,13 @@ public interface UserService {
 
 	UserInfo authenticateUser(String emailId, String password);
 
-	ArrayList<FlightDetails> searchFlightByName(String flightname);
+	List<FlightDetails> searchFlightByName(String flightname);
 
-	ArrayList<FlightDetails> searchFlightBySource(String source);
+	List<FlightDetails> searchFlightBySource(String source);
 
-	ArrayList<FlightDetails> searchFlightByDestination(String destination);
+	List<FlightDetails> searchFlightByDestination(String destination);
 
-	ArrayList<FlightDetails> getFlightDetails();
+	List<FlightDetails> getFlightDetails();
 
 	BookingStatus bookRequest(UserInfo user,FlightDetails flight);
 

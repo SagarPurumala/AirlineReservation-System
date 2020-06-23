@@ -1,8 +1,9 @@
 package com.capgemini.airlinereservationsystem.controller;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -186,23 +187,26 @@ public class SubAirlineMain {
 										case 1:
 
 											do {
-												System.out.println("Enter FlightID to add : ");
-												flightId = scanner.nextInt();
+												
 												try {
+													System.out.println("Enter FlightID to add : ");
+													flightId = scanner.nextInt();
 													validation.validatedId(flightId);
 													flag = true;
 												} catch (InputMismatchException e) {
 													flag = false;
 													System.err.println("Id should contains only digits");
+													scanner.next();
 												} catch (ARSException e) {
 													flag = false;
 													System.err.println(e.getMessage());
 												}
 											} while (!flag);
 											do {
-												System.out.println("Enter FlightName : ");
-												flightName= scanner.next();
+												
 												try {
+													System.out.println("Enter FlightName : ");
+													flightName= scanner.next();
 													validation.validatedName(flightName);
 													flag = true;
 												} catch (InputMismatchException e) {
@@ -229,9 +233,10 @@ public class SubAirlineMain {
 												}
 											} while (!flag);
 											do {
-												System.out.println("Enter Destination : ");
-												flightDestination = scanner.next();
+												
 												try {
+													System.out.println("Enter Destination : ");
+													flightDestination = scanner.next();
 													validation.validatedName(flightDestination);
 													flag = true;
 												} catch (InputMismatchException e) {
@@ -244,14 +249,15 @@ public class SubAirlineMain {
 												}
 											} while (!flag);
 											do {
-												System.out.println("Enter No.of seat Available in the Flight : ");
-												noofSeatsAvailable = scanner.nextInt();
+												
 												try {
-													//validation.validatedId(noofSeatsAvailable);
+													System.out.println("Enter No.of seat Available in the Flight : ");
+													noofSeatsAvailable = scanner.nextInt();
 													flag = true;
 												} catch (InputMismatchException e) {
 													flag = false;
 													System.err.println("noofSeatsAvailable should contains only digits");
+													scanner.next();
 												} catch (ARSException e) {
 													flag = false;
 													System.err.println(e.getMessage());
@@ -261,7 +267,7 @@ public class SubAirlineMain {
 												System.out.println("Enter  Flight Arrival Date Time : ");
 												 arrivalDateTime=LocalDateTime.of(scanner.nextInt(), scanner.nextInt(), scanner.nextInt(), scanner.nextInt(), scanner.nextInt());
 												try {
-													//validation.validatedId(noofSeatsAvailable);
+													
 													flag = true;
 												} catch (InputMismatchException e) {
 													flag = false;
@@ -275,7 +281,7 @@ public class SubAirlineMain {
 												System.out.println("Enter  Flight departure Date Time : ");
 												 departureDateTime=LocalDateTime.of(scanner.nextInt(), scanner.nextInt(), scanner.nextInt(), scanner.nextInt(), scanner.nextInt());
 												try {
-													//validation.validatedId(noofSeatsAvailable);
+													
 													flag = true;
 												} catch (InputMismatchException e) {
 													flag = false;
@@ -306,7 +312,7 @@ public class SubAirlineMain {
 
 											FlightDetails bean3 = new FlightDetails();
 											bean3.setSource(source);
-											ArrayList<FlightDetails> flightSource1 = service.searchFlightBySource(source);
+											List<FlightDetails> flightSource1 = service.searchFlightBySource(source);
 											System.out.println(
 													"<--------------------------------------------------------------------->");
 											System.out.println(String.format("%-10s %-10s %-13s %-15s %-20s %-20s %s", "FlightId",
@@ -327,7 +333,7 @@ public class SubAirlineMain {
 
 											FlightDetails bean4 = new FlightDetails();
 											bean4.setDestination(destination);
-											ArrayList<FlightDetails> flightDestination1 = service.searchFlightByDestination(destination);
+											List<FlightDetails> flightDestination1 = service.searchFlightByDestination(destination);
 											System.out.println(
 													"<<--------------------------------------------------------------------->>");
 											System.out.println(String.format("%-10s %-10s %-13s %-15s %-20s %-20s %s", "Flight Id",
@@ -347,7 +353,7 @@ public class SubAirlineMain {
 
 											FlightDetails bean5 = new FlightDetails();
 											bean5.setFlightName(name);;
-											ArrayList<FlightDetails> fname = service.searchFlightByName(name);
+											List<FlightDetails> fname = service.searchFlightByName(name);
 											System.out.println(
 													"<--------------------------------------------------------------------->");
 											System.out.println(String.format("%-10s %-10s %-13s %-15s %-20s %-20s %s", "FlightId",
@@ -380,7 +386,7 @@ public class SubAirlineMain {
 											}
 											break;
 										case 6:
-											ArrayList<FlightDetails> info = service.getFlightDetails();
+											List<FlightDetails> info = service.getFlightDetails();
 											System.out.println(
 													"<--------------------------------------------------------------------->");
 											System.out.println(String.format("%-10s %-10s %-13s %-15s %-20s %-20s %s", "FlightId",
@@ -404,6 +410,8 @@ public class SubAirlineMain {
 									} catch (InputMismatchException e) {
 										System.err.println("Invalid entry please provide 1 or 2 or 3 or 4 or 5 or 6  or 9");
 										scanner.nextLine();
+									}catch (Exception e) {
+										System.out.println("Invalid Credentials");
 									}
 								} while (true);
 							} catch (Exception e) {
@@ -422,6 +430,7 @@ public class SubAirlineMain {
 						System.err.println("Invalid entry please provide 1 or 2 or 3");
 						scanner.nextLine();
 					}
+						
 				} while (true);
 				case 2:
 					UserService service1 = new UserServiceImple();
@@ -556,7 +565,7 @@ public class SubAirlineMain {
 
 											FlightDetails bean3 = new FlightDetails();
 											bean3.setSource(source);
-											ArrayList<FlightDetails> flightSource1 = service1.searchFlightBySource(source);
+											List<FlightDetails> flightSource1 = service1.searchFlightBySource(source);
 											System.out.println(
 													"<--------------------------------------------------------------------->");
 											System.out.println(String.format("%-10s %-10s %-13s %-15s %-20s %-20s %s", "FlightId",
@@ -579,7 +588,7 @@ public class SubAirlineMain {
 
 											FlightDetails bean4 = new FlightDetails();
 											bean4.setDestination(destination);
-											ArrayList<FlightDetails> flightDestination1 = service1.searchFlightByDestination(destination);
+											List<FlightDetails> flightDestination1 = service1.searchFlightByDestination(destination);
 											System.out.println(
 													"<<--------------------------------------------------------------------->>");
 											System.out.println(String.format("%-10s %-10s %-13s %-15s %-20s %-20s %s", "FlightId",
@@ -599,7 +608,7 @@ public class SubAirlineMain {
 
 											FlightDetails bean5 = new FlightDetails();
 											bean5.setFlightName(name);;
-											ArrayList<FlightDetails> fname = service1.searchFlightByName(name);
+											List<FlightDetails> fname = service1.searchFlightByName(name);
 											System.out.println(
 													"<--------------------------------------------------------------------->");
 											System.out.println(String.format("%-10s %-10s %-13s %-15s %-20s %-20s %s", "FlightId",
@@ -614,7 +623,7 @@ public class SubAirlineMain {
 											}
 											break;
 										case 4:
-											ArrayList<FlightDetails> info = service1.getFlightDetails();
+											List<FlightDetails> info = service1.getFlightDetails();
 											System.out.println(
 													"<--------------------------------------------------------------------->");
 											System.out.println(String.format("%-10s %-10s %-13s %-15s %-20s %-20s %s", "FlightId",
@@ -676,6 +685,9 @@ public class SubAirlineMain {
 									} catch (InputMismatchException e) {
 										System.err.println("Invalid entry please provide 1 or 2 or 3 or 4 or 5 or 7");
 										scanner.nextLine();
+									}
+									catch (Exception e) {
+										System.err.println("Invalid Credentials");
 									}
 								} while (true);
 							} catch (Exception e) {

@@ -1,6 +1,7 @@
 package com.capgemini.airlinereservationsystem.dao;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.capgemini.airlinereservationsystem.dto.AdminInfo;
 import com.capgemini.airlinereservationsystem.dto.FlightDetails;
@@ -65,7 +66,7 @@ public class AdminDAOImple implements AdminDAO{
 	}
 
 	@Override
-	public ArrayList<FlightDetails> searchFlightByName(String flightName) {
+	public List<FlightDetails> searchFlightByName(String flightName) {
 		// TODO Auto-generated method stub
 		ArrayList<FlightDetails> searchList = new ArrayList<FlightDetails>();
 		for (int i = 0; i <= AirlineRepository.FLIGHT_DETAILS.size() - 1; i++) {
@@ -84,7 +85,7 @@ public class AdminDAOImple implements AdminDAO{
 	}
 
 	@Override
-	public ArrayList<FlightDetails> searchFlightBySource(String source) {
+	public List<FlightDetails> searchFlightBySource(String source) {
 		// TODO Auto-generated method stub
 		ArrayList<FlightDetails> searchList = new ArrayList<FlightDetails>();
 		for (int i = 0; i <= AirlineRepository.FLIGHT_DETAILS.size() - 1; i++) {
@@ -103,7 +104,7 @@ public class AdminDAOImple implements AdminDAO{
 	}
 
 	@Override
-	public ArrayList<FlightDetails> searchFlightByDestination(String destination) {
+	public List<FlightDetails> searchFlightByDestination(String destination) {
 		// TODO Auto-generated method stub
 		ArrayList<FlightDetails> searchList = new ArrayList<FlightDetails>();
 		for (int i = 0; i <= AirlineRepository.FLIGHT_DETAILS.size() - 1; i++) {
@@ -121,7 +122,7 @@ public class AdminDAOImple implements AdminDAO{
 	}
 
 	@Override
-	public ArrayList<FlightDetails> getFlightDetails() {
+	public List<FlightDetails> getFlightDetails() {
 		// TODO Auto-generated method stub
 		return AirlineRepository.FLIGHT_DETAILS;
 	}
