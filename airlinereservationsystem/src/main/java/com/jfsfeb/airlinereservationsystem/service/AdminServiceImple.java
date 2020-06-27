@@ -1,28 +1,25 @@
 package com.jfsfeb.airlinereservationsystem.service;
 
-
 import java.util.List;
 
+import com.jfsfeb.airlinereservationsystem.dao.AdminDAO;
+import com.jfsfeb.airlinereservationsystem.dao.AdminDAOImple;
 import com.jfsfeb.airlinereservationsystem.dto.AdminInfo;
 import com.jfsfeb.airlinereservationsystem.dto.FlightDetails;
-import com.jfsfeb.airlinereservationsystem.dto.UserInfo;
+
+import com.jfsfeb.airlinereservationsystem.exception.ARSException;
 import com.jfsfeb.airlinereservationsystem.validation.Validation;
-import com.jsfeb.airlinereservationsystem.dao.AdminDAO;
-import com.jsfeb.airlinereservationsystem.dao.AdminDAOImple;
 
-public class AdminServiceImple implements AdminService{
-
-	private AdminDAO dao=new AdminDAOImple();
-	Validation validation=new Validation();
-	@Override
-	public boolean registerAdmin(AdminInfo admin) {
+public class AdminServiceImple implements AdminService {
 	
-		return dao.registerAdmin(admin);
-	}
-
+	Validation validation = new Validation();
+	 AdminDAO dao = new AdminDAOImple();
+	
 	@Override
 	public AdminInfo authenticateAdmin(String email, String password) {
-		if(validation.validatedEmail(email)) {
+		
+		
+		if (validation.validatedEmail(email)) {
 			if(validation.validatedPassword(password)) {
 				return dao.authenticateAdmin(email, password);
 			}
@@ -31,45 +28,59 @@ public class AdminServiceImple implements AdminService{
 	}
 
 	@Override
+	public boolean registerAdmin(AdminInfo admin) {
+		if (admin != null) {
+			return dao.registerAdmin(admin);
+		}
+		throw new ARSException("Enter correct details");
+	}
+
+	@Override
 	public boolean addFlights(FlightDetails flightDetails) {
-		// TODO Auto-generated method stub
-		return dao.addFlights(flightDetails);
+		if (flightDetails != null) {
+			return dao.addFlights(flightDetails);
+		}
+		throw new ARSException("Enter Correct details");
+
 	}
 
 	@Override
 	public boolean removeFlight(int flightId) {
-		// TODO Auto-generated method stub
-		return dao.removeFlight(flightId);
+		if (validation.validatedId(flightId)) {
+			return dao.removeFlight(flightId);
+		}
+		return false;
 	}
 
 	@Override
 	public List<FlightDetails> searchFlightByName(String flightname) {
-		// TODO Auto-generated method stub
-		return dao.searchFlightByName(flightname);
+		if (flightname != null) {
+			return dao.searchFlightByName(flightname);
+		}
+		throw new ARSException("Enter Correct Details");
 	}
 
 	@Override
 	public List<FlightDetails> searchFlightBySource(String source) {
-		// TODO Auto-generated method stub
-		return dao.searchFlightBySource(source);
+		if (validation.validatedSource(source)) {
+			return dao.searchFlightBySource(source);
+		}
+		return null;
 	}
 
 	@Override
 	public List<FlightDetails> searchFlightByDestination(String destination) {
-		// TODO Auto-generated method stub
-		return dao.searchFlightByDestination(destination);
+		if (validation.validatedDestination(destination)) {
+
+			return dao.searchFlightByDestination(destination);
+		}
+		return null;
 	}
 
 	@Override
 	public List<FlightDetails> getFlightDetails() {
-		// TODO Auto-generated method stub
-		return dao.getFlightDetails();
-	}
 
-	@Override
-	public boolean bookingStatus(UserInfo user, FlightDetails flightDetails) {
-		// TODO Auto-generated method stub
-		return false;
+		return dao.getFlightDetails();
 	}
 
 }

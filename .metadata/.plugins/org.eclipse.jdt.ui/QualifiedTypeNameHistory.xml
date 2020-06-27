@@ -13,4 +13,7 @@
 <fullyQualifiedTypeName name="com.capgemini.airlinereservationsystem.dto.BookingStatus"/>
 <fullyQualifiedTypeName name="lombok.Data"/>
 <fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="lombok.extern.log4j.Log4j"/>
+<fullyQualifiedTypeName name="com.jfsfeb.airlinereservationsystem.validation.Validation"/>
+<fullyQualifiedTypeName name="com.jfsfeb.airlinereservationsystem.exception.ARSException"/>
 </qualifiedTypeNameHistroy>

@@ -1,4 +1,4 @@
-package com.capgemini.airlinereservationsystemjdbc;
+package com.jfsfeb.airlinereservationsystemjdbc;
 
 /**
  * Hello world!

@@ -43,14 +43,16 @@ public class Validation {
 	}
 
 	public boolean validatedEmail(String email) throws ARSException {
-		String emailRegEx = "^[a-z0-9](\\.?[a-z0-9]){5,}@g(oogle)?mail\\.(com|org)";
+		String emailRegEx = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 		boolean result = false;
 		Pattern pattern = Pattern.compile(emailRegEx);
 		Matcher matcher = pattern.matcher(email);
 		if (matcher.matches()) {
 			result = true;
+			
 		} else {
-			throw new ARSException("Enter proper email such that it should consist of numbers and alphabets (eg:sagar1@gmail.com)");
+			
+			throw new ARSException("Enter The Proper Email ID (eg:sagar@gmail.com)");
 		}
 		return result;
 	}
@@ -66,5 +68,30 @@ public class Validation {
 		}
 		return result;
 	}
+	public boolean validatedSource(String source) throws ARSException {
+		String nameRegEx = "^(?=.{4,20}$)(?![_.-])(?!.*[.]{2})[a-zA-Z._-]+(?<![_.-])";
+		boolean result = false;
+		Pattern pattern = Pattern.compile(nameRegEx);
+		Matcher matcher = pattern.matcher(source);
+		if (matcher.matches()) {
+			result = true;
+		} else {
+			throw new ARSException("Invalid Source! Source should have atleast 4 characters");
+		}
+		return result;
+	}
+	public boolean validatedDestination(String Destination) throws ARSException {
+		String nameRegEx = "^(?=.{4,20}$)(?![_.-])(?!.*[.]{2})[a-zA-Z._-]+(?<![_.-])";
+		boolean result = false;
+		Pattern pattern = Pattern.compile(nameRegEx);
+		Matcher matcher = pattern.matcher(Destination);
+		if (matcher.matches()) {
+			result = true;
+		} else {
+			throw new ARSException("Invalid Destination! Destination should have atleast 4 characters");
+		}
+		return result;
+	}
+	
 
 }

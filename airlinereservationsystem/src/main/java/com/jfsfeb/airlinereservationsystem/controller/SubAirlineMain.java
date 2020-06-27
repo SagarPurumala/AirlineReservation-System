@@ -11,13 +11,15 @@ import com.jfsfeb.airlinereservationsystem.dto.BookingStatus;
 import com.jfsfeb.airlinereservationsystem.dto.FlightDetails;
 import com.jfsfeb.airlinereservationsystem.dto.UserInfo;
 import com.jfsfeb.airlinereservationsystem.exception.ARSException;
-import com.jfsfeb.airlinereservationsystem.repository.AirlineRepository;
+
 import com.jfsfeb.airlinereservationsystem.service.AdminService;
 import com.jfsfeb.airlinereservationsystem.service.AdminServiceImple;
 import com.jfsfeb.airlinereservationsystem.service.UserService;
 import com.jfsfeb.airlinereservationsystem.service.UserServiceImple;
 import com.jfsfeb.airlinereservationsystem.validation.Validation;
 
+import lombok.extern.log4j.Log4j;
+@Log4j
 public class SubAirlineMain {
 	public static void airlineOperations() {
 
@@ -35,17 +37,18 @@ public class SubAirlineMain {
 		int noofSeatsAvailable = 0;
 		LocalDateTime arrivalDateTime = null;
 		LocalDateTime departureDateTime = null;
+		
 		Validation validation = new Validation();
 
 		@SuppressWarnings("resource")
 		Scanner scanner = new Scanner(System.in);
 		do {
 			try {
-				System.out.println(
+				log.info(
 						"<----------------------<<< WELCOME TO AIRLINE RESERVATION SYSTEM >>>--------------------->");
-				System.out.println("[1] ADMIN PAGE");
-				System.out.println("[2] USER PAGE");
-				System.out.println("<--------------------------------------------------------------------->");
+				log.info("[1] ADMIN PAGE");
+				log.info("[2] USER PAGE");
+				log.info("<--------------------------------------------------------------------->");
 				int i = scanner.nextInt();
 				switch (i) {
 				case 1:
@@ -54,9 +57,9 @@ public class SubAirlineMain {
 						try {
 							System.out
 									.println("<--------------------------------------------------------------------->");
-							System.out.println("[1] ADMINISTRATION REGISTER");
-							System.out.println("[2] ADMINISTRATION LOGIN");
-							System.out.println("[3] EXIT");
+							log.info("[1] ADMINISTRATION REGISTER");
+							log.info("[2] ADMINISTRATION LOGIN");
+							log.info("[3] EXIT");
 							System.out
 									.println("<--------------------------------------------------------------------->");
 							int choice = scanner.nextInt();
@@ -65,75 +68,76 @@ public class SubAirlineMain {
 							case 1:
 								do {
 									try {
-										System.out.println("Enter ID to Register as ADMIN : ");
+										log.info("Enter ID to Register as ADMIN : ");
 										checkId = scanner.nextInt();
 										validation.validatedId(checkId);
 										flag = true;
 									} catch (InputMismatchException e) {
-										System.err.println("ID should consist of only digits");
+										log.error("ID should consist of only digits");
 										flag = false;
 										scanner.next();
 									} catch (ARSException e) {
 										flag = false;
-										System.err.println(e.getMessage());
+										log.error(e.getMessage());
 									}
 								} while (!flag);
 								do {
 									try {
-										System.out.println("Enter Name to Register : ");
+										log.info("Enter Name to Register : ");
 										checkName = scanner.next();
 										validation.validatedName(checkName);
 										flag = true;
 									} catch (InputMismatchException e) {
 										flag = false;
-										System.err.println("Name should consists of only Alphabates");
+										log.error("Name should consists of only Alphabates");
 									} catch (ARSException e) {
 										flag = false;
-										System.err.println(e.getMessage());
+										log.error(e.getMessage());
 									}
 								} while (!flag);
 								do {
 									try {
-										System.out.println("Enter MobileNumber to Register : ");
+										log.info("Enter MobileNumber to Register : ");
 										checkMobile = scanner.nextLong();
 										validation.validatedMobile(checkMobile);
 										flag = true;
 									} catch (InputMismatchException e) {
-										System.err.println("Mobile Number  should consists of only numbers");
+										log.error("Mobile Number  should consists of only numbers");
 										flag = false;
 										scanner.next();
 									} catch (ARSException e) {
 										flag = false;
-										System.err.println(e.getMessage());
+										log.error(e.getMessage());
 									}
 								} while (!flag);
 								do {
 									try {
-										System.out.println("Enter Email to Register : ");
+										log.info("Enter Email to Register : ");
 										checkEmail = scanner.next();
-										validation.validatedEmail(checkEmail);
+										//validation.validatedEmail(checkEmail);
+										System.out.println(validation.validatedEmail(checkEmail));
 										flag = true;
 									} catch (InputMismatchException e) {
 										flag = false;
-										System.err.println(
+										log.error(
 												"Enter proper email such that it should consist of numbers and alphabets");
 									} catch (ARSException e) {
 										flag = false;
-										System.err.println(e.getMessage());
+										log.error(e.getMessage());
 									}
 								} while (!flag);
 								do {
 									try {
-										System.out.println("Enter Password :");
+										log.info("Enter Password :");
 										checkPassword = scanner.next();
 										validation.validatedPassword(checkPassword);
 										flag = true;
 									} catch (InputMismatchException e) {
 										flag = false;
-										System.err.println("Password doesnt accept spaces ");
+										log.error("Password doesnt accept spaces ");
 									} catch (ARSException e) {
 										flag = false;
-										System.err.println(e.getMessage());
+										log.error(e.getMessage());
 									}
 								} while (!flag);
 
@@ -146,37 +150,39 @@ public class SubAirlineMain {
 
 								boolean check = service.registerAdmin(bean);
 								if (check) {
-									System.out.println("You have registered Successfully");
+									log.info("You have registered Successfully");
 								} else {
-									System.out.println("Already registered");
+									log.info("Already registered");
 								}
 								break;
 
 							case 2:
-								System.out.println("Enter registered email to login : ");
+								log.info("Enter registered email to login : ");
 								String email = scanner.next();
-								System.out.println("Enter registered Password to login : ");
+								
+								log.info("Enter registered Password to login : ");
 								String password = scanner.next();
 								try {
-									@SuppressWarnings("unused")
+									
 									AdminInfo authBean = service.authenticateAdmin(email, password);
-									System.out.println("You have logged in successfully");
-									System.out.println("Now you can perform the following operations:-");
+									
+									log.info("You have logged in successfully");
+									log.info("Now you can perform the following operations:-");
 									do {
 										try {
-											System.out.println(
+											log.info(
 													"<--------------------------------------------------------------------->");
-											System.out.println("[1]  ADD FLIGHTS");
-											System.out.println("[2]  SEARCH FLIGHT BY SOURCE");
-											System.out.println("[3]  SEARCH FLIGHT BY DESTINATION");
-											System.out.println("[4]  SEARCH FLIGHT BY NAME");
-											System.out.println("[5]  REMOVE FLIGHT");
-											System.out.println("[6]  VIEW ALL FLIGHTDETAILS");
-											// System.out.println("[7] ISSUE FLIGHTDETAILS");
-											// System.out.println("[8] VIEW ALL USER");
+											log.info("[1]  ADD FLIGHTS");
+											log.info("[2]  SEARCH FLIGHT BY SOURCE");
+											log.info("[3]  SEARCH FLIGHT BY DESTINATION");
+											log.info("[4]  SEARCH FLIGHT BY NAME");
+											log.info("[5]  REMOVE FLIGHT");
+											log.info("[6]  VIEW ALL FLIGHTDETAILS");
+											// log.info("[7] ISSUE FLIGHTDETAILS");
+											// log.info("[8] VIEW ALL USER");
 
-											System.out.println("[9] LOGOUT");
-											System.out.println(
+											log.info("[9] LOGOUT");
+											log.info(
 													"<--------------------------------------------------------------------->");
 											int choice1 = scanner.nextInt();
 											switch (choice1) {
@@ -185,52 +191,52 @@ public class SubAirlineMain {
 												do {
 
 													try {
-														System.out.println("Enter FlightID to add : ");
+														log.info("Enter FlightID to add : ");
 														flightId = scanner.nextInt();
 														validation.validatedId(flightId);
 														flag = true;
 													} catch (InputMismatchException e) {
 														flag = false;
-														System.err.println("Id should contains only digits");
+														log.error("Id should contains only digits");
 														scanner.next();
 													} catch (ARSException e) {
 														flag = false;
-														System.err.println(e.getMessage());
+														log.error(e.getMessage());
 													}
 												} while (!flag);
 												do {
 
 													try {
-														System.out.println("Enter FlightName : ");
+														log.info("Enter FlightName : ");
 														flightName = scanner.next();
 														validation.validatedName(flightName);
 														flag = true;
 													} catch (InputMismatchException e) {
 														flag = false;
-														System.err.println("FlightName should contains only Alphabets");
+														log.error("FlightName should contains only Alphabets");
 													} catch (ARSException e) {
 														flag = false;
-														System.err.println(e.getMessage());
+														log.error(e.getMessage());
 													}
 												} while (!flag);
 												do {
-													System.out.println("Enter Source : ");
+													log.info("Enter Source : ");
 													flightSource = scanner.next();
 													try {
 														validation.validatedName(flightSource);
 														flag = true;
 													} catch (InputMismatchException e) {
 														flag = false;
-														System.err.println("Source should contains only Alphabates");
+														log.error("Source should contains only Alphabates");
 													} catch (ARSException e) {
 														flag = false;
-														System.err.println(e.getMessage());
+														log.error(e.getMessage());
 													}
 												} while (!flag);
 												do {
 
 													try {
-														System.out.println("Enter Destination : ");
+														log.info("Enter Destination : ");
 														flightDestination = scanner.next();
 														validation.validatedName(flightDestination);
 														flag = true;
@@ -240,7 +246,7 @@ public class SubAirlineMain {
 																.println("Destination should contains only Alphabates");
 													} catch (ARSException e) {
 														flag = false;
-														System.err.println(e.getMessage());
+														log.error(e.getMessage());
 													}
 												} while (!flag);
 												do {
@@ -252,44 +258,47 @@ public class SubAirlineMain {
 														flag = true;
 													} catch (InputMismatchException e) {
 														flag = false;
-														System.err.println(
+														log.error(
 																"noofSeatsAvailable should contains only digits");
 														scanner.next();
 													} catch (ARSException e) {
 														flag = false;
-														System.err.println(e.getMessage());
+														log.error(e.getMessage());
 													}
 												} while (!flag);
 												do {
-													System.out.println("Enter  Flight Arrival Date Time : ");
-													arrivalDateTime = LocalDateTime.of(scanner.nextInt(),
-															scanner.nextInt(), scanner.nextInt(), scanner.nextInt(),
-															scanner.nextInt());
+													log.info("Enter  Flight Arrival Date Time : ");
+													
 													try {
-
+														arrivalDateTime = LocalDateTime.of(scanner.nextInt(),
+																scanner.nextInt(), scanner.nextInt(), scanner.nextInt(),
+																scanner.nextInt());
+                                                        
 														flag = true;
 													} catch (InputMismatchException e) {
 														flag = false;
-														System.err.println("its should contains only digits");
+														log.error("its should contains only digits");
+														scanner.next();
 													} catch (ARSException e) {
 														flag = false;
-														System.err.println(e.getMessage());
+														log.error(e.getMessage());
 													}
 												} while (!flag);
 												do {
-													System.out.println("Enter  Flight departure Date Time : ");
-													departureDateTime = LocalDateTime.of(scanner.nextInt(),
-															scanner.nextInt(), scanner.nextInt(), scanner.nextInt(),
-															scanner.nextInt());
+													log.info("Enter  Flight departure Date Time : ");
+													
 													try {
-
+														departureDateTime = LocalDateTime.of(scanner.nextInt(),
+																scanner.nextInt(), scanner.nextInt(), scanner.nextInt(),
+																scanner.nextInt());
 														flag = true;
 													} catch (InputMismatchException e) {
 														flag = false;
-														System.err.println("its should contains only digits");
+														log.error("its should contains only digits ");
+														scanner.next();
 													} catch (ARSException e) {
 														flag = false;
-														System.err.println(e.getMessage());
+														log.error(e.getMessage());
 													}
 												} while (!flag);
 												FlightDetails bean1 = new FlightDetails();
@@ -302,28 +311,28 @@ public class SubAirlineMain {
 												bean1.setDepartureDateTime(departureDateTime);
 												boolean check2 = service.addFlights(bean1);
 												if (check2) {
-													System.out.println("Flight added of id = " + flightId);
+													log.info("Flight added of id = " + flightId);
 												} else {
-													System.out.println("Flight already exist of id = " + flightId);
+													log.info("Flight already exist of id = " + flightId);
 												}
 												break;
 											case 2:
-												System.out.println("Search Flight Details by Source : ");
+												log.info("Search Flight Details by Source : ");
 												String source = scanner.next();
 
 												FlightDetails bean3 = new FlightDetails();
 												bean3.setSource(source);
 												List<FlightDetails> flightSource1 = service
 														.searchFlightBySource(source);
-												System.out.println(
+												log.info(
 														"<--------------------------------------------------------------------->");
-												System.out.println(String.format(
+												log.info(String.format(
 														"%-10s %-10s %-13s %-15s %-20s %-20s %s", "FlightId",
 														"Flight Name", "Source", "Destination", "Arrival Date Time",
 														"Departure Date Time", "NoofSeatAvailable"));
 												for (FlightDetails flightBean : flightSource1) {
 													if (flightBean != null) {
-														System.out.println(String.format(
+														log.info(String.format(
 																"%-10s %-10s %-13s %-15s %-20s %-20s %s",
 																flightBean.getFlightId(), flightBean.getFlightName(),
 																flightBean.getSource(), flightBean.getDestination(),
@@ -331,27 +340,27 @@ public class SubAirlineMain {
 																flightBean.getDepartureDateTime(),
 																flightBean.getNoofseatsavailable()));
 													} else {
-														System.out.println("No Flights are available with this Source");
+														log.info("No Flights are available with this Source");
 													}
 												}
 												break;
 											case 3:
-												System.out.println("Search flight by Destination : ");
+												log.info("Search flight by Destination : ");
 												String destination = scanner.next();
 
 												FlightDetails bean4 = new FlightDetails();
 												bean4.setDestination(destination);
 												List<FlightDetails> flightDestination1 = service
 														.searchFlightByDestination(destination);
-												System.out.println(
+												log.info(
 														"<<--------------------------------------------------------------------->>");
-												System.out.println(String.format(
+												log.info(String.format(
 														"%-10s %-10s %-13s %-15s %-20s %-20s %s", "Flight Id",
 														"Flight Name", "Source", "Destination", "Arrival Date Time",
 														"Departure Date Time", "NoofSeatAvailable"));
 												for (FlightDetails flightBean : flightDestination1) {
 													if (flightBean != null) {
-														System.out.println(String.format(
+														log.info(String.format(
 																"%-10s %-10s %-13s %-15s %-20s %-20s %s",
 																flightBean.getFlightId(), flightBean.getFlightName(),
 																flightBean.getSource(), flightBean.getDestination(),
@@ -359,28 +368,28 @@ public class SubAirlineMain {
 																flightBean.getDepartureDateTime(),
 																flightBean.getNoofseatsavailable()));
 													} else {
-														System.out.println(
+														log.info(
 																"No Flights are available with this Destination");
 													}
 												}
 												break;
 											case 4:
-												System.out.println(" SEARCH FLIGHT BY NAME : ");
+												log.info(" SEARCH FLIGHT BY NAME : ");
 												String name = scanner.next();
 
 												FlightDetails bean5 = new FlightDetails();
 												bean5.setFlightName(name);
 												;
 												List<FlightDetails> fname = service.searchFlightByName(name);
-												System.out.println(
+												log.info(
 														"<--------------------------------------------------------------------->");
-												System.out.println(String.format(
+												log.info(String.format(
 														"%-10s %-10s %-13s %-15s %-20s %-20s %s", "FlightId",
 														"FlightName", "Source", "Destination", "ArrivalDateTime",
 														"DepartureDateTime", "NoofSeatAvailable"));
 												for (FlightDetails flightBean : fname) {
 													if (flightBean != null) {
-														System.out.println(String.format(
+														log.info(String.format(
 																"%-10s %-10s %-13s %-15s %-20s %-20s %s",
 																flightBean.getFlightId(), flightBean.getFlightName(),
 																flightBean.getSource(), flightBean.getDestination(),
@@ -388,41 +397,40 @@ public class SubAirlineMain {
 																flightBean.getDepartureDateTime(),
 																flightBean.getNoofseatsavailable()));
 													} else {
-														System.out.println(
+														log.info(
 																"No Flights are available with this Flight Name");
 													}
 												}
 												break;
 											case 5:
-												System.out.println("REMOVE FLIGHT ");
-												System.out.println("ENTER FLIGHT ID");
+												log.info("REMOVE FLIGHT ");
+												log.info("ENTER FLIGHT ID");
 												int flightId3 = scanner.nextInt();
 												if (flightId3 == 0) {
-													System.out.println("Please Enter the Valid FlightId");
+													log.info("Please Enter the Valid FlightId");
 												} else {
 													FlightDetails bean6 = new FlightDetails();
 													bean6.setFlightId(flightId3);
 													boolean remove = service.removeFlight(flightId3);
 													if (remove) {
-														System.out
-																.println("The Flight is removed of Id = " + flightId3);
+														log.info("The Flight is removed of Id = " + flightId3);
 													} else {
-														System.out.println(
+														log.info(
 																"The Flight is not removed of Id = " + flightId3);
 													}
 												}
 												break;
 											case 6:
 												List<FlightDetails> info = service.getFlightDetails();
-												System.out.println(
+												log.info(
 														"<--------------------------------------------------------------------->");
-												System.out.println(String.format(
+												log.info(String.format(
 														"%-10s %-10s %-13s %-15s %-20s %-20s %s", "FlightId",
 														"FlightName", "Source", "Destination", "ArrivalDateTime",
 														"DepartureDateTime", "NoofSeatAvailable"));
 												for (FlightDetails flightBean : info) {
 													if (flightBean != null) {
-														System.out.println(String.format(
+														log.info(String.format(
 																"%-10s %-10s %-13s %-15s %-20s %-20s %s",
 																flightBean.getFlightId(), flightBean.getFlightName(),
 																flightBean.getSource(), flightBean.getDestination(),
@@ -430,7 +438,7 @@ public class SubAirlineMain {
 																flightBean.getDepartureDateTime(),
 																flightBean.getNoofseatsavailable()));
 													} else {
-														System.out.println(
+														log.info(
 																"No Flight are available in the Flight Details");
 													}
 												}
@@ -439,20 +447,20 @@ public class SubAirlineMain {
 												airlineOperations();
 
 											default:
-												System.out.println(
+												log.info(
 														"Invalid Choice please provide 1 or 2 or 3 or 4 or 5 or 6  or 9");
 												break;
 											}
 										} catch (InputMismatchException e) {
-											System.err.println(
+											log.error(
 													"Invalid entry please provide 1 or 2 or 3 or 4 or 5 or 6  or 9");
 											scanner.nextLine();
 										} catch (Exception e) {
-											System.out.println("Invalid Credentials");
+											log.info("Invalid Credentials");
 										}
 									} while (true);
 								} catch (Exception e) {
-									System.out.println("Invalid Credentials");
+									log.info("Invalid Credentials");
 								}
 								break;
 							case 3:
@@ -460,11 +468,11 @@ public class SubAirlineMain {
 								break;
 
 							default:
-								System.out.println("Invalid Choice please provide 1 or 2 or 3");
+								log.info("Invalid Choice please provide 1 or 2 or 3");
 								break;
 							}
 						} catch (InputMismatchException e) {
-							System.err.println("Invalid entry please provide 1 or 2 or 3");
+							log.error("Invalid entry please provide 1 or 2 or 3");
 							scanner.nextLine();
 						}
 
@@ -475,9 +483,9 @@ public class SubAirlineMain {
 						try {
 							System.out
 									.println("<--------------------------------------------------------------------->");
-							System.out.println("[1] USER REGISTER");
-							System.out.println("[2] USER LOGIN");
-							System.out.println("[3] EXIT");
+							log.info("[1] USER REGISTER");
+							log.info("[2] USER LOGIN");
+							log.info("[3] EXIT");
 							System.out
 									.println("<--------------------------------------------------------------------->");
 							int choice = scanner.nextInt();
@@ -486,75 +494,75 @@ public class SubAirlineMain {
 
 								do {
 									try {
-										System.out.println("Enter ID to Register as USER : ");
+										log.info("Enter ID to Register as USER : ");
 										checkId = scanner.nextInt();
 										validation.validatedId(checkId);
 										flag = true;
 									} catch (InputMismatchException e) {
-										System.err.println("ID should consist of only digits");
+										log.error("ID should consist of only digits");
 										flag = false;
 										scanner.next();
 									} catch (ARSException e) {
 										flag = false;
-										System.err.println(e.getMessage());
+										log.error(e.getMessage());
 									}
 								} while (!flag);
 								do {
 									try {
-										System.out.println("Enter Name to Register : ");
+										log.info("Enter Name to Register : ");
 										checkName = scanner.next();
 										validation.validatedName(checkName);
 										flag = true;
 									} catch (InputMismatchException e) {
 										flag = false;
-										System.err.println("Name should consists of only Alphabates");
+										log.error("Name should consists of only Alphabates");
 									} catch (ARSException e) {
 										flag = false;
-										System.err.println(e.getMessage());
+										log.error(e.getMessage());
 									}
 								} while (!flag);
 								do {
 									try {
-										System.out.println("Enter MobileNumber to Register : ");
+										log.info("Enter MobileNumber to Register : ");
 										checkMobile = scanner.nextLong();
 										validation.validatedMobile(checkMobile);
 										flag = true;
 									} catch (InputMismatchException e) {
-										System.err.println("Mobile Number  should consists of only numbers");
+										log.error("Mobile Number  should consists of only numbers");
 										flag = false;
 										scanner.next();
 									} catch (ARSException e) {
 										flag = false;
-										System.err.println(e.getMessage());
+										log.error(e.getMessage());
 									}
 								} while (!flag);
 								do {
 									try {
-										System.out.println("Enter Email to Register : ");
+										log.info("Enter Email to Register : ");
 										checkEmail = scanner.next();
 										// validation.validatedEmail(checkEmail);
 										flag = true;
 									} catch (InputMismatchException e) {
 										flag = false;
-										System.err.println(
+										log.error(
 												"Enter proper email such that it should consist of numbers and alphabets");
 									} catch (ARSException e) {
 										flag = false;
-										System.err.println(e.getMessage());
+										log.error(e.getMessage());
 									}
 								} while (!flag);
 								do {
 									try {
-										System.out.println("Enter Password :");
+										log.info("Enter Password :");
 										checkPassword = scanner.next();
 										// validation.validatedPassword(checkPassword);
 										flag = true;
 									} catch (InputMismatchException e) {
 										flag = false;
-										System.err.println("Password doesnt accept spaces ");
+										log.error("Password doesnt accept spaces ");
 									} catch (ARSException e) {
 										flag = false;
-										System.err.println(e.getMessage());
+										log.error(e.getMessage());
 									}
 								} while (!flag);
 								UserInfo bean1 = new UserInfo();
@@ -566,53 +574,53 @@ public class SubAirlineMain {
 
 								boolean check = service1.registerUser(bean1);
 								if (check) {
-									System.out.println("Registered Successfully");
+									log.info("Registered Successfully");
 								} else {
-									System.out.println("Already registered");
+									log.info("Already registered");
 								}
 								break;
 
 							case 2:
-								System.out.println("Enter registered email to login : ");
+								log.info("Enter registered email to login : ");
 								String email = scanner.next();
-								System.out.println("Enter registered Password to login : ");
+								log.info("Enter registered Password to login : ");
 								String password = scanner.next();
 								try {
 								
 									UserInfo UserBean = service1.authenticateUser(email, password);
-									System.out.println("Logged in Successfully");
+									log.info("Logged in Successfully");
 									do {
 										try {
-											System.out.println(
+											log.info(
 													"<--------------------------------------------------------------------->");
-											System.out.println("[1]  SEARCH FLIGHT BY SOURCE");
-											System.out.println("[2]  SEARCH FLIGHT BY DESTINATION");
-											System.out.println("[3] SEARCH FLIGHT BY NAME");
-											System.out.println("[4]  VIEW ALL FLIGHTDETAILS");
-											System.out.println("[5] SEARCH FLIGHT BY SOURCE AND DESTINATION");
-											System.out.println("[6]  BOOK THE FLIGHT");
-											System.out.println("[7]  LOGOUT");
-											System.out.println(
+											log.info("[1]  SEARCH FLIGHT BY SOURCE");
+											log.info("[2]  SEARCH FLIGHT BY DESTINATION");
+											log.info("[3] SEARCH FLIGHT BY NAME");
+											log.info("[4]  VIEW ALL FLIGHTDETAILS");
+											log.info("[5] SEARCH FLIGHT BY SOURCE AND DESTINATION");
+											log.info("[6]  BOOK THE FLIGHT");
+											log.info("[7]  LOGOUT");
+											log.info(
 													"<--------------------------------------------------------------------->");
 											int choice2 = scanner.nextInt();
 											switch (choice2) {
 											case 1:
-												System.out.println("Search Flight Details by Source : ");
+												log.info("Search Flight Details by Source : ");
 												String source = scanner.next();
 
 												FlightDetails bean3 = new FlightDetails();
 												bean3.setSource(source);
 												List<FlightDetails> flightSource1 = service1
 														.searchFlightBySource(source);
-												System.out.println(
+												log.info(
 														"<--------------------------------------------------------------------->");
-												System.out.println(String.format(
+												log.info(String.format(
 														"%-10s %-10s %-13s %-15s %-20s %-20s %s", "FlightId",
 														"FlightName", "Source", "Destination", "ArrivalDateTime",
 														"DepartureDateTime", "NoofSeatAvailable"));
 												for (FlightDetails flightBean : flightSource1) {
 													if (flightBean != null) {
-														System.out.println(String.format(
+														log.info(String.format(
 																"%-10s %-10s %-13s %-15s %-20s %-20s %s",
 																flightBean.getFlightId(), flightBean.getFlightName(),
 																flightBean.getSource(), flightBean.getDestination(),
@@ -620,29 +628,29 @@ public class SubAirlineMain {
 																flightBean.getDepartureDateTime(),
 																flightBean.getNoofseatsavailable()));
 													} else {
-														System.out.println("No Flights are available with this Source");
+														log.info("No Flights are available with this Source");
 													}
 												}
 												break;
 
 											case 2:
 
-												System.out.println("Search flight by Destination : ");
+												log.info("Search flight by Destination : ");
 												String destination = scanner.next();
 
 												FlightDetails bean4 = new FlightDetails();
 												bean4.setDestination(destination);
 												List<FlightDetails> flightDestination1 = service1
 														.searchFlightByDestination(destination);
-												System.out.println(
+												log.info(
 														"<<--------------------------------------------------------------------->>");
-												System.out.println(String.format(
+												log.info(String.format(
 														"%-10s %-10s %-13s %-15s %-20s %-20s %s", "FlightId",
 														"FlightName", "Source", "Destination", "ArrivalDateTime",
 														"DepartureDateTime", "NoofSeatAvailable"));
 												for (FlightDetails flightBean : flightDestination1) {
 													if (flightBean != null) {
-														System.out.println(String.format(
+														log.info(String.format(
 																"%-10s %-10s %-13s %-15s %-20s %-20s %s",
 																flightBean.getFlightId(), flightBean.getFlightName(),
 																flightBean.getSource(), flightBean.getDestination(),
@@ -650,28 +658,28 @@ public class SubAirlineMain {
 																flightBean.getDepartureDateTime(),
 																flightBean.getNoofseatsavailable()));
 													} else {
-														System.out.println(
+														log.info(
 																"No Flights are available with this Destination");
 													}
 												}
 												break;
 											case 3:
-												System.out.println(" SEARCH FLIGHT BY NAME : ");
+												log.info(" SEARCH FLIGHT BY NAME : ");
 												String name = scanner.next();
 
 												FlightDetails bean5 = new FlightDetails();
 												bean5.setFlightName(name);
 												;
 												List<FlightDetails> fname = service1.searchFlightByName(name);
-												System.out.println(
+												log.info(
 														"<--------------------------------------------------------------------->");
-												System.out.println(String.format(
+												log.info(String.format(
 														"%-10s %-10s %-13s %-15s %-20s %-20s %s", "FlightId",
 														"FlightName", "Source", "Destination", "ArrivalDateTime",
 														"DepartureDateTime", "NoofSeatAvailable"));
 												for (FlightDetails flightBean : fname) {
 													if (flightBean != null) {
-														System.out.println(String.format(
+														log.info(String.format(
 																"%-10s %-10s %-13s %-15s %-20s %-20s %s",
 																flightBean.getFlightId(), flightBean.getFlightName(),
 																flightBean.getSource(), flightBean.getDestination(),
@@ -679,22 +687,22 @@ public class SubAirlineMain {
 																flightBean.getDepartureDateTime(),
 																flightBean.getNoofseatsavailable()));
 													} else {
-														System.out.println(
+														log.info(
 																"No Flights are available with this Flight Name");
 													}
 												}
 												break;
 											case 4:
 												List<FlightDetails> info = service1.getFlightDetails();
-												System.out.println(
+												log.info(
 														"<--------------------------------------------------------------------->");
-												System.out.println(String.format(
+												log.info(String.format(
 														"%-10s %-10s %-13s %-15s %-20s %-20s %s", "FlightId",
 														"FlightName", "Source", "Destination", "ArrivalDateTime",
 														"DepartureDateTime", "NoofSeatAvailable"));
 												for (FlightDetails flightBean : info) {
 													if (flightBean != null) {
-														System.out.println(String.format(
+														log.info(String.format(
 																"%-10s %-10s %-13s %-15s %-20s %-20s %s",
 																flightBean.getFlightId(), flightBean.getFlightName(),
 																flightBean.getSource(), flightBean.getDestination(),
@@ -702,30 +710,30 @@ public class SubAirlineMain {
 																flightBean.getDepartureDateTime(),
 																flightBean.getNoofseatsavailable()));
 													} else {
-														System.out.println(
+														log.info(
 																"No Flight are available in the Flight Details");
 													}
 												}
 												break;
 											case 5:
-												System.out.println("Search flight by Source : ");
+												log.info("Search flight by Source : ");
 												String source1 = scanner.next();
-												System.out.println("Search flight by Destination : ");
+												log.info("Search flight by Destination : ");
 												String destination1 = scanner.next();
 												FlightDetails bean6 = new FlightDetails();
 												bean6.setDestination(source1);
 												bean6.setDestination(destination1);
 												List<FlightDetails> flightSourceToDestination = service1
 														.searchFlightBySourceAndDestination(source1, destination1);
-												System.out.println(
+												log.info(
 														"<<--------------------------------------------------------------------->>");
-												System.out.println(String.format(
+												log.info(String.format(
 														"%-10s %-10s %-13s %-15s %-20s %-20s %s", "FlightId",
 														"FlightName", "Source", "Destination", "ArrivalDateTime",
 														"DepartureDateTime", "NoofSeatAvailable"));
 												for (FlightDetails flightBean : flightSourceToDestination) {
 													if (flightBean != null) {
-														System.out.println(String.format(
+														log.info(String.format(
 																"%-10s %-10s %-13s %-15s %-20s %-20s %s",
 																flightBean.getFlightId(), flightBean.getFlightName(),
 																flightBean.getSource(), flightBean.getDestination(),
@@ -733,30 +741,30 @@ public class SubAirlineMain {
 																flightBean.getDepartureDateTime(),
 																flightBean.getNoofseatsavailable()));
 													} else {
-														System.out.println(
+														log.info(
 																"No Flights are available with this Destination");
 													}
 												}
 												break;
 											case 6:
-												System.out.println("Search flight by Source : ");
+												log.info("Search flight by Source : ");
 												String source2 = scanner.next();
-												System.out.println("Search flight by Destination : ");
+												log.info("Search flight by Destination : ");
 												String destination2 = scanner.next();
 												FlightDetails bean7 = new FlightDetails();
 												bean7.setDestination(source2);
 												bean7.setDestination(destination2);
 												List<FlightDetails> flightSourceToDestination1 = service1
 														.searchFlightBySourceAndDestination(source2, destination2);
-												System.out.println(
+												log.info(
 														"<<--------------------------------------------------------------------->>");
-												System.out.println(String.format(
+												log.info(String.format(
 														"%-10s %-10s %-13s %-15s %-20s %-20s %s", "FlightId",
 														"FlightName", "Source", "Destination", "ArrivalDateTime",
 														"DepartureDateTime", "NoofSeatAvailable"));
 												for (FlightDetails flightBean : flightSourceToDestination1) {
 													if (flightBean != null) {
-														System.out.println(String.format(
+														log.info(String.format(
 																"%-10s %-10s %-13s %-15s %-20s %-20s %s",
 																flightBean.getFlightId(), flightBean.getFlightName(),
 																flightBean.getSource(), flightBean.getDestination(),
@@ -764,48 +772,48 @@ public class SubAirlineMain {
 																flightBean.getDepartureDateTime(),
 																flightBean.getNoofseatsavailable()));
 													} else {
-														System.out.println(
+														log.info(
 																"No Flights are available with this Destination");
 													}
 												}
 												do {
 												try {
-													System.out.println(
+													log.info(
 															"<--------------------------------------------------------------------->");
-													System.out.println("[1]  PROCEED TO BOOK");
-													System.out.println("[2]  LOGOUT");
+													log.info("[1]  PROCEED TO BOOK");
+													log.info("[2]  LOGOUT");
 
-													System.out.println(
+													log.info(
 															"<--------------------------------------------------------------------->");
 													int choice3 = scanner.nextInt();
 													switch (choice3) {
 													case 1:
 														try {
-														System.out.println("Enter User Id : ");
+														log.info("Enter User Id : ");
 														int userId2 = scanner.nextInt();
 														UserInfo userBean = new UserInfo();
 														userBean.setUserId(userId2);
-														System.out.println("Enter Flight Id : ");
+														log.info("Enter Flight Id : ");
 														int flightId2 = scanner.nextInt();						
 														FlightDetails flightDetails1 = new FlightDetails();
 														flightDetails1.setFlightId(flightId2);
-														System.out.println("Enter No of seats : ");
+														log.info("Enter No of seats : ");
 														int seats = scanner.nextInt();
 														BookingStatus bookingStatus = new BookingStatus();
 														bookingStatus.setNoofSeatsBooked(seats);
 														try {
 															BookingStatus request = service1.bookRequest(userBean,
 																	flightDetails1);
-															System.out.println("Request placed to Airline Management ");
-															System.out.println(
+															log.info("Request placed to Airline Management ");
+															log.info(
 																	"<--------------------------------------------------------------------->");
-															System.out.println(String.format(
+															log.info(String.format(
 																	"%-10s %-10s %-10s %-10s %-13s %-15s %-20s %-20s %s",
-																	"FlightId", "FlightName", "User ID", "UserName",
+																	"FlightId", "FlightName", "UserID", "UserName",
 																	"Source", "Destination", "ArrivalDateTime",
-																	"DepartureDateTime", "NoofSeatAvailable"));
+																	"DepartureDateTime", "NoofSeatBooked"));
 															;
-															System.out.println(String.format(
+															log.info(String.format(
 																	"%-10s %-10s %-10s %-10s %-13s %-15s %-20s %-20s %s",
 																	request.getFlightDetails().getFlightId(),
 																	request.getFlightDetails().getFlightName(),
@@ -817,27 +825,27 @@ public class SubAirlineMain {
 																	request.getFlightDetails().getDepartureDateTime(),
 																	bookingStatus.getNoofSeatsBooked()));
 														} catch (Exception e) {
-															System.out.println("Invalid Request of booking");
+															log.info("Invalid Request of booking");
 														}
 														}
 														catch (InputMismatchException e) {
-															System.err.println("Invalid entry  ");
+															log.error("Invalid entry  ");
 															scanner.nextLine();
 														} catch (Exception e) {
-															System.out.println("Invalid request");
+															log.info("Invalid request");
 														}
 														break;
 													case 2:
 														airlineOperations();
 													default:
-														System.err.println("Invalid entry please provide 1 or 2 ");
+														log.error("Invalid entry please provide 1 or 2 ");
 														break;
 													}
 												} catch (InputMismatchException e) {
-													System.err.println("Invalid entry please provide 1 or 2 ");
+													log.error("Invalid entry please provide 1 or 2 ");
 													scanner.nextLine();
 												} catch (Exception e) {
-													System.out.println("Invalid Credentials");
+													log.info("Invalid Credentials");
 												}
 												} while (true);
 
@@ -845,7 +853,7 @@ public class SubAirlineMain {
 												airlineOperations();
 
 											default:
-												System.err.println(
+												log.error(
 														"Invalid entry please provide 1 or 2 or 3 or 4 or 5 or 7");
 												break;
 											}
@@ -854,11 +862,11 @@ public class SubAirlineMain {
 													.println("Invalid entry please provide 1 or 2 or 3 or 4 or 5 or 7");
 											scanner.nextLine();
 										} catch (Exception e) {
-											System.err.println("Invalid Credentials");
+											log.error("Invalid Credentials");
 										}
 									} while (true);
 								} catch (Exception e) {
-									System.err.println("Invalid Credentials");
+									log.error("Invalid Credentials");
 								}
 								break;
 							case 3:
@@ -866,26 +874,26 @@ public class SubAirlineMain {
 								break;
 
 							default:
-								System.out.println("Invalid Choice");
-								System.err.println("Choice must be 1 or 2 or 3");
+								log.info("Invalid Choice");
+								log.error("Choice must be 1 or 2 or 3");
 								break;
 							}
 						} catch (InputMismatchException e) { // if we give string in 1 n 2 n 3
-							System.err.println("Invalid entry please provide 1 or 2 or 3");
+							log.error("Invalid entry please provide 1 or 2 or 3");
 							scanner.nextLine();
 						}
 					} while (true);
 
 				default:
-					System.out.println("Invalid Choice");
-					System.err.println("Choice must be 1 or 2 ");
+					log.info("Invalid Choice");
+					log.error("Choice must be 1 or 2 ");
 					break;
 				}
 			} catch (InputMismatchException e) { //// if we give string in 1 n 2
-				System.err.println("Invalid entry please provide 1 or 2");
+				log.error("Invalid entry please provide 1 or 2");
 				scanner.nextLine();
 			} catch (Exception e) {
-				System.err.println("Invalid Credentials");
+				log.error("Invalid Credentials");
 			}
 		} while (true);
 	}

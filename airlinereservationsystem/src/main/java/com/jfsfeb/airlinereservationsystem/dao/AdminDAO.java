@@ -1,4 +1,4 @@
-package com.jsfeb.airlinereservationsystem.dao;
+package com.jfsfeb.airlinereservationsystem.dao;
 
 
 import java.util.List;
@@ -25,6 +25,6 @@ public interface AdminDAO {
 
 	List<FlightDetails> getFlightDetails();
 
-	boolean bookingStatus(UserInfo user, FlightDetails flightDetails);
+	
 
 }

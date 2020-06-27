@@ -1,4 +1,4 @@
-package com.jsfeb.airlinereservationsystem.dao;
+package com.jfsfeb.airlinereservationsystem.dao;
 
 import java.util.ArrayList;
 import java.util.List;

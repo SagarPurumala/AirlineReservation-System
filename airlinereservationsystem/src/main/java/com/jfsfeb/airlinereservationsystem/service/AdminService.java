@@ -25,5 +25,5 @@ public interface AdminService {
 
 	List<FlightDetails> getFlightDetails();
 
-	boolean bookingStatus(UserInfo user, FlightDetails flightDetails);
+
 }

@@ -1,4 +1,4 @@
-package com.jsfeb.airlinereservationsystem.dao;
+package com.jfsfeb.airlinereservationsystem.dao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -127,10 +127,6 @@ public class AdminDAOImple implements AdminDAO{
 		return AirlineRepository.FLIGHT_DETAILS;
 	}
 	
-	@Override
-	public boolean bookingStatus(UserInfo user, FlightDetails flightDetails) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+	
 
 }
