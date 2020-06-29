@@ -68,7 +68,7 @@ public class AdminDAOImple implements AdminDAO{
 
 	@Override
 	public List<FlightDetails> searchFlightByName(String flightName) {
-		// TODO Auto-generated method stub
+	
 		ArrayList<FlightDetails> searchList = new ArrayList<FlightDetails>();
 		for (int i = 0; i <= AirlineRepository.FLIGHT_DETAILS.size() - 1; i++) {
 			FlightDetails retrievedFlight = AirlineRepository.FLIGHT_DETAILS.get(i);

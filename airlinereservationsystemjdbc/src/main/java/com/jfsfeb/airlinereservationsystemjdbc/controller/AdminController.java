@@ -1,20 +1,18 @@
-package com.jfsfeb.airlinereservationsystem.controller;
+package com.jfsfeb.airlinereservationsystemjdbc.controller;
 
 import java.time.LocalDateTime;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
-import com.jfsfeb.airlinereservationsystem.dto.AdminInfo;
-import com.jfsfeb.airlinereservationsystem.dto.BookingStatus;
-import com.jfsfeb.airlinereservationsystem.dto.FlightDetails;
-import com.jfsfeb.airlinereservationsystem.exception.ARSException;
-import com.jfsfeb.airlinereservationsystem.factory.AirlineFactory;
-import com.jfsfeb.airlinereservationsystem.service.AdminService;
-
+import com.jfsfeb.airlinereservationsystemjdbc.dto.BookingStatus;
+import com.jfsfeb.airlinereservationsystemjdbc.dto.FlightDetails;
+import com.jfsfeb.airlinereservationsystemjdbc.dto.User;
+import com.jfsfeb.airlinereservationsystemjdbc.execption.ARSException;
+import com.jfsfeb.airlinereservationsystemjdbc.factory.AirlineFactory;
+import com.jfsfeb.airlinereservationsystemjdbc.service.AdminService;
 
 import lombok.extern.log4j.Log4j;
-
 @Log4j
 public class AdminController {
 	public static void adminOperations() {
@@ -62,10 +60,10 @@ public class AdminController {
 					checkEmail = scanner.next();
 					log.info("Enter Password :");
 					checkPassword = scanner.next();
-					AdminInfo bean = new AdminInfo();
+					User bean = new User();
 					bean.setId(checkId);
 					bean.setName(checkName);
-					bean.setMobileNo(checkMobile);
+					bean.setMobileNumber(checkMobile);
 					bean.setEmailId(checkEmail);
 					bean.setPassword(checkPassword);
 
@@ -93,7 +91,7 @@ public class AdminController {
 					password = scanner.next();
 
 					try {
-						AdminInfo authBean = service.authenticateAdmin(email, password);
+						User authBean = service.authenticateAdmin(email, password);
 						if (authBean != null) {
 							log.info("You have logged in successfully");
 							log.info("Now you can perform the following operations:-");
@@ -375,13 +373,13 @@ public class AdminController {
 														"%-10s %-10s %-10s %-10s %-13s %-15s %-20s %-20s %s",
 														request.getFlightDetails().getFlightId(),
 														request.getFlightDetails().getFlightName(),
-														request.getUserInfo().getUserId(),
-														request.getUserInfo().getUserName(),
+														request.getUser().getId(),
+														request.getUser().getName(),
 														request.getFlightDetails().getSource(),
 														request.getFlightDetails().getDestination(),
 														request.getFlightDetails().getArrivalDateTime(),
 														request.getFlightDetails().getDepartureDateTime(),
-														request.getNoofSeatsBooked()));
+														request.getNoofseatsbooked()));
 											} else {
 												log.info("Request not found in booking status");
 											}
@@ -413,7 +411,7 @@ public class AdminController {
 					}
 					break;
 				case 3:
-					SubAirlineMain.airlineOperations();
+					SubAirlineController.airlineOperations();
 					break;
 
 				default:
@@ -427,4 +425,5 @@ public class AdminController {
 
 		} while (true);
 	}
+
 }

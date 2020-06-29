@@ -12,6 +12,6 @@ public class UserInfo implements Serializable {
 	private String emailId;
 	@ToString.Exclude
 	private String password;
-	private String mobileNumber;
+	private long mobileNumber;
 
 }

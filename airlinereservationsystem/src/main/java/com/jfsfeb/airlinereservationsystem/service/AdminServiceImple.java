@@ -31,10 +31,19 @@ public class AdminServiceImple implements AdminService {
 
 	@Override
 	public boolean registerAdmin(AdminInfo admin) {
-		if (admin != null) {
-			return dao.registerAdmin(admin);
+		if(validation.validatedId(admin.getId())) {
+			if(validation.validatedName(admin.getName())) {
+				if(validation.validatedMobile(admin.getMobileNo())) {
+					if(validation.validatedEmail(admin.getEmailId())) {
+						if(validation.validatedPassword(admin.getPassword())) {
+							return dao.registerAdmin(admin);
+						}
+					}
+					
+				}
+			}
 		}
-		throw new ARSException("Enter correct details");
+		throw new ARSException("invalid inputs");
 	}
 
 	@Override
@@ -97,6 +106,31 @@ public class AdminServiceImple implements AdminService {
 		  return true;
 		}
 		throw new ARSException("Invalid Id! Id should contain exactly 4 positive digits");
+	}
+
+	@Override
+	public boolean validateSource(String source) {
+      if(validation.validatedSource(source)) {
+    	  return true;
+      }
+      
+      throw new ARSException("Invalid Source! Source should have atleast 4 characters");
+	}
+
+	@Override
+	public boolean validateDestination(String destination) {
+		if(validation.validatedDestination(destination)) {
+			return true;
+		}
+		throw new ARSException("Invalid Destination! Destination should have atleast 4 characters");
+	}
+
+	@Override
+	public boolean validateFlightName(String flightname) {
+	    if(validation.validatedName(flightname)) {
+	    	return true;
+	    }
+	    throw new ARSException("Invalid Name! Name should have atleast 4 characters");
 	}
 
 }

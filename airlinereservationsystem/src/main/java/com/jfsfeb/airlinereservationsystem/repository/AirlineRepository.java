@@ -32,7 +32,7 @@ public class AirlineRepository {
 		user.setUserName("sagar");
 		user.setEmailId("sagar1@gmail.com");
 		user.setPassword("Sagar1@");
-		user.setMobileNumber("9642726909");
+		user.setMobileNumber(9642726909l);
 		USER_INFOS.add(user);
 
 		FlightDetails flight = new FlightDetails();

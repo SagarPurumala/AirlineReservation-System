@@ -1,16 +1,14 @@
-package com.jfsfeb.airlinereservationsystem.controller;
-
-
+package com.jfsfeb.airlinereservationsystemjdbc.controller;
 
 import java.util.InputMismatchException;
-
 import java.util.Scanner;
 
-
 import lombok.extern.log4j.Log4j;
+
 @Log4j
-public class SubAirlineMain {
-	public static void airlineOperations() {
+public class SubAirlineController {
+
+public static void airlineOperations() {
 
 		
 		@SuppressWarnings("resource")

@@ -1,22 +1,21 @@
-package com.jfsfeb.airlinereservationsystem.controller;
+package com.jfsfeb.airlinereservationsystemjdbc.controller;
 
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
-import com.jfsfeb.airlinereservationsystem.dto.BookingStatus;
-import com.jfsfeb.airlinereservationsystem.dto.FlightDetails;
-import com.jfsfeb.airlinereservationsystem.dto.UserInfo;
-import com.jfsfeb.airlinereservationsystem.exception.ARSException;
-import com.jfsfeb.airlinereservationsystem.factory.AirlineFactory;
-import com.jfsfeb.airlinereservationsystem.service.UserService;
-
+import com.jfsfeb.airlinereservationsystemjdbc.dto.BookingStatus;
+import com.jfsfeb.airlinereservationsystemjdbc.dto.FlightDetails;
+import com.jfsfeb.airlinereservationsystemjdbc.dto.User;
+import com.jfsfeb.airlinereservationsystemjdbc.execption.ARSException;
+import com.jfsfeb.airlinereservationsystemjdbc.factory.AirlineFactory;
+import com.jfsfeb.airlinereservationsystemjdbc.service.UserService;
 
 import lombok.extern.log4j.Log4j;
 
 @Log4j
 public class UserController {
-	public static void userOperations() {
+public static void userOperations() {
 		
 		int checkId = 0;
 		String checkName = null;
@@ -53,9 +52,9 @@ public class UserController {
 					log.info("Enter Password :");
 					checkPassword = scanner.next();
 
-					UserInfo bean1 = new UserInfo();
-					bean1.setUserId(checkId);
-					bean1.setUserName(checkName);
+					User bean1 = new User();
+					bean1.setId(checkId);
+					bean1.setName(checkName);
 					bean1.setMobileNumber(checkMobile);
 					bean1.setEmailId(checkEmail);
 					bean1.setPassword(checkPassword);
@@ -84,7 +83,7 @@ public class UserController {
 					String password = scanner.next();
 					try {
 
-						UserInfo user = service1.authenticateUser(email, password);
+						User user = service1.authenticateUser(email, password);
 						if (user != null) {
 							log.info("Logged in Successfully");
 							do {
@@ -269,8 +268,8 @@ public class UserController {
 													try {
 														log.info("Enter User Id : ");
 														int userId2 = scanner.nextInt();
-														UserInfo userBean = new UserInfo();
-														userBean.setUserId(userId2);
+														User userBean = new User();
+														userBean.setId(userId2);
 														log.info("Enter Flight Id : ");
 														int flightId2 = scanner.nextInt();
 														FlightDetails flightDetails1 = new FlightDetails();
@@ -278,7 +277,7 @@ public class UserController {
 														log.info("Enter No of seats : ");
 														int seats = scanner.nextInt();
 														BookingStatus bookingStatus = new BookingStatus();
-														bookingStatus.setNoofSeatsBooked(seats);
+														bookingStatus.setNoofseatsbooked(seats);
 														try {
 															BookingStatus request = service1.bookRequest(userBean,
 																	flightDetails1);
@@ -295,13 +294,13 @@ public class UserController {
 																	"%-10s %-10s %-10s %-10s %-13s %-15s %-20s %-20s %s",
 																	request.getFlightDetails().getFlightId(),
 																	request.getFlightDetails().getFlightName(),
-																	request.getUserInfo().getUserId(),
-																	request.getUserInfo().getUserName(),
+																	request.getUser().getId(),
+																	request.getUser().getName(),
 																	request.getFlightDetails().getSource(),
 																	request.getFlightDetails().getDestination(),
 																	request.getFlightDetails().getArrivalDateTime(),
 																	request.getFlightDetails().getDepartureDateTime(),
-																	bookingStatus.getNoofSeatsBooked()));
+																	bookingStatus.getNoofseatsbooked()));
 														} catch (Exception e) {
 															log.info("Invalid Request of booking");
 														}
@@ -313,7 +312,7 @@ public class UserController {
 													}
 													break;
 												case 2:
-													SubAirlineMain.airlineOperations();
+													SubAirlineController.airlineOperations();
 												default:
 													log.error("Invalid entry please provide 1 or 2 ");
 													break;
@@ -347,7 +346,7 @@ public class UserController {
 					}
 					break;
 				case 3:
-					SubAirlineMain.airlineOperations();
+					SubAirlineController.airlineOperations();
 					break;
 
 				default:
@@ -362,4 +361,5 @@ public class UserController {
 		} while (true);
 	}// close of userOperations method
 
-}// close of UserController class
+
+}

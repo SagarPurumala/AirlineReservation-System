@@ -1,18 +1,15 @@
-package com.jfsfeb.airlinereservationsystem.service;
-
+package com.jfsfeb.airlinereservationsystemjdbc.service;
 
 import java.util.List;
 
-import com.jfsfeb.airlinereservationsystem.dto.AdminInfo;
-import com.jfsfeb.airlinereservationsystem.dto.BookingStatus;
-import com.jfsfeb.airlinereservationsystem.dto.FlightDetails;
-
+import com.jfsfeb.airlinereservationsystemjdbc.dto.BookingStatus;
+import com.jfsfeb.airlinereservationsystemjdbc.dto.FlightDetails;
+import com.jfsfeb.airlinereservationsystemjdbc.dto.User;
 
 public interface AdminService {
-	
-	boolean registerAdmin(AdminInfo admin);
+	boolean registerAdmin(User admin);
 
-	AdminInfo authenticateAdmin(String email, String password);
+	User authenticateAdmin(String email, String password);
 
 	boolean addFlights(FlightDetails flightDetails);
 
@@ -35,5 +32,5 @@ public interface AdminService {
 	boolean validateDestination(String destination);
 	
 	boolean validateFlightName(String flightname);
-	
+
 }

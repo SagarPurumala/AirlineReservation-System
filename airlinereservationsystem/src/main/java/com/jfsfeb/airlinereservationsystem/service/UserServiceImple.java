@@ -7,6 +7,7 @@ import com.jfsfeb.airlinereservationsystem.dao.UserDAO;
 import com.jfsfeb.airlinereservationsystem.dto.BookingStatus;
 import com.jfsfeb.airlinereservationsystem.dto.FlightDetails;
 import com.jfsfeb.airlinereservationsystem.dto.UserInfo;
+import com.jfsfeb.airlinereservationsystem.exception.ARSException;
 import com.jfsfeb.airlinereservationsystem.factory.AirlineFactory;
 import com.jfsfeb.airlinereservationsystem.validation.Validation;
 
@@ -27,10 +28,21 @@ public class UserServiceImple implements UserService {
 
 	@Override
 	public boolean registerUser(UserInfo user) {
-		if (user != null) {
-			return dao.registerUser(user);
+		
+		if(validation.validatedId(user.getUserId())) {
+			if(validation.validatedName(user.getUserName())) {
+				if(validation.validatedMobile(user.getMobileNumber())) {
+					if(validation.validatedEmail(user.getEmailId())) {
+						if(validation.validatedPassword(user.getPassword())) {
+							return dao.registerUser(user);
+						}
+					}
+					
+				}
+			}
 		}
-		return false;
+		throw new ARSException("invalid inputs");
+		
 	}
 
 	@Override
