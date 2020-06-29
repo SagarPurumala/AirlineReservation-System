@@ -74,6 +74,12 @@ public class AirlineRepository {
 		flight3.setArrivalDateTime(LocalDateTime.of(2020, Month.SEPTEMBER, 15, 10, 10));
 		flight3.setDepartureDateTime(LocalDateTime.of(2020, Month.SEPTEMBER, 15, 12, 10));
 		FLIGHT_DETAILS.add(flight3);
+		
+		BookingStatus status=new BookingStatus();
+		status.setFlightDetails(flight1);
+		status.setUserInfo(user);
+		status.setNoofSeatsBooked(2);
+		STATUS.add(status);
 
 	}
 }

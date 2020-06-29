@@ -3,16 +3,16 @@ package com.jfsfeb.airlinereservationsystem.service;
 import java.util.List;
 
 import com.jfsfeb.airlinereservationsystem.dao.UserDAO;
-import com.jfsfeb.airlinereservationsystem.dao.UserDAOImple;
+
 import com.jfsfeb.airlinereservationsystem.dto.BookingStatus;
 import com.jfsfeb.airlinereservationsystem.dto.FlightDetails;
 import com.jfsfeb.airlinereservationsystem.dto.UserInfo;
-import com.jfsfeb.airlinereservationsystem.exception.ARSException;
+import com.jfsfeb.airlinereservationsystem.factory.AirlineFactory;
 import com.jfsfeb.airlinereservationsystem.validation.Validation;
 
 public class UserServiceImple implements UserService {
 
-	private UserDAO dao = new UserDAOImple();
+	private UserDAO dao = AirlineFactory.getUserDAOImplInstance();
 	private Validation validation = new Validation();
 
 	@Override

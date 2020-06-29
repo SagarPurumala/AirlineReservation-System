@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.jfsfeb.airlinereservationsystem.dto.AdminInfo;
+import com.jfsfeb.airlinereservationsystem.dto.BookingStatus;
 import com.jfsfeb.airlinereservationsystem.dto.FlightDetails;
-import com.jfsfeb.airlinereservationsystem.dto.UserInfo;
+
 import com.jfsfeb.airlinereservationsystem.exception.ARSException;
 import com.jfsfeb.airlinereservationsystem.repository.AirlineRepository;
 
@@ -31,7 +32,7 @@ public class AdminDAOImple implements AdminDAO{
 				return a2;
 			}
 		}
-		throw new ARSException("Invalid Credentials");
+		throw new ARSException("Invalid Credentials please provide correct");
 		
 	}
 
@@ -125,6 +126,12 @@ public class AdminDAOImple implements AdminDAO{
 	public List<FlightDetails> getFlightDetails() {
 		// TODO Auto-generated method stub
 		return AirlineRepository.FLIGHT_DETAILS;
+	}
+
+	@Override
+	public List<BookingStatus> getBookingStatus() {
+		// TODO Auto-generated method stub
+		return AirlineRepository.STATUS;
 	}
 	
 	

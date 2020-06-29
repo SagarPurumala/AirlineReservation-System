@@ -13,7 +13,22 @@
 <fullyQualifiedTypeName name="com.capgemini.airlinereservationsystem.dto.BookingStatus"/>
 <fullyQualifiedTypeName name="lombok.Data"/>
 <fullyQualifiedTypeName name="java.util.List"/>
-<fullyQualifiedTypeName name="lombok.extern.log4j.Log4j"/>
 <fullyQualifiedTypeName name="com.jfsfeb.airlinereservationsystem.validation.Validation"/>
+<fullyQualifiedTypeName name="lombok.val"/>
+<fullyQualifiedTypeName name="java.lang.Exception"/>
+<fullyQualifiedTypeName name="lombok.extern.log4j.Log4j"/>
+<fullyQualifiedTypeName name="com.jfsfeb.airlinereservationsystem.controller.SubAirlineMain"/>
+<fullyQualifiedTypeName name="com.jfsfeb.airlinereservationsystem.controller.AdminController"/>
+<fullyQualifiedTypeName name="com.jfsfeb.airlinereservationsystem.controller.UserController"/>
 <fullyQualifiedTypeName name="com.jfsfeb.airlinereservationsystem.exception.ARSException"/>
+<fullyQualifiedTypeName name="com.jfsfeb.airlinereservationsystem.dao.AdminDAO"/>
+<fullyQualifiedTypeName name="com.jfsfeb.airlinereservationsystem.dao.AdminDAOImple"/>
+<fullyQualifiedTypeName name="com.jfsfeb.airlinereservationsystem.dao.UserDAO"/>
+<fullyQualifiedTypeName name="com.jfsfeb.airlinereservationsystem.dao.UserDAOImple"/>
+<fullyQualifiedTypeName name="com.jfsfeb.airlinereservationsystem.service.AdminService"/>
+<fullyQualifiedTypeName name="com.jfsfeb.airlinereservationsystem.service.AdminServiceImple"/>
+<fullyQualifiedTypeName name="com.jfsfeb.airlinereservationsystem.service.UserService"/>
+<fullyQualifiedTypeName name="com.jfsfeb.airlinereservationsystem.service.UserServiceImple"/>
+<fullyQualifiedTypeName name="com.jfsfeb.airlinereservationsystem.factory.AirlineFactory"/>
+<fullyQualifiedTypeName name="com.jfsfeb.airlinereservationsystem.dto.AdminInfo"/>
 </qualifiedTypeNameHistroy>

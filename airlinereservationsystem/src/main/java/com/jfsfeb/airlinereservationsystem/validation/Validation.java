@@ -65,6 +65,7 @@ public class Validation {
 		} else {
 			throw new ARSException(
 					"Password should contain atleast 6 characters ,atleast one uppercase,atleast one lowercase,atleast one number,atleast one special symbol(@#$%) ");
+		  
 		}
 		return result;
 	}
@@ -92,6 +93,5 @@ public class Validation {
 		}
 		return result;
 	}
-	
 
 }

@@ -4,8 +4,9 @@ package com.jfsfeb.airlinereservationsystem.service;
 import java.util.List;
 
 import com.jfsfeb.airlinereservationsystem.dto.AdminInfo;
+import com.jfsfeb.airlinereservationsystem.dto.BookingStatus;
 import com.jfsfeb.airlinereservationsystem.dto.FlightDetails;
-import com.jfsfeb.airlinereservationsystem.dto.UserInfo;
+
 
 public interface AdminService {
 	
@@ -25,5 +26,7 @@ public interface AdminService {
 
 	List<FlightDetails> getFlightDetails();
 
-
+	List<BookingStatus> getBookingStatus();
+	
+	boolean validateFlightID(int flightid);
 }
