@@ -1,7 +1,10 @@
 package com.jfsfeb.airlinereservationsystemjdbc.dto;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+
+import java.time.LocalDate;
+
+import java.time.LocalTime;
 
 import lombok.Data;
 @SuppressWarnings("serial")
@@ -12,7 +15,9 @@ public class FlightDetails implements Serializable{
 	private String source;
 	private String destination;
 	private int noofseatsavailable;
-	private LocalDateTime arrivalDateTime;
-	private LocalDateTime departureDateTime;
-
+	private LocalDate arrivalDate;
+	private LocalTime arrivalTime;
+	private LocalDate departureDate;
+	private LocalTime departureTime;
+	
 }

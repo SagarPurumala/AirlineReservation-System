@@ -6,7 +6,9 @@ import lombok.Data;
 
 @SuppressWarnings("serial")
 @Data
+
 public class BookingStatus implements Serializable{
+	
 	private int id;
 	private int flightId;
 	private int noofseatsbooked;

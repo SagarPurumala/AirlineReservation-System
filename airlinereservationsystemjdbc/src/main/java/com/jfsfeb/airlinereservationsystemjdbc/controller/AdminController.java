@@ -1,6 +1,8 @@
 package com.jfsfeb.airlinereservationsystemjdbc.controller;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+
+import java.time.LocalTime;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -25,16 +27,17 @@ public class AdminController {
 		String password = null;
 		String checkEmail = null;
 		String checkPassword = null;
+		String role=null;
 		int flightId = 0;
 		String flightName = null;
 		String flightSource = null;
 		String flightDestination = null;
 		int noofSeatsAvailable = 0;
-		LocalDateTime arrivalDateTime = null;
-		LocalDateTime departureDateTime = null;
-
-	
-
+		LocalDate arrivalDate = null;
+		LocalDate departureDate = null;
+		LocalTime departureTime=null;
+		LocalTime arrivalTime=null;
+		
 		@SuppressWarnings("resource")
 		Scanner scanner = new Scanner(System.in);
 		AdminService service = AirlineFactory.getAdminServiceImplInstance();
@@ -60,12 +63,15 @@ public class AdminController {
 					checkEmail = scanner.next();
 					log.info("Enter Password :");
 					checkPassword = scanner.next();
+					log.info("Enter Role :");
+					role = scanner.next();
 					User bean = new User();
 					bean.setId(checkId);
 					bean.setName(checkName);
 					bean.setMobileNumber(checkMobile);
 					bean.setEmailId(checkEmail);
 					bean.setPassword(checkPassword);
+					bean.setRole(role);
 
 					boolean check = service.registerAdmin(bean);
 					if (check) {
@@ -189,12 +195,29 @@ public class AdminController {
 											}
 										} while (!flag);
 										do {
-											log.info("Enter  Flight Arrival Date Time : ");
+											log.info("Enter  Flight Arrival Date  : ");
 
 											try {
-												arrivalDateTime = LocalDateTime.of(scanner.nextInt(), scanner.nextInt(),
-														scanner.nextInt(), scanner.nextInt(), scanner.nextInt());
+												arrivalDate = LocalDate.of(scanner.nextInt(), scanner.nextInt(),
+														scanner.nextInt());
+                                                
+												flag = true;
+											} catch (InputMismatchException e) {
+												flag = false;
+												log.error("its should be in the form of yyyy,mm,dd only in digits");
+												scanner.next();
+											} catch (ARSException e) {
+												flag = false;
+												log.error(e.getMessage());
+											}
+										} while (!flag);
+										do {
+											log.info("Enter  Flight Arrival Time : ");
 
+											try {
+												arrivalTime = LocalTime.of(scanner.nextInt(), scanner.nextInt(),
+														scanner.nextInt());
+                                                
 												flag = true;
 											} catch (InputMismatchException e) {
 												flag = false;
@@ -206,12 +229,27 @@ public class AdminController {
 											}
 										} while (!flag);
 										do {
-											log.info("Enter  Flight departure Date Time : ");
+											log.info("Enter  Flight departure Date  : ");
 
 											try {
-												departureDateTime = LocalDateTime.of(scanner.nextInt(),
-														scanner.nextInt(), scanner.nextInt(), scanner.nextInt(),
-														scanner.nextInt());
+												departureDate = LocalDate.of(scanner.nextInt(),
+														scanner.nextInt(), scanner.nextInt());
+												flag = true;
+											} catch (InputMismatchException e) {
+												flag = false;
+												log.error("its should contains only digits ");
+												scanner.next();
+											} catch (ARSException e) {
+												flag = false;
+												log.error(e.getMessage());
+											}
+										} while (!flag);
+										do {
+											log.info("Enter  Flight departure Time : ");
+
+											try {
+												departureTime = LocalTime.of(scanner.nextInt(),
+														scanner.nextInt(), scanner.nextInt());
 												flag = true;
 											} catch (InputMismatchException e) {
 												flag = false;
@@ -228,8 +266,11 @@ public class AdminController {
 										bean1.setSource(flightSource);
 										bean1.setDestination(flightDestination);
 										bean1.setNoofseatsavailable(noofSeatsAvailable);
-										bean1.setArrivalDateTime(arrivalDateTime);
-										bean1.setDepartureDateTime(departureDateTime);
+										bean1.setArrivalDate(arrivalDate);
+										bean1.setArrivalTime(arrivalTime);
+										bean1.setDepartureDate(departureDate);
+										bean1.setDepartureTime(departureTime);
+										
 										boolean check2 = service.addFlights(bean1);
 										if (check2) {
 											log.info("Flight added of id = " + flightId);
@@ -246,16 +287,18 @@ public class AdminController {
 										List<FlightDetails> flightSource1 = service.searchFlightBySource(source);
 										log.info(
 												"<--------------------------------------------------------------------->");
-										log.info(String.format("%-10s %-10s %-13s %-15s %-20s %-20s %s", "FlightId",
-												"Flight Name", "Source", "Destination", "Arrival Date Time",
-												"Departure Date Time", "NoofSeatAvailable"));
+										log.info(String.format("%-10s %-10s %-10s %-10s %-13s %-15s %-20s %-20s %s", "FlightId",
+												"Flight Name", "Source", "Destination", "Arrival Date","Arrival Time",
+												"DepartureDate","Departure Time", "NoofSeatAvailable"));
 										for (FlightDetails flightBean : flightSource1) {
 											if (flightBean != null) {
-												log.info(String.format("%-10s %-10s %-13s %-15s %-20s %-20s %s",
+												log.info(String.format("%-10s %-10s %-10s %-10s %-13s %-15s %-20s %-20s %s",
 														flightBean.getFlightId(), flightBean.getFlightName(),
 														flightBean.getSource(), flightBean.getDestination(),
-														flightBean.getArrivalDateTime(),
-														flightBean.getDepartureDateTime(),
+														java.sql.Date.valueOf(flightBean.getArrivalDate()),
+														java.sql.Time.valueOf(flightBean.getArrivalTime()),
+														java.sql.Date.valueOf(flightBean.getDepartureDate()),
+														java.sql.Time.valueOf(flightBean.getDepartureTime()),
 														flightBean.getNoofseatsavailable()));
 											} else {
 												log.info("No Flights are available with this Source");
@@ -272,16 +315,18 @@ public class AdminController {
 												.searchFlightByDestination(destination);
 										log.info(
 												"<<--------------------------------------------------------------------->>");
-										log.info(String.format("%-10s %-10s %-13s %-15s %-20s %-20s %s", "Flight Id",
-												"Flight Name", "Source", "Destination", "Arrival Date Time",
-												"Departure Date Time", "NoofSeatAvailable"));
+										log.info(String.format("%-10s %-10s %-10s %-10s %-13s %-15s %-20s %-20s %s", "FlightId",
+												"Flight Name", "Source", "Destination", "Arrival Date","Arrival Time",
+												"DepartureDate","Departure Time", "NoofSeatAvailable"));
 										for (FlightDetails flightBean : flightDestination1) {
 											if (flightBean != null) {
-												log.info(String.format("%-10s %-10s %-13s %-15s %-20s %-20s %s",
+												log.info(String.format("%-10s %-10s %-10s %-10s %-13s %-15s %-20s %-20s %s",
 														flightBean.getFlightId(), flightBean.getFlightName(),
 														flightBean.getSource(), flightBean.getDestination(),
-														flightBean.getArrivalDateTime(),
-														flightBean.getDepartureDateTime(),
+														java.sql.Date.valueOf(flightBean.getArrivalDate()),
+														java.sql.Time.valueOf(flightBean.getArrivalTime()),
+														java.sql.Date.valueOf(flightBean.getDepartureDate()),
+														java.sql.Time.valueOf(flightBean.getDepartureTime()),
 														flightBean.getNoofseatsavailable()));
 											} else {
 												log.info("No Flights are available with this Destination");
@@ -294,20 +339,22 @@ public class AdminController {
 
 										FlightDetails bean5 = new FlightDetails();
 										bean5.setFlightName(name);
-										;
+										
 										List<FlightDetails> fname = service.searchFlightByName(name);
 										log.info(
 												"<--------------------------------------------------------------------->");
-										log.info(String.format("%-10s %-10s %-13s %-15s %-20s %-20s %s", "FlightId",
-												"FlightName", "Source", "Destination", "ArrivalDateTime",
-												"DepartureDateTime", "NoofSeatAvailable"));
+										log.info(String.format("%-10s %-10s %-10s %-10s %-13s %-15s %-20s %-20s %s", "FlightId",
+												"Flight Name", "Source", "Destination", "Arrival Date","Arrival Time",
+												"DepartureDate","Departure Time", "NoofSeatAvailable"));
 										for (FlightDetails flightBean : fname) {
 											if (flightBean != null) {
-												log.info(String.format("%-10s %-10s %-13s %-15s %-20s %-20s %s",
+												log.info(String.format("%-10s %-10s %-10s %-10s %-13s %-15s %-20s %-20s %s",
 														flightBean.getFlightId(), flightBean.getFlightName(),
 														flightBean.getSource(), flightBean.getDestination(),
-														flightBean.getArrivalDateTime(),
-														flightBean.getDepartureDateTime(),
+														java.sql.Date.valueOf(flightBean.getArrivalDate()),
+														java.sql.Time.valueOf(flightBean.getArrivalTime()),
+														java.sql.Date.valueOf(flightBean.getDepartureDate()),
+														java.sql.Time.valueOf(flightBean.getDepartureTime()),
 														flightBean.getNoofseatsavailable()));
 											} else {
 												log.info("No Flights are available with this Flight Name");
@@ -343,16 +390,18 @@ public class AdminController {
 										List<FlightDetails> info = service.getFlightDetails();
 										log.info(
 												"<--------------------------------------------------------------------->");
-										log.info(String.format("%-10s %-10s %-13s %-15s %-20s %-20s %s", "FlightId",
-												"FlightName", "Source", "Destination", "ArrivalDateTime",
-												"DepartureDateTime", "NoofSeatAvailable"));
+										log.info(String.format("%-10s %-10s %-10s %-10s %-13s %-15s %-20s %-20s %s","FlightId",
+												"Flight Name", "Source", "Destination", "Arrival Date","Arrival Time",
+												"Departure Date","Departure Time", "NoofSeatAvailable"));
 										for (FlightDetails flightBean : info) {
 											if (flightBean != null) {
-												log.info(String.format("%-10s %-10s %-13s %-15s %-20s %-20s %s",
+												log.info(String.format("%-10s %-10s %-10s %-10s %-13s %-15s %-20s %-20s %s",
 														flightBean.getFlightId(), flightBean.getFlightName(),
 														flightBean.getSource(), flightBean.getDestination(),
-														flightBean.getArrivalDateTime(),
-														flightBean.getDepartureDateTime(),
+														java.sql.Date.valueOf(flightBean.getArrivalDate()),
+														java.sql.Time.valueOf(flightBean.getArrivalTime()),
+														java.sql.Date.valueOf(flightBean.getDepartureDate()),
+														java.sql.Time.valueOf(flightBean.getDepartureTime()),
 														flightBean.getNoofseatsavailable()));
 											} else {
 												log.info("No Flight are available in the Flight Details");
@@ -377,8 +426,8 @@ public class AdminController {
 														request.getUser().getName(),
 														request.getFlightDetails().getSource(),
 														request.getFlightDetails().getDestination(),
-														request.getFlightDetails().getArrivalDateTime(),
-														request.getFlightDetails().getDepartureDateTime(),
+														//request.getFlightDetails().getArrivalDateTime(),
+														//request.getFlightDetails().getDepartureDateTime(),
 														request.getNoofseatsbooked()));
 											} else {
 												log.info("Request not found in booking status");
@@ -404,7 +453,7 @@ public class AdminController {
 							} while (true);
 
 						} else {
-							log.info("emailid Anf ");
+							log.info("emailid and password should not be null ");
 						}
 					} catch (ARSException e) {
 						log.info(e.getMessage());

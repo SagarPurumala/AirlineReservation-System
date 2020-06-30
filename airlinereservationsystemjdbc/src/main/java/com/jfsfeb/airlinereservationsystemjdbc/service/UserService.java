@@ -20,7 +20,7 @@ public interface UserService {
 
 	List<FlightDetails> getFlightDetails();
 
-	BookingStatus bookRequest(User user,FlightDetails flight);
+	BookingStatus bookRequest(BookingStatus bookingStatus);
 	
 	List<FlightDetails> searchFlightBySourceAndDestination(String source,String destination);
 

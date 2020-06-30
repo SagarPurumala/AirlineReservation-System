@@ -20,7 +20,7 @@ public interface UserDAO {
 
 	List<FlightDetails> getFlightDetails();
 	
-	BookingStatus bookRequest(User user,FlightDetails Flight);
+	BookingStatus bookRequest(BookingStatus bookingStatus);
 	
 	List<FlightDetails> searchFlightBySourceAndDestination(String source,String destination);
 }
