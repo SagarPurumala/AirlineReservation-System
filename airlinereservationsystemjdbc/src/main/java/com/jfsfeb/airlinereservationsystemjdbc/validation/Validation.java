@@ -95,6 +95,16 @@ public class Validation {
 			return result;
 		}
 
+		public boolean validatedRole(String role) throws ARSException {
+			String roleRegEx = "^(?i)(admin|user)$" ;
+			boolean result = false;
+			if(Pattern.matches(roleRegEx, String.valueOf(role))) {
+				result = true;
+			} else {
+				throw new ARSException("Enter admin or user as role ");
+			}
+			return result;
+		}
 		public boolean validatedAdminRole(String role) throws ARSException {
 			String roleRegEx = "^(?i)(admin)$" ;
 			boolean result = false;
@@ -112,6 +122,18 @@ public class Validation {
 				result = true;
 			} else {
 				throw new ARSException("Enter user as role ");
+			}
+			return result;
+		}
+		public boolean validatedPasswordLogin(String password) throws ARSException {
+			String passwordRegEx = "((?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%]).{6,20})";
+			boolean result = false;
+			if (Pattern.matches(passwordRegEx, String.valueOf(password))) {
+				result = true;
+			} else {
+				throw new ARSException(
+						"Password should contain atleast 6 characters ,atleast one uppercase,atleast one lowercase,atleast one number,atleast one special symbol(@#$%) ");
+			  
 			}
 			return result;
 		}

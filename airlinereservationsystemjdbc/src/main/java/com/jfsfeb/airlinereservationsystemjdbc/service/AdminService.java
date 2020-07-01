@@ -4,12 +4,9 @@ import java.util.List;
 
 import com.jfsfeb.airlinereservationsystemjdbc.dto.BookingStatus;
 import com.jfsfeb.airlinereservationsystemjdbc.dto.FlightDetails;
-import com.jfsfeb.airlinereservationsystemjdbc.dto.User;
 
 public interface AdminService {
-	boolean registerAdmin(User admin);
-
-	User authenticateAdmin(String email, String password);
+	
 
 	boolean addFlights(FlightDetails flightDetails);
 

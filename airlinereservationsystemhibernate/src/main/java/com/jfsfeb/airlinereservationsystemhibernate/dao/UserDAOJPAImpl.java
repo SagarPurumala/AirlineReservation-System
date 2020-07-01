@@ -57,19 +57,73 @@ public class UserDAOJPAImpl implements UserDAO{
 
 	@Override
 	public List<FlightDetails> searchFlightByName(String flightname) {
-		// TODO Auto-generated method stub
+		EntityManager manager = null;
+		try {
+			factory = Persistence.createEntityManagerFactory("TestPersistence");
+			manager = factory.createEntityManager();
+			String jpql = "Select f from FlightDetails f where flightName=:name";
+			TypedQuery<FlightDetails> query = manager.createQuery(jpql, FlightDetails.class);
+			  query.setParameter("name",flightname);
+			List<FlightDetails> recordList = query.getResultList();
+			for (int i = 0; i < recordList.size()-1; i++) {
+				recordList.get(i);
+			}
+			manager.close();
+			factory.close();
+			return recordList;
+		}catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+
 		return null;
 	}
 
 	@Override
 	public List<FlightDetails> searchFlightBySource(String source) {
-		// TODO Auto-generated method stub
+		EntityManager manager = null;
+		try {
+			factory = Persistence.createEntityManagerFactory("TestPersistence");
+			manager = factory.createEntityManager();
+			String jpql = "Select f from FlightDetails f where source=:source";
+			TypedQuery<FlightDetails> query = manager.createQuery(jpql, FlightDetails.class);
+			  query.setParameter("source",source);
+			List<FlightDetails> recordList = query.getResultList();
+			for (int i = 0; i < recordList.size()-1; i++) {
+				recordList.get(i);
+			}
+			manager.close();
+			factory.close();
+			return recordList;
+		}catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+
 		return null;
 	}
 
 	@Override
 	public List<FlightDetails> searchFlightByDestination(String destination) {
-		// TODO Auto-generated method stub
+		EntityManager manager = null;
+		try {
+			factory = Persistence.createEntityManagerFactory("TestPersistence");
+			manager = factory.createEntityManager();
+			String jpql = "Select f from FlightDetails f where destination=:destination";
+			TypedQuery<FlightDetails> query = manager.createQuery(jpql, FlightDetails.class);
+			  query.setParameter("destination",destination);
+			List<FlightDetails> recordList = query.getResultList();
+			for (int i = 0; i < recordList.size()-1; i++) {
+				recordList.get(i);
+			}
+			manager.close();
+			factory.close();
+			return recordList;
+		}catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+
 		return null;
 	}
 
@@ -88,13 +142,30 @@ public class UserDAOJPAImpl implements UserDAO{
 
 	@Override
 	public BookingStatus bookRequest(BookingStatus bookingStatus) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
 	@Override
 	public List<FlightDetails> searchFlightBySourceAndDestination(String source, String destination) {
-		// TODO Auto-generated method stub
+		EntityManager manager = null;
+		try {
+			factory = Persistence.createEntityManagerFactory("TestPersistence");
+			manager = factory.createEntityManager();
+			String jpql = "Select f from FlightDetails f where source=:source and destination=:destination";
+			TypedQuery<FlightDetails> query = manager.createQuery(jpql, FlightDetails.class);
+			 query.setParameter("source",source);
+			  query.setParameter("destination",destination);
+			List<FlightDetails> recordList = query.getResultList();
+			for (int i = 0; i < recordList.size()-1; i++) {
+				recordList.get(i);
+			}
+			manager.close();
+			factory.close();
+			return recordList;
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 

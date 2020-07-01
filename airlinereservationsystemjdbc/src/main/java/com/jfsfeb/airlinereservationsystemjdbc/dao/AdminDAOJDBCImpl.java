@@ -10,65 +10,13 @@ import java.util.List;
 
 import com.jfsfeb.airlinereservationsystemjdbc.dto.BookingStatus;
 import com.jfsfeb.airlinereservationsystemjdbc.dto.FlightDetails;
-import com.jfsfeb.airlinereservationsystemjdbc.dto.User;
+
 import com.jfsfeb.airlinereservationsystemjdbc.execption.ARSException;
 import com.jfsfeb.airlinereservationsystemjdbc.utility.JdbcUtility;
 
 public class AdminDAOJDBCImpl implements AdminDAO{
    
 	JdbcUtility dbConnector=new JdbcUtility();
-	@Override
-	public boolean registerAdmin(User admin) {
-		try {
-			Connection conn = dbConnector.getConnection();
-			PreparedStatement pstmt = conn.prepareStatement(dbConnector.getQuery("addUser"));
-			
-			pstmt.setInt(1, admin.getId());
-			pstmt.setString(2, admin.getName());
-			pstmt.setString(3, admin.getEmailId());
-			pstmt.setLong(4, admin.getMobileNumber());
-			pstmt.setString(5, admin.getPassword());
-			pstmt.setString(6, admin.getRole());
-
-			pstmt.executeUpdate();
-
-		} catch (Exception e) {
-			throw new ARSException("Can't Add New admin, as Admin Already Exists");
-		}
-		return true;
-	}
-
-	@Override
-	public User authenticateAdmin(String email, String password) {
-	    User adminInfo = new User();
-
-		try {
-			Connection conn = dbConnector.getConnection();
-			PreparedStatement pstmt = conn.prepareStatement(dbConnector.getQuery("loginCheckAdmin"));
-			pstmt.setString(1, email);
-			pstmt.setString(2, password);
-			try  {
-				ResultSet rs = pstmt.executeQuery();
-				while (rs.next()) {
-					adminInfo.setEmailId(rs.getString("email_id"));
-					adminInfo.setPassword(rs.getString("password"));
-                   
-					return adminInfo;
-				}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new ARSException("Invalid Login Credentials, Please Enter Correctly");
-		
-		}
-			} catch (Exception e) {
-				e.printStackTrace();
-				throw new ARSException("Invalid Login Credentials, Please Enter Correctly");
-			
-			}
-		throw new ARSException("Invalid Login Credentials, Please Enter Correctly");
-		
-	}
 	
 
 	@Override
@@ -240,9 +188,10 @@ public class AdminDAOJDBCImpl implements AdminDAO{
 				ResultSet resultSet = stmt.executeQuery(dbConnector.getQuery("showBooking"))) {
 			while (resultSet.next()) {
 				BookingStatus info = new BookingStatus();
+				info.setTicketId(resultSet.getInt("ticket_id"));
 				info.setFlightId(resultSet.getInt("flight_id"));
 				info.setId(resultSet.getInt("id"));
-				info.setId(resultSet.getInt("noofseatsbooked"));
+				info.setNoofseatsbooked(resultSet.getInt("noofseatsbooked"));
 				
 				bookingList.add(info);
 			}

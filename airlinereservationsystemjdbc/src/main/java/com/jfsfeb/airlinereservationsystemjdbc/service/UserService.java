@@ -4,13 +4,9 @@ import java.util.List;
 
 import com.jfsfeb.airlinereservationsystemjdbc.dto.BookingStatus;
 import com.jfsfeb.airlinereservationsystemjdbc.dto.FlightDetails;
-import com.jfsfeb.airlinereservationsystemjdbc.dto.User;
 
 public interface UserService {
 	
-	boolean registerUser(User user);
-
-	User authenticateUser(String emailId, String password);
 
 	List<FlightDetails> searchFlightByName(String flightname);
 

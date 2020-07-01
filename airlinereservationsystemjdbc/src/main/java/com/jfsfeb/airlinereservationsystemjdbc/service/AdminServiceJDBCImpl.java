@@ -6,7 +6,6 @@ import java.util.List;
 import com.jfsfeb.airlinereservationsystemjdbc.dao.AdminDAO;
 import com.jfsfeb.airlinereservationsystemjdbc.dto.BookingStatus;
 import com.jfsfeb.airlinereservationsystemjdbc.dto.FlightDetails;
-import com.jfsfeb.airlinereservationsystemjdbc.dto.User;
 import com.jfsfeb.airlinereservationsystemjdbc.execption.ARSException;
 import com.jfsfeb.airlinereservationsystemjdbc.factory.AirlineFactory;
 import com.jfsfeb.airlinereservationsystemjdbc.validation.Validation;
@@ -14,34 +13,7 @@ import com.jfsfeb.airlinereservationsystemjdbc.validation.Validation;
 public class AdminServiceJDBCImpl implements AdminService{
 	Validation validation = new Validation();
 	AdminDAO dao = AirlineFactory.getAdminDAOImplInstance();
-	@Override
-	public boolean registerAdmin(User admin) {
-		if(validation.validatedId(admin.getId())) {
-			if(validation.validatedName(admin.getName())) {
-				if(validation.validatedMobile(admin.getMobileNumber())) {
-					if(validation.validatedEmail(admin.getEmailId())) {
-						if(validation.validatedPassword(admin.getPassword())) {
-							if(validation.validatedAdminRole(admin.getRole())) {
-							return dao.registerAdmin(admin);
-							}
-						}
-					}
-					
-				}
-			}
-		}
-		throw new ARSException("invalid inputs");
-	}
 
-	@Override
-	public User authenticateAdmin(String email, String password) {
-		if (validation.validatedEmail(email)) {
-			if (validation.validatedPassword(password)) {
-				return dao.authenticateAdmin(email, password);
-			} 
-		} 
-		return null;
-	}
 
 	@Override
 	public boolean addFlights(FlightDetails flightDetails) {

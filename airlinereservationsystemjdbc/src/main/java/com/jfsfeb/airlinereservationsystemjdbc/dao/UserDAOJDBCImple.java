@@ -10,64 +10,11 @@ import java.util.List;
 
 import com.jfsfeb.airlinereservationsystemjdbc.dto.BookingStatus;
 import com.jfsfeb.airlinereservationsystemjdbc.dto.FlightDetails;
-import com.jfsfeb.airlinereservationsystemjdbc.dto.User;
 import com.jfsfeb.airlinereservationsystemjdbc.execption.ARSException;
 import com.jfsfeb.airlinereservationsystemjdbc.utility.JdbcUtility;
 
 public class UserDAOJDBCImple implements UserDAO {
 	JdbcUtility dbConnector = new JdbcUtility();
-
-	@Override
-	public boolean registerUser(User user) {
-		try {
-			Connection conn = dbConnector.getConnection();
-			PreparedStatement pstmt = conn.prepareStatement(dbConnector.getQuery("addUser"));
-
-			pstmt.setInt(1, user.getId());
-			pstmt.setString(2, user.getName());
-			pstmt.setString(3, user.getEmailId());
-			pstmt.setLong(4, user.getMobileNumber());
-			pstmt.setString(5, user.getPassword());
-			pstmt.setString(6, user.getRole());
-
-			pstmt.executeUpdate();
-
-		} catch (Exception e) {
-			throw new ARSException("Can't Add New User, as User Already Exists");
-		}
-		return true;
-	}
-
-	@Override
-	public User authenticateUser(String emailId, String password) {
-		User userInfo = new User();
-
-		try {
-			Connection conn = dbConnector.getConnection();
-			PreparedStatement pstmt = conn.prepareStatement(dbConnector.getQuery("loginCheckUser"));
-			pstmt.setString(1, emailId);
-			pstmt.setString(2, password);
-			try {
-				ResultSet rs = pstmt.executeQuery();
-				while (rs.next()) {
-					userInfo.setEmailId(rs.getString("email_id"));
-					userInfo.setPassword(rs.getString("password"));
-
-					return userInfo;
-				}
-
-			} catch (Exception e) {
-				e.printStackTrace();
-				throw new ARSException("Invalid Login Credentials, Please Enter Correctly");
-
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new ARSException("Invalid Login Credentials, Please Enter Correctly");
-
-		}
-		throw new ARSException("Invalid Login Credentials, Please Enter Correctly");
-	}
 
 	@Override
 	public List<FlightDetails> searchFlightByName(String flightname) {
@@ -189,9 +136,93 @@ public class UserDAOJDBCImple implements UserDAO {
 
 	@Override
 	public BookingStatus bookRequest(BookingStatus bookingStatus) {
+		int userId = bookingStatus.getId();
 
+		try {
+			Connection conn = dbConnector.getConnection();
+			PreparedStatement getFlightPstmt = conn.prepareStatement(dbConnector.getQuery("getFlight"));
+			
+			getFlightPstmt.setInt(1, bookingStatus.getFlightId());
+			
+			try (ResultSet getReqSet = getFlightPstmt.executeQuery();) {
+				while (getReqSet.next()) {
+					int bookFlightId = getReqSet.getInt("flight_id");
+
+					if (bookingStatus.getFlightId() == bookFlightId) {
+
+						try {
+							Connection conne = dbConnector.getConnection();
+							PreparedStatement getUserPstmt = conne.prepareStatement(dbConnector.getQuery("getUser"));
+							getUserPstmt.setInt(1, bookingStatus.getId());
+							try (ResultSet getUser = getUserPstmt.executeQuery();) {
+								while (getUser.next()) {
+									int user = getUser.getInt("id");
+									
+									if (userId == user) {
+									
+										try {
+											Connection conn1 = dbConnector.getConnection();
+											PreparedStatement getRequestPstmt = conn1.prepareStatement(dbConnector.getQuery("requestBooked"));
+											getRequestPstmt.setInt(1, bookingStatus.getTicketId());
+											getRequestPstmt.setInt(2, bookingStatus.getId());
+										getRequestPstmt.setInt(3, bookingStatus.getFlightId());
+										getRequestPstmt.setInt(4, bookingStatus.getNoofseatsbooked());
+										
+										getRequestPstmt.executeUpdate();
+										return bookingStatus;
+										
+										
+	
+										} catch (Exception e) {
+											throw new ARSException("Can't request flight");
+										}
+										
+										
+										
+										
+									}
+								}
+							}
+						} catch (Exception e) {
+							throw new ARSException(e.getMessage());
+						}
+					}
+				}
+			}
+		} catch (ARSException e) {
+			throw new ARSException(e.getMessage());
+		} catch (Exception e) {
+			throw new ARSException(e.getMessage());
+		}
 		return null;
 	}
+
+//			try (ResultSet getReqSet = getFlightPstmt.executeQuery();) {
+//				if (getReqSet.next()) {
+//					int requestFlightId = getReqSet.getInt("flight_id");
+//					getRequestPstmt.setInt(1, requestFlightId);
+//					try (ResultSet getUserSet = getUserPstmt.executeQuery();) {
+//						if (getUserSet.next()) {
+//							int requestUserId = getReqSet.getInt("id");
+//							getRequestPstmt.setInt(1, requestUserId);
+//						} else {
+//							throw new ARSException("Request not Found with Matching UserId ");
+//						}
+//					} catch (Exception e) {
+//						throw new ARSException(e.getMessage());
+//					}
+//				} else {
+//					throw new ARSException("Request not Found with Matching FlightId ");
+//				}
+//
+//			} catch (Exception e) {
+//				throw new ARSException(e.getMessage());
+//			}
+//		} catch (Exception e) {
+//			throw new ARSException(e.getMessage());
+//		}
+
+//	}
 
 	@Override
 	public List<FlightDetails> searchFlightBySourceAndDestination(String source, String destination) {
