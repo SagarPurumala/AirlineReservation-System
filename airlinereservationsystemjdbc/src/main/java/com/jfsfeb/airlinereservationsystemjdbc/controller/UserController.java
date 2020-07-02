@@ -26,7 +26,7 @@ public class UserController {
 				log.info("You have logged in successfully as a User");
 				log.info("Now you can perform the following operations:-");
 				log.info("<--------------------------------------------------------------------->");
-				
+
 				log.info("[1]  VIEW ALL FLIGHTDETAILS");
 				log.info("[2]  SEARCH FLIGHT BY SOURCE");
 				log.info("[3]  SEARCH FLIGHT BY DESTINATION");
@@ -34,24 +34,22 @@ public class UserController {
 				log.info("[5] SEARCH FLIGHT BY SOURCE AND DESTINATION");
 				log.info("[6]  BOOK THE FLIGHT");
 				log.info("[7]  CANCEL THE FLIGHT BASED ON TICKET ID");
-				
-				log.info("[8]  LOGOUT");
+				log.info("[8]  TICKET DETAILS BASED ON USER ID");
+				log.info("[9]  LOGOUT");
 				log.info("<--------------------------------------------------------------------->");
 				int choice2 = scanner.nextInt();
 				switch (choice2) {
 				case 1:
 					List<FlightDetails> info = service1.getFlightDetails();
-					log.info(
-							"<--------------------------------------------------------------------->");
-					log.info(String.format("%-10s %-10s %-10s %-15s %-15s %-15s %-20s %-20s %s","FlightId",
-							"FlightName", "Source", "Destination", "ArrivalDate","ArrivalTime",
-							"DepartureDate","DepartureTime", "NoofSeatAvailable"));
+					log.info("<--------------------------------------------------------------------->");
+					log.info(String.format("%-10s %-10s %-10s %-15s %-15s %-15s %-20s %-20s %s", "FlightId",
+							"FlightName", "Source", "Destination", "ArrivalDate", "ArrivalTime", "DepartureDate",
+							"DepartureTime", "NoofSeatAvailable"));
 					for (FlightDetails flightBean : info) {
 						if (flightBean != null) {
 							log.info(String.format("%-10s %-10s %-10s %-15s %-15s %-15s %-20s %-20s %s",
-									flightBean.getFlightId(), flightBean.getFlightName(),
-									flightBean.getSource(), flightBean.getDestination(),
-									java.sql.Date.valueOf(flightBean.getArrivalDate()),
+									flightBean.getFlightId(), flightBean.getFlightName(), flightBean.getSource(),
+									flightBean.getDestination(), java.sql.Date.valueOf(flightBean.getArrivalDate()),
 									java.sql.Time.valueOf(flightBean.getArrivalTime()),
 									java.sql.Date.valueOf(flightBean.getDepartureDate()),
 									java.sql.Time.valueOf(flightBean.getDepartureTime()),
@@ -139,7 +137,7 @@ public class UserController {
 						}
 					}
 					break;
-		
+
 				case 5:
 					log.info("Search flight by Source : ");
 					String source1 = scanner.next();
@@ -221,10 +219,10 @@ public class UserController {
 									if (bookingId <= 1000) {
 										bookingId = bookingId + 1000;
 									}
-									
+
 									BookingDetails bookingStatus = new BookingDetails();
 									bookingStatus.setNoofseatsbooked(seats);
-								    bookingStatus.setTicketId(bookingId);
+									bookingStatus.setTicketId(bookingId);
 									bookingStatus.setId(userId2);
 									bookingStatus.setFlightId(flightId2);
 									try {
@@ -232,14 +230,11 @@ public class UserController {
 										log.info("Request placed to Airline Management ");
 										log.info(
 												"<--------------------------------------------------------------------->");
-										log.info(String.format("%-10s %-10s %-10s %s","TicketId",
-												"FlightId", "UserID", "NoofSeatBooked"));
+										log.info(String.format("%-10s %-10s %-10s %s", "TicketId", "FlightId", "UserID",
+												"NoofSeatBooked"));
 										;
-										log.info(String.format("%-10s %-10s %-10s %s",
-												request.getTicketId(),
-												request.getFlightId(),
-												request.getId(),
-												request.getNoofseatsbooked()));
+										log.info(String.format("%-10s %-10s %-10s %s", request.getTicketId(),
+												request.getFlightId(), request.getId(), request.getNoofseatsbooked()));
 									} catch (Exception e) {
 										log.info("Invalid Request of booking");
 									}
@@ -274,14 +269,13 @@ public class UserController {
 						if (ticketId == 0) {
 							log.info("Please Enter the Valid FlightId");
 						} else {
-							BookingDetails book=new BookingDetails();
-			
+							BookingDetails book = new BookingDetails();
 							book.setTicketId(ticketId);
 							boolean remove = service1.cancelTicket(ticketId);
 							if (remove) {
 								log.info("The Cancel ticket Id = " + ticketId);
 							} else {
-								log.info("The Ticked Id is not removed = " +  ticketId);
+								log.info("The Ticked Id is not removed = " + ticketId);
 							}
 						}
 					} catch (InputMismatchException e) {
@@ -292,6 +286,30 @@ public class UserController {
 					}
 					break;
 				case 8:
+					log.info("ENTER USER ID TO FIND TICKET DETAILS");
+					try {
+						int userId = scanner.nextInt();
+						List<BookingDetails> ticket = service1.getTicketDetails(userId);
+
+						log.info("<--------------------------------------------------------------------->");
+						log.info(String.format("%-10s %-10s %-10s %s", "TicketID", "FlightId", "UserID",
+								"NoofSeatBooked"));
+						for (BookingDetails request : ticket) {
+							if (request != null) {
+								log.info(String.format("%-10s %-10s %-10s %s", request.getTicketId(),
+										request.getFlightId(), request.getId(), request.getNoofseatsbooked()));
+							} else {
+								log.info("Request not found in booking status");
+							}
+						}
+					} catch (InputMismatchException e) {
+						log.error("Invalid entry valid Id");
+						scanner.nextLine();
+					} catch (ARSException e) {
+						log.info(e.getMessage());
+					}
+					break;
+				case 9:
 					SubAirlineController.airlineOperations();
 
 				default:

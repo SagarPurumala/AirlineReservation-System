@@ -171,4 +171,48 @@ public class UserDAOJPAImpl implements UserDAO{
 		return null;
 	}
 
+	@Override
+	public boolean cancelTicket(int ticketId) {
+		EntityManager manager = null;
+		EntityTransaction transaction = null;
+		try {
+			factory = Persistence.createEntityManagerFactory("TestPersistence");
+			manager = factory.createEntityManager();
+			transaction = manager.getTransaction();
+			transaction.begin();
+			BookingStatus bookingStatus = manager.find(BookingStatus.class, ticketId);
+			manager.remove(bookingStatus);
+			transaction.commit();
+			return true;
+		} catch (Exception e) {
+			transaction.rollback();
+			throw new ARSException("TicketId Can't Be Removed or Deleted from Booking Details");
+		} finally {
+			manager.close();
+			factory.close();
+		}
+	}
+
+	@Override
+	public List<BookingStatus> getTicketDetails(int userId) {
+		EntityManager manager = null;
+		try {
+			factory = Persistence.createEntityManagerFactory("TestPersistence");
+			manager = factory.createEntityManager();
+			String jpql = "Select f from BookingStatus f where f.id=:id";
+			TypedQuery<BookingStatus> query = manager.createQuery(jpql, BookingStatus.class);
+			 query.setParameter("id",userId);
+			List<BookingStatus> recordList = query.getResultList();
+			for (int i = 0; i < recordList.size()-1; i++) {
+				recordList.get(i);
+			}
+			manager.close();
+			factory.close();
+			return recordList;
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 }

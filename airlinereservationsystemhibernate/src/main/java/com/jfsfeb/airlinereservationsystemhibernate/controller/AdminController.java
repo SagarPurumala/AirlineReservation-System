@@ -8,11 +8,11 @@ import java.util.Scanner;
 
 import com.jfsfeb.airlinereservationsystemhibernate.dto.BookingStatus;
 import com.jfsfeb.airlinereservationsystemhibernate.dto.FlightDetails;
-
+import com.jfsfeb.airlinereservationsystemhibernate.dto.User;
 import com.jfsfeb.airlinereservationsystemhibernate.exception.ARSException;
 import com.jfsfeb.airlinereservationsystemhibernate.factory.AirlineFactory;
 import com.jfsfeb.airlinereservationsystemhibernate.service.AdminService;
-
+import com.jfsfeb.airlinereservationsystemhibernate.service.AirlineService;
 
 import lombok.extern.log4j.Log4j;
 
@@ -22,6 +22,11 @@ public class AdminController {
 
 
 		boolean flag = false;
+		String checkName = null;
+		long checkMobile = 0;
+		String checkEmail = null;
+		String checkPassword = null;
+		String role=null;
 		int flightId = 0;
 		String flightName = null;
 		String flightSource = null;
@@ -35,7 +40,7 @@ public class AdminController {
 		@SuppressWarnings("resource")
 		Scanner scanner = new Scanner(System.in);
 		AdminService service = AirlineFactory.getAdminServiceImplInstance();
-
+		 AirlineService airlineService =AirlineFactory.getAirlineServiceImplInstance();
 		do {
 			try {
 				log.info("You have logged in successfully");
@@ -48,7 +53,8 @@ public class AdminController {
 				log.info("[5]  REMOVE FLIGHT");
 				log.info("[6]  VIEW ALL FLIGHTDETAILS");
 				log.info("[7] ISSUED BOOKING STATUS");
-				log.info("[8] LOGOUT");
+				log.info("[8] ADD NEW ADMIN or USER");
+				log.info("[9] LOGOUT");
 				log.info("<--------------------------------------------------------------------->");
 				int choice1 = scanner.nextInt();
 				switch (choice1) {
@@ -130,7 +136,7 @@ public class AdminController {
 						}
 					} while (!flag);
 					do {
-						log.info("Enter  Flight Arrival Date (YYYY,MM,DD): ");
+						log.info("Enter  Flight Arrival Date (YYYY,MM,DD) : ");
 
 						try {
 							arrivalDate = LocalDate.of(scanner.nextInt(), scanner.nextInt(), scanner.nextInt());
@@ -146,7 +152,7 @@ public class AdminController {
 						}
 					} while (!flag);
 					do {
-						log.info("Enter  Flight Arrival Time (HOURS,MIN,SECS): ");
+						log.info("Enter  Flight Arrival Time(HOURS,MIN,SECS) : ");
 
 						try {
 							arrivalTime = LocalTime.of(scanner.nextInt(), scanner.nextInt(), scanner.nextInt());
@@ -177,7 +183,7 @@ public class AdminController {
 						}
 					} while (!flag);
 					do {
-						log.info("Enter  Flight departure Time (HOURS,MIN,SECS): ");
+						log.info("Enter  Flight departure Time(HOURS,MIN,SECS) : ");
 
 						try {
 							departureTime = LocalTime.of(scanner.nextInt(), scanner.nextInt(), scanner.nextInt());
@@ -349,15 +355,56 @@ public class AdminController {
 					}
 					break;
 				case 8:
+					   try {
+						
+							log.info("Enter Name to Register : ");
+							checkName = scanner.next();
+							log.info("Enter MobileNumber to Register : ");
+							checkMobile = scanner.nextLong();
+							log.info("Enter Email to Register : ");
+							checkEmail = scanner.next();
+							log.info("Enter Password :");
+							checkPassword = scanner.next();
+							log.info("Enter Role as admin or user :");
+							role = scanner.next();
+							int userId = (int) (Math.random() * 10000);
+							if (userId <= 1000) {
+								userId = userId + 1000;
+							}
+							User bean = new User();
+							bean.setId(userId);
+							bean.setName(checkName);
+							bean.setMobileNumber(checkMobile);
+							bean.setEmailId(checkEmail);
+							bean.setPassword(checkPassword);
+							bean.setRole(role);
+
+							boolean check = airlineService.register(bean);
+							if (check) {
+								log.info("You have registered Successfully");
+							} else {
+								log.info("Already registered");
+							}
+							break;
+		                  }catch (InputMismatchException e) {
+		      				log.error("Invalid entry ");
+		    				scanner.next();
+		    				break;
+		    			}
+		                  catch (ARSException e) {
+							log.info(e.getMessage());
+							break;
+						}
+				case 9:
 					SubAirlineController.airlineOperations();
 
 				default:
-					log.info("Invalid Choice please provide 1 or 2 or 3 or 4 or 5 or 6  or 7 or 8");
+					log.info("Invalid entry please choose from above options");
 					break;
 				}
 
 			} catch (InputMismatchException e) {
-				log.error("Invalid entry please provide 1 or 2 or 3 or 4 or 5 or 6  or 7 or 8");
+				log.error("Invalid entry please choose from above options");
 				scanner.nextLine();
 			} catch (ARSException e) {
 				log.info(e.getMessage());
@@ -365,6 +412,7 @@ public class AdminController {
 				log.info("Invalid Credentials");
 			}
 		} while (true);
+
 
 	}
 }

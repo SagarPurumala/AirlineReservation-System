@@ -61,4 +61,20 @@ public class UserServiceJPAImpl implements UserService{
 		return null;
 	}
 
+	@Override
+	public boolean cancelTicket(int ticketId) {
+		if (validation.validatedId(ticketId)) {
+			return dao.cancelTicket(ticketId);
+		}
+		return false;
+	}
+
+	@Override
+	public List<BookingStatus> getTicketDetails(int userId) {
+		if(validation.validatedId(userId)) {
+			return dao.getTicketDetails(userId);
+			}
+			return null;
+	}
+
 }

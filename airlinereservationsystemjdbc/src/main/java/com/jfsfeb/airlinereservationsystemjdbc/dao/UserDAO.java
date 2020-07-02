@@ -21,5 +21,5 @@ public interface UserDAO {
 	
 	boolean cancelTicket(int ticketId);
 	
-	public List<BookingDetails> getTicketDetails(int userId);
+     List<BookingDetails> getTicketDetails(int userId);
 }

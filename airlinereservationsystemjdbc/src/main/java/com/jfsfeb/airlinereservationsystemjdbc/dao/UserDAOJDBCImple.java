@@ -37,13 +37,18 @@ public class UserDAOJDBCImple implements UserDAO {
 					flight.setDepartureTime(resultSet.getTime("departuretime").toLocalTime());
 
 					searchList.add(flight);
+				}
+				if (searchList.isEmpty()) {
+					throw new ARSException("Flight is Not Found in the Airline  with the Given Flight Name");
+				} else {
 					return searchList;
 				}
+				
 			}
 		} catch (Exception e) {
 			throw new ARSException(e.getMessage());
 		}
-		throw new ARSException("Flight is Not Found in the Airline  with the Given Flight Name");
+
 	}
 
 	@Override
@@ -66,13 +71,19 @@ public class UserDAOJDBCImple implements UserDAO {
 					flight.setDepartureDate(resultSet.getDate("departuredate").toLocalDate());
 					flight.setDepartureTime(resultSet.getTime("departuretime").toLocalTime());
 					searchList.add(flight);
+					
+				}
+				if (searchList.isEmpty()) {
+					throw new ARSException("Flight is Not Found in the Airline  with the Given Flight Source");
+				} else {
 					return searchList;
 				}
+				
 			}
 		} catch (Exception e) {
 			throw new ARSException(e.getMessage());
 		}
-		throw new ARSException("Flight is Not Found in the Airline  with the Given Flight Source");
+
 	}
 
 	@Override
@@ -95,13 +106,19 @@ public class UserDAOJDBCImple implements UserDAO {
 					flight.setDepartureDate(resultSet.getDate("departuredate").toLocalDate());
 					flight.setDepartureTime(resultSet.getTime("departuretime").toLocalTime());
 					searchList.add(flight);
+					
+				}
+				if (searchList.isEmpty()) {
+					throw new ARSException("Flight is Not Found in the Airline  with the Given Flight Destination");
+				} else {
 					return searchList;
 				}
+				
 			}
 		} catch (Exception e) {
 			throw new ARSException(e.getMessage());
 		}
-		throw new ARSException("Flight is Not Found in the Airline  with the Given Flight Destination");
+
 	}
 
 	@Override
@@ -215,13 +232,19 @@ public class UserDAOJDBCImple implements UserDAO {
 					flight.setDepartureDate(resultSet.getDate("departuredate").toLocalDate());
 					flight.setDepartureTime(resultSet.getTime("departuretime").toLocalTime());
 					searchList.add(flight);
+					
+				}
+				if (searchList.isEmpty()) {
+					throw new ARSException("Flight is Not Found in the Airline  with the Given Flight Destination");
+				} else {
 					return searchList;
 				}
+				
 			}
 		} catch (Exception e) {
 			throw new ARSException(e.getMessage());
 		}
-		throw new ARSException("Flight is Not Found in the Airline  with the Given Flight Destination");
+
 	}
 
 	@Override
@@ -244,8 +267,29 @@ public class UserDAOJDBCImple implements UserDAO {
 
 	@Override
 	public List<BookingDetails> getTicketDetails(int userId) {
-		// TODO Auto-generated method stub
-		return null;
+		List<BookingDetails> tickets = new ArrayList<BookingDetails>();
+		try (Connection connection =dbConnector.getConnection();
+				PreparedStatement myStmt = connection.prepareStatement(dbConnector.getQuery("ticketdetails"));) {
+			myStmt.setInt(1, userId);
+		ResultSet	rs = myStmt.executeQuery();
+			while (rs.next()) {
+				BookingDetails ticketBean1 = new BookingDetails();
+				ticketBean1.setTicketId(rs.getInt("ticket_id"));
+				ticketBean1.setId(rs.getInt("id"));
+				ticketBean1.setFlightId(rs.getInt("flight_id"));
+				ticketBean1.setNoofseatsbooked(rs.getInt("noofseatsbooked"));
+				tickets.add(ticketBean1);
+			}
+			if (tickets.isEmpty()) {
+				throw new ARSException("No Ticket Found with that user Id");
+			} else {
+				return tickets;
+			}
+		} catch (Exception e) {
+			e.getMessage();
+			throw new ARSException("No tickets with this userid...........");
+		}
+	}
 	}
 
-}
+

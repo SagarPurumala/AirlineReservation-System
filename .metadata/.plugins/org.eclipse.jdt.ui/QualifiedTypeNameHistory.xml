@@ -22,5 +22,12 @@
 <fullyQualifiedTypeName name="javax.persistence.EntityTransaction"/>
 <fullyQualifiedTypeName name="com.jfsfeb.airlinereservationsystemhibernate.dto.User"/>
 <fullyQualifiedTypeName name="com.jfsfeb.airlinereservationsystemhibernate.dto.FlightDetails"/>
+<fullyQualifiedTypeName name="com.jfsfeb.airlinereservationsystemjdbc.controller.UserController"/>
+<fullyQualifiedTypeName name="com.jfsfeb.airlinereservationsystemjdbc.dto.BookingStatus"/>
+<fullyQualifiedTypeName name="javax.persistence.ManyToOne"/>
+<fullyQualifiedTypeName name="javax.persistence.CascadeType"/>
+<fullyQualifiedTypeName name="javax.persistence.OneToMany"/>
+<fullyQualifiedTypeName name="com.jfsfeb.airlinereservationsystemjdbc.dto.User"/>
+<fullyQualifiedTypeName name="java.sql.ResultSet"/>
 <fullyQualifiedTypeName name="com.jfsfeb.airlinereservationsystemhibernate.dto.BookingStatus"/>
 </qualifiedTypeNameHistroy>

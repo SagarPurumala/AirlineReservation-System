@@ -18,4 +18,8 @@ public interface UserService {
 	BookingStatus bookRequest(BookingStatus bookingStatus);
 	
 	List<FlightDetails> searchFlightBySourceAndDestination(String source,String destination);
+	
+	boolean cancelTicket(int ticketId);
+
+	List<BookingStatus> getTicketDetails(int userId);
 }

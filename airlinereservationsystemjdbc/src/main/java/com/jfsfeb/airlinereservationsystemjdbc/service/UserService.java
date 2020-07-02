@@ -21,5 +21,8 @@ public interface UserService {
 	List<FlightDetails> searchFlightBySourceAndDestination(String source,String destination);
 	
 	boolean cancelTicket(int ticketId);
+	
+	List<BookingDetails> getTicketDetails(int userId);
+	
 
 }

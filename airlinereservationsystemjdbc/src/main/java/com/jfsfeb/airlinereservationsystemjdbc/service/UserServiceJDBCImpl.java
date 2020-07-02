@@ -69,4 +69,12 @@ public class UserServiceJDBCImpl implements UserService{
 		return false;
 	}
 
+	@Override
+	public List<BookingDetails> getTicketDetails(int userId) {
+		if(validation.validatedId(userId)) {
+		return dao.getTicketDetails(userId);
+		}
+		return null;
+	}
+
 }
