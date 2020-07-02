@@ -30,4 +30,6 @@
 <fullyQualifiedTypeName name="com.jfsfeb.airlinereservationsystemjdbc.dto.User"/>
 <fullyQualifiedTypeName name="java.sql.ResultSet"/>
 <fullyQualifiedTypeName name="com.jfsfeb.airlinereservationsystemhibernate.dto.BookingStatus"/>
+<fullyQualifiedTypeName name="com.jfsfeb.airlinereservationsystemspring.validation.Validation"/>
+<fullyQualifiedTypeName name="com.jfsfeb.airlinereservationsystemspring.bean.User"/>
 </qualifiedTypeNameHistroy>
