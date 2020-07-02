@@ -4,7 +4,7 @@ import java.util.List;
 
 
 import com.jfsfeb.airlinereservationsystemjdbc.dao.UserDAO;
-import com.jfsfeb.airlinereservationsystemjdbc.dto.BookingStatus;
+import com.jfsfeb.airlinereservationsystemjdbc.dto.BookingDetails;
 import com.jfsfeb.airlinereservationsystemjdbc.dto.FlightDetails;
 import com.jfsfeb.airlinereservationsystemjdbc.factory.AirlineFactory;
 import com.jfsfeb.airlinereservationsystemjdbc.validation.Validation;
@@ -45,7 +45,7 @@ public class UserServiceJDBCImpl implements UserService{
 	}
 
 	@Override
-	public BookingStatus bookRequest(BookingStatus bookingStatus) {
+	public BookingDetails bookRequest(BookingDetails bookingStatus) {
 	
 			return dao.bookRequest(bookingStatus);
 		
@@ -59,6 +59,14 @@ public class UserServiceJDBCImpl implements UserService{
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public boolean cancelTicket(int ticketId) {
+		if (validation.validatedId(ticketId)) {
+			return dao.cancelTicket(ticketId);
+		}
+		return false;
 	}
 
 }

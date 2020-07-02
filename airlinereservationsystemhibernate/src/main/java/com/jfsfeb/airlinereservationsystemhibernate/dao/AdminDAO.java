@@ -4,15 +4,9 @@ import java.util.List;
 
 import com.jfsfeb.airlinereservationsystemhibernate.dto.BookingStatus;
 import com.jfsfeb.airlinereservationsystemhibernate.dto.FlightDetails;
-import com.jfsfeb.airlinereservationsystemhibernate.dto.User;
-
-
 
 public interface AdminDAO {
-	boolean registerAdmin(User admin);
-
-	User authenticateAdmin(String email, String password);
-
+	
 	boolean addFlights(FlightDetails flightDetails);
 
 	boolean removeFlight(int flightId);

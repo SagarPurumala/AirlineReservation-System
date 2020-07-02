@@ -2,7 +2,7 @@ package com.jfsfeb.airlinereservationsystemjdbc.service;
 
 import java.util.List;
 
-import com.jfsfeb.airlinereservationsystemjdbc.dto.BookingStatus;
+import com.jfsfeb.airlinereservationsystemjdbc.dto.BookingDetails;
 import com.jfsfeb.airlinereservationsystemjdbc.dto.FlightDetails;
 
 public interface UserService {
@@ -16,8 +16,10 @@ public interface UserService {
 
 	List<FlightDetails> getFlightDetails();
 
-	BookingStatus bookRequest(BookingStatus bookingStatus);
+	BookingDetails bookRequest(BookingDetails bookingStatus);
 	
 	List<FlightDetails> searchFlightBySourceAndDestination(String source,String destination);
+	
+	boolean cancelTicket(int ticketId);
 
 }

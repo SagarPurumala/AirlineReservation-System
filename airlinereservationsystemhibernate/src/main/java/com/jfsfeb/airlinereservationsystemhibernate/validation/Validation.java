@@ -81,6 +81,16 @@ public class Validation {
 		}
 		return result;
 	}
+	public boolean validatedRole(String role) throws ARSException {
+		String roleRegEx = "^(?i)(admin|user)$" ;
+		boolean result = false;
+		if(Pattern.matches(roleRegEx, String.valueOf(role))) {
+			result = true;
+		} else {
+			throw new ARSException("Enter admin or user as role ");
+		}
+		return result;
+	}
 	public boolean validatedDestination(String Destination) throws ARSException {
 		String nameRegEx = "^(?=.{4,20}$)(?![_.-])(?!.*[.]{2})[a-zA-Z._-]+(?<![_.-])";
 		boolean result = false;

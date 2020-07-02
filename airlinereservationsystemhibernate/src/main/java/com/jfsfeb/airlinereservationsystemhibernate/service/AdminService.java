@@ -4,15 +4,12 @@ import java.util.List;
 
 import com.jfsfeb.airlinereservationsystemhibernate.dto.BookingStatus;
 import com.jfsfeb.airlinereservationsystemhibernate.dto.FlightDetails;
-import com.jfsfeb.airlinereservationsystemhibernate.dto.User;
 
 
 
 public interface AdminService {
  
-	boolean registerAdmin(User admin);
-
-	User authenticateAdmin(String email, String password);
+	
 
 	boolean addFlights(FlightDetails flightDetails);
 

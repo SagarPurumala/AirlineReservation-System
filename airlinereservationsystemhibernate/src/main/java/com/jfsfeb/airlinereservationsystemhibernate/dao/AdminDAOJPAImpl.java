@@ -10,52 +10,12 @@ import javax.persistence.TypedQuery;
 
 import com.jfsfeb.airlinereservationsystemhibernate.dto.BookingStatus;
 import com.jfsfeb.airlinereservationsystemhibernate.dto.FlightDetails;
-import com.jfsfeb.airlinereservationsystemhibernate.dto.User;
 import com.jfsfeb.airlinereservationsystemhibernate.exception.ARSException;
 
 public class AdminDAOJPAImpl implements AdminDAO{
 
 	EntityManagerFactory factory = null;
-	@Override
-	public boolean registerAdmin(User admin) {
-		EntityManager manager = null;
-		EntityTransaction transaction = null;
-		try {
-			factory = Persistence.createEntityManagerFactory("TestPersistence");
-			manager = factory.createEntityManager();
-			transaction = manager.getTransaction();
-			transaction.begin();
-			manager.persist(admin);
-			transaction.commit();
-			return true;
-		} catch (Exception e) {
-			transaction.rollback();
-			throw new ARSException("Admin Already Exists Or Admin Can't Be added");
-		} finally {
-			manager.close();
-			factory.close();
-		}
-	}
-
-	@Override
-	public User authenticateAdmin(String email, String password) {
-		EntityManager manager = null;
-		factory = Persistence.createEntityManagerFactory("TestPersistence");
-		manager = factory.createEntityManager();
-		String jpql = "select u from  User u where u.emailId = :emailId and u.password =:password";
-		TypedQuery<User> query = manager.createQuery(jpql, User.class);
-		query.setParameter("emailId", email);
-		query.setParameter("password", password);
-		try {
-			return query.getSingleResult();
-		} catch (Exception e) {
-			throw new ARSException("Invalid Login Credentials, Please Enter Correctly");
-		} finally {
-			manager.close();
-			factory.close();
-		}
-	}
-
+	
 	@Override
 	public boolean addFlights(FlightDetails flightDetails) {
 		EntityManager manager = null;
@@ -186,8 +146,15 @@ public class AdminDAOJPAImpl implements AdminDAO{
 
 	@Override
 	public List<BookingStatus> getBookingStatus() {
-		
-		return null;
+		EntityManager manager = null;
+		factory = Persistence.createEntityManagerFactory("TestPersistence");
+		manager = factory.createEntityManager();
+		String jpql = "select b from BookingStatus b";
+		TypedQuery<BookingStatus> query = manager.createQuery(jpql, BookingStatus.class);
+		List<BookingStatus> recordlist = query.getResultList();
+		manager.close();
+		factory.close();
+		return recordlist;
 	}
 
 }

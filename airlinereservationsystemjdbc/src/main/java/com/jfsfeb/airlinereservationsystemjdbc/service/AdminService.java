@@ -2,7 +2,7 @@ package com.jfsfeb.airlinereservationsystemjdbc.service;
 
 import java.util.List;
 
-import com.jfsfeb.airlinereservationsystemjdbc.dto.BookingStatus;
+import com.jfsfeb.airlinereservationsystemjdbc.dto.BookingDetails;
 import com.jfsfeb.airlinereservationsystemjdbc.dto.FlightDetails;
 
 public interface AdminService {
@@ -20,7 +20,7 @@ public interface AdminService {
 
 	List<FlightDetails> getFlightDetails();
 
-	List<BookingStatus> getBookingStatus();
+	List<BookingDetails> getBookingStatus();
 	
 	boolean validateFlightID(int flightid);
 	

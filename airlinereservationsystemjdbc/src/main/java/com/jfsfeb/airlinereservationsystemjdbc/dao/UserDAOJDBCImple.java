@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.jfsfeb.airlinereservationsystemjdbc.dto.BookingStatus;
+import com.jfsfeb.airlinereservationsystemjdbc.dto.BookingDetails;
 import com.jfsfeb.airlinereservationsystemjdbc.dto.FlightDetails;
 import com.jfsfeb.airlinereservationsystemjdbc.execption.ARSException;
 import com.jfsfeb.airlinereservationsystemjdbc.utility.JdbcUtility;
@@ -135,51 +135,47 @@ public class UserDAOJDBCImple implements UserDAO {
 	}
 
 	@Override
-	public BookingStatus bookRequest(BookingStatus bookingStatus) {
+	public BookingDetails bookRequest(BookingDetails bookingStatus) {
 		int userId = bookingStatus.getId();
 
-		try {
+		try (
 			Connection conn = dbConnector.getConnection();
-			PreparedStatement getFlightPstmt = conn.prepareStatement(dbConnector.getQuery("getFlight"));
-			
+			PreparedStatement getFlightPstmt = conn.prepareStatement(dbConnector.getQuery("getFlight"));){
+
 			getFlightPstmt.setInt(1, bookingStatus.getFlightId());
-			
+
 			try (ResultSet getReqSet = getFlightPstmt.executeQuery();) {
 				while (getReqSet.next()) {
 					int bookFlightId = getReqSet.getInt("flight_id");
 
 					if (bookingStatus.getFlightId() == bookFlightId) {
 
-						try {
+						try (
 							Connection conne = dbConnector.getConnection();
-							PreparedStatement getUserPstmt = conne.prepareStatement(dbConnector.getQuery("getUser"));
+							PreparedStatement getUserPstmt = conne.prepareStatement(dbConnector.getQuery("getUser"));){
 							getUserPstmt.setInt(1, bookingStatus.getId());
 							try (ResultSet getUser = getUserPstmt.executeQuery();) {
 								while (getUser.next()) {
 									int user = getUser.getInt("id");
-									
+
 									if (userId == user) {
-									
-										try {
+
+										try (
 											Connection conn1 = dbConnector.getConnection();
-											PreparedStatement getRequestPstmt = conn1.prepareStatement(dbConnector.getQuery("requestBooked"));
+											PreparedStatement getRequestPstmt = conn1
+													.prepareStatement(dbConnector.getQuery("requestBooked"));){
 											getRequestPstmt.setInt(1, bookingStatus.getTicketId());
 											getRequestPstmt.setInt(2, bookingStatus.getId());
-										getRequestPstmt.setInt(3, bookingStatus.getFlightId());
-										getRequestPstmt.setInt(4, bookingStatus.getNoofseatsbooked());
-										
-										getRequestPstmt.executeUpdate();
-										return bookingStatus;
-										
-										
-	
+											getRequestPstmt.setInt(3, bookingStatus.getFlightId());
+											getRequestPstmt.setInt(4, bookingStatus.getNoofseatsbooked());
+
+											getRequestPstmt.executeUpdate();
+											return bookingStatus;
+
 										} catch (Exception e) {
 											throw new ARSException("Can't request flight");
 										}
-										
-										
-										
-										
+
 									}
 								}
 							}
@@ -196,33 +192,6 @@ public class UserDAOJDBCImple implements UserDAO {
 		}
 		return null;
 	}
-
-//			try (ResultSet getReqSet = getFlightPstmt.executeQuery();) {
-//				if (getReqSet.next()) {
-//					int requestFlightId = getReqSet.getInt("flight_id");
-//					getRequestPstmt.setInt(1, requestFlightId);
-//					try (ResultSet getUserSet = getUserPstmt.executeQuery();) {
-//						if (getUserSet.next()) {
-//							int requestUserId = getReqSet.getInt("id");
-//							getRequestPstmt.setInt(1, requestUserId);
-//						} else {
-//							throw new ARSException("Request not Found with Matching UserId ");
-//						}
-//					} catch (Exception e) {
-//						throw new ARSException(e.getMessage());
-//					}
-//				} else {
-//					throw new ARSException("Request not Found with Matching FlightId ");
-//				}
-//
-//			} catch (Exception e) {
-//				throw new ARSException(e.getMessage());
-//			}
-//		} catch (Exception e) {
-//			throw new ARSException(e.getMessage());
-//		}
-
-//	}
 
 	@Override
 	public List<FlightDetails> searchFlightBySourceAndDestination(String source, String destination) {
@@ -253,6 +222,30 @@ public class UserDAOJDBCImple implements UserDAO {
 			throw new ARSException(e.getMessage());
 		}
 		throw new ARSException("Flight is Not Found in the Airline  with the Given Flight Destination");
+	}
+
+	@Override
+	public boolean cancelTicket(int ticketId) {
+		try (Connection conn = dbConnector.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(dbConnector.getQuery("cancelTicket"));) {
+			pstmt.setInt(1, ticketId);
+			int result = pstmt.executeUpdate();
+			if (result != 0) {
+				return true;
+			}
+
+		} catch (Exception e) {
+			throw new ARSException(e.getMessage());
+
+		}
+		throw new  ARSException("Ticked Id is not Present in the Airline Reservation System");
+	
+	}
+
+	@Override
+	public List<BookingDetails> getTicketDetails(int userId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

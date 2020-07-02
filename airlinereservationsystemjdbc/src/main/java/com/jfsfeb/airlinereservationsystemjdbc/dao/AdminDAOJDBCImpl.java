@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.jfsfeb.airlinereservationsystemjdbc.dto.BookingStatus;
+import com.jfsfeb.airlinereservationsystemjdbc.dto.BookingDetails;
 import com.jfsfeb.airlinereservationsystemjdbc.dto.FlightDetails;
 
 import com.jfsfeb.airlinereservationsystemjdbc.execption.ARSException;
@@ -181,13 +181,13 @@ public class AdminDAOJDBCImpl implements AdminDAO{
 	}
 
 	@Override
-	public List<BookingStatus> getBookingStatus() {
-		List<BookingStatus> bookingList = new LinkedList<BookingStatus>();
+	public List<BookingDetails> getBookingStatus() {
+		List<BookingDetails> bookingList = new LinkedList<BookingDetails>();
 		try (Connection conn = dbConnector.getConnection();
 				Statement stmt = conn.createStatement();
 				ResultSet resultSet = stmt.executeQuery(dbConnector.getQuery("showBooking"))) {
 			while (resultSet.next()) {
-				BookingStatus info = new BookingStatus();
+				BookingDetails info = new BookingDetails();
 				info.setTicketId(resultSet.getInt("ticket_id"));
 				info.setFlightId(resultSet.getInt("flight_id"));
 				info.setId(resultSet.getInt("id"));

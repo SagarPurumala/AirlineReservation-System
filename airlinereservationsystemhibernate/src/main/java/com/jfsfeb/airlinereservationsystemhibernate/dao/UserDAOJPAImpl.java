@@ -15,46 +15,7 @@ import com.jfsfeb.airlinereservationsystemhibernate.exception.ARSException;
 
 public class UserDAOJPAImpl implements UserDAO{
 	EntityManagerFactory factory = null;
-	@Override
-	public boolean registerUser(User user) {
-		EntityManager manager = null;
-		EntityTransaction transaction = null;
-		try {
-			factory = Persistence.createEntityManagerFactory("TestPersistence");
-			manager = factory.createEntityManager();
-			transaction = manager.getTransaction();
-			transaction.begin();
-			manager.persist(user);
-			transaction.commit();
-			return true;
-		} catch (Exception e) {
-			transaction.rollback();
-			throw new ARSException("User Already Exists Or User Can't Be added");
-		} finally {
-			manager.close();
-			factory.close();
-		}
-	}
-
-	@Override
-	public User authenticateUser(String emailId, String password) {
-		EntityManager manager = null;
-		factory = Persistence.createEntityManagerFactory("TestPersistence");
-		manager = factory.createEntityManager();
-		String jpql = "select u from  User u where u.emailId = :emailId and u.password =:password";
-		TypedQuery<User> query = manager.createQuery(jpql, User.class);
-		query.setParameter("emailId", emailId);
-		query.setParameter("password", password);
-		try {
-			return query.getSingleResult();
-		} catch (Exception e) {
-			throw new ARSException("Invalid Login Credentials, Please Enter Correctly");
-		} finally {
-			manager.close();
-			factory.close();
-		}
-	}
-
+	
 	@Override
 	public List<FlightDetails> searchFlightByName(String flightname) {
 		EntityManager manager = null;
@@ -142,6 +103,47 @@ public class UserDAOJPAImpl implements UserDAO{
 
 	@Override
 	public BookingStatus bookRequest(BookingStatus bookingStatus) {
+		EntityManager manager = null;
+		EntityTransaction transaction = null;  
+		FlightDetails flightDetails=new FlightDetails();
+		User user=new User();
+		int flightId=0;
+		int userId=0;
+		try {
+			factory = Persistence.createEntityManagerFactory("TestPersistence");
+			manager = factory.createEntityManager();
+			transaction = manager.getTransaction();
+			transaction.begin();
+			flightDetails = manager.find(FlightDetails.class, bookingStatus.getFlightId());
+
+			if (flightDetails != null) {
+				flightId=flightDetails.getFlightId();
+				transaction.commit();
+				if(flightId==bookingStatus.getFlightId()) {
+					transaction.begin();
+					user = manager.find(User.class, bookingStatus.getId());
+					if(user!=null) {
+						userId=user.getId();
+						transaction.commit();
+						if(userId==bookingStatus.getId()) {
+							transaction.begin();
+							manager.persist(bookingStatus);
+							transaction.commit();
+						}
+					}else {
+						throw new ARSException("Invalid Request, User ID Not Found");
+					}
+				}
+				
+			} else {
+				throw new ARSException("Invalid Request, Flight ID Not Found");
+			}
+		} catch (ARSException e) {
+			throw new ARSException(e.getMessage());
+		} finally {
+			manager.close();
+			factory.close();
+		}
 		
 		return null;
 	}

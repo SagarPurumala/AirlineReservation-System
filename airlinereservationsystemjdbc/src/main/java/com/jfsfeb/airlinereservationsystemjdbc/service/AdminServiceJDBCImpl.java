@@ -4,7 +4,7 @@ import java.util.List;
 
 
 import com.jfsfeb.airlinereservationsystemjdbc.dao.AdminDAO;
-import com.jfsfeb.airlinereservationsystemjdbc.dto.BookingStatus;
+import com.jfsfeb.airlinereservationsystemjdbc.dto.BookingDetails;
 import com.jfsfeb.airlinereservationsystemjdbc.dto.FlightDetails;
 import com.jfsfeb.airlinereservationsystemjdbc.execption.ARSException;
 import com.jfsfeb.airlinereservationsystemjdbc.factory.AirlineFactory;
@@ -62,7 +62,7 @@ public class AdminServiceJDBCImpl implements AdminService{
 	}
 
 	@Override
-	public List<BookingStatus> getBookingStatus() {
+	public List<BookingDetails> getBookingStatus() {
 		return dao.getBookingStatus();
 	}
 

@@ -2,7 +2,7 @@ package com.jfsfeb.airlinereservationsystemjdbc.dao;
 
 import java.util.List;
 
-import com.jfsfeb.airlinereservationsystemjdbc.dto.BookingStatus;
+import com.jfsfeb.airlinereservationsystemjdbc.dto.BookingDetails;
 import com.jfsfeb.airlinereservationsystemjdbc.dto.FlightDetails;
 
 
@@ -21,5 +21,5 @@ public interface AdminDAO {
 
 	List<FlightDetails> getFlightDetails();
 	
-	List<BookingStatus> getBookingStatus();
+	List<BookingDetails> getBookingStatus();
 }

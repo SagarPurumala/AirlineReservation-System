@@ -1,17 +1,18 @@
 package com.jfsfeb.airlinereservationsystemjdbc.controller;
 
 import java.time.LocalDate;
-
 import java.time.LocalTime;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
-import com.jfsfeb.airlinereservationsystemjdbc.dto.BookingStatus;
+import com.jfsfeb.airlinereservationsystemjdbc.dto.BookingDetails;
 import com.jfsfeb.airlinereservationsystemjdbc.dto.FlightDetails;
+import com.jfsfeb.airlinereservationsystemjdbc.dto.User;
 import com.jfsfeb.airlinereservationsystemjdbc.execption.ARSException;
 import com.jfsfeb.airlinereservationsystemjdbc.factory.AirlineFactory;
 import com.jfsfeb.airlinereservationsystemjdbc.service.AdminService;
+import com.jfsfeb.airlinereservationsystemjdbc.service.AirlineService;
 
 import lombok.extern.log4j.Log4j;
 
@@ -20,6 +21,11 @@ public class AdminController {
 	public static void adminOperations() {
 
 		boolean flag = false;
+		String checkName = null;
+		long checkMobile = 0;
+		String checkEmail = null;
+		String checkPassword = null;
+		String role=null;
 		int flightId = 0;
 		String flightName = null;
 		String flightSource = null;
@@ -33,7 +39,7 @@ public class AdminController {
 		@SuppressWarnings("resource")
 		Scanner scanner = new Scanner(System.in);
 		AdminService service = AirlineFactory.getAdminServiceImplInstance();
-
+		 AirlineService airlineService =AirlineFactory.getAirlineServiceImplInstance();
 		do {
 			try {
 				log.info("You have logged in successfully");
@@ -46,7 +52,8 @@ public class AdminController {
 				log.info("[5]  REMOVE FLIGHT");
 				log.info("[6]  VIEW ALL FLIGHTDETAILS");
 				log.info("[7] ISSUED BOOKING STATUS");
-				log.info("[8] LOGOUT");
+				log.info("[8] ADD NEW ADMIN or USER");
+				log.info("[9] LOGOUT");
 				log.info("<--------------------------------------------------------------------->");
 				int choice1 = scanner.nextInt();
 				switch (choice1) {
@@ -128,7 +135,7 @@ public class AdminController {
 						}
 					} while (!flag);
 					do {
-						log.info("Enter  Flight Arrival Date  : ");
+						log.info("Enter  Flight Arrival Date (YYYY,MM,DD) : ");
 
 						try {
 							arrivalDate = LocalDate.of(scanner.nextInt(), scanner.nextInt(), scanner.nextInt());
@@ -144,7 +151,7 @@ public class AdminController {
 						}
 					} while (!flag);
 					do {
-						log.info("Enter  Flight Arrival Time : ");
+						log.info("Enter  Flight Arrival Time(HOURS,MIN,SECS) : ");
 
 						try {
 							arrivalTime = LocalTime.of(scanner.nextInt(), scanner.nextInt(), scanner.nextInt());
@@ -160,7 +167,7 @@ public class AdminController {
 						}
 					} while (!flag);
 					do {
-						log.info("Enter  Flight departure Date  : ");
+						log.info("Enter  Flight departure Date (YYYY,MM,DD) : ");
 
 						try {
 							departureDate = LocalDate.of(scanner.nextInt(), scanner.nextInt(), scanner.nextInt());
@@ -175,7 +182,7 @@ public class AdminController {
 						}
 					} while (!flag);
 					do {
-						log.info("Enter  Flight departure Time : ");
+						log.info("Enter  Flight departure Time(HOURS,MIN,SECS) : ");
 
 						try {
 							departureTime = LocalTime.of(scanner.nextInt(), scanner.nextInt(), scanner.nextInt());
@@ -329,12 +336,12 @@ public class AdminController {
 					}
 					break;
 				case 7:
-					List<BookingStatus> booking = service.getBookingStatus();
+					List<BookingDetails> booking = service.getBookingStatus();
 
 					log.info("<--------------------------------------------------------------------->");
 					log.info(String.format("%-10s %-10s %-10s %s", "TicketID","FlightId",
 							 "UserID", "NoofSeatBooked"));
-					for (BookingStatus request : booking) {
+					for (BookingDetails request : booking) {
 						if (request != null) {
 							log.info(String.format("%-10s %-10s %-10s %s",
 									request.getTicketId(),
@@ -347,6 +354,47 @@ public class AdminController {
 					}
 					break;
 				case 8:
+					   try {
+						
+							log.info("Enter Name to Register : ");
+							checkName = scanner.next();
+							log.info("Enter MobileNumber to Register : ");
+							checkMobile = scanner.nextLong();
+							log.info("Enter Email to Register : ");
+							checkEmail = scanner.next();
+							log.info("Enter Password :");
+							checkPassword = scanner.next();
+							log.info("Enter Role as admin or user :");
+							role = scanner.next();
+							int userId = (int) (Math.random() * 10000);
+							if (userId <= 1000) {
+								userId = userId + 1000;
+							}
+							User bean = new User();
+							bean.setId(userId);
+							bean.setName(checkName);
+							bean.setMobileNumber(checkMobile);
+							bean.setEmailId(checkEmail);
+							bean.setPassword(checkPassword);
+							bean.setRole(role);
+
+							boolean check = airlineService.register(bean);
+							if (check) {
+								log.info("You have registered Successfully");
+							} else {
+								log.info("Already registered");
+							}
+							break;
+		                  }catch (InputMismatchException e) {
+		      				log.error("Invalid entry ");
+		    				scanner.next();
+		    				break;
+		    			}
+		                  catch (ARSException e) {
+							log.info(e.getMessage());
+							break;
+						}
+				case 9:
 					SubAirlineController.airlineOperations();
 
 				default:

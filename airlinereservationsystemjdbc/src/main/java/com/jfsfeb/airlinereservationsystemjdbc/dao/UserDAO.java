@@ -2,7 +2,7 @@ package com.jfsfeb.airlinereservationsystemjdbc.dao;
 
 import java.util.List;
 
-import com.jfsfeb.airlinereservationsystemjdbc.dto.BookingStatus;
+import com.jfsfeb.airlinereservationsystemjdbc.dto.BookingDetails;
 import com.jfsfeb.airlinereservationsystemjdbc.dto.FlightDetails;
 
 public interface UserDAO {
@@ -15,7 +15,11 @@ public interface UserDAO {
 
 	List<FlightDetails> getFlightDetails();
 
-	BookingStatus bookRequest(BookingStatus bookingStatus);
+	BookingDetails bookRequest(BookingDetails bookingStatus);
 
 	List<FlightDetails> searchFlightBySourceAndDestination(String source, String destination);
+	
+	boolean cancelTicket(int ticketId);
+	
+	public List<BookingDetails> getTicketDetails(int userId);
 }

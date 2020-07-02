@@ -1,2 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<qualifiedTypeNameHistroy/>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="javax.persistence.Query"/>
+<fullyQualifiedTypeName name="com.jfsfeb.airlinereservationsystemjdbc.controller.AdminController"/>
+<fullyQualifiedTypeName name="com.jfsfeb.airlinereservationsystemjdbc.dao.AirlineDAOJDBCImp"/>
+<fullyQualifiedTypeName name="com.jfsfeb.airlinereservationsystemjdbc.service.AirlineServiceImp"/>
+<fullyQualifiedTypeName name="com.jfsfeb.airlinereservationsystemjdbc.dao.AirlineDAO"/>
+<fullyQualifiedTypeName name="com.jfsfeb.airlinereservationsystemjdbc.service.AirlineService"/>
+<fullyQualifiedTypeName name="com.jfsfeb.airlinereservationsystemjdbc.factory.AirlineFactory"/>
+<fullyQualifiedTypeName name="com.jfsfeb.airlinereservationsystemjdbc.execption.ARSException"/>
+<fullyQualifiedTypeName name="com.jfsfeb.airlinereservationsystemjdbc.controller.AirlineMainController"/>
+<fullyQualifiedTypeName name="com.jfsfeb.airlinereservationsystemjdbc.controller.SubAirlineController"/>
+<fullyQualifiedTypeName name="java.lang.Exception"/>
+<fullyQualifiedTypeName name="com.jfsfeb.airlinereservationsystemhibernate.validation.Validation"/>
+<fullyQualifiedTypeName name="com.jfsfeb.airlinereservationsystemhibernate.dao.AirlineDAO"/>
+<fullyQualifiedTypeName name="com.jfsfeb.airlinereservationsystemhibernate.service.AirlineServiceJPAImpl"/>
+<fullyQualifiedTypeName name="com.jfsfeb.airlinereservationsystemhibernate.factory.AirlineFactory"/>
+<fullyQualifiedTypeName name="com.jfsfeb.airlinereservationsystemhibernate.service.AirlineService"/>
+<fullyQualifiedTypeName name="javax.persistence.Table"/>
+<fullyQualifiedTypeName name="javax.persistence.Column"/>
+<fullyQualifiedTypeName name="com.jfsfeb.airlinereservationsystemhibernate.exception.ARSException"/>
+<fullyQualifiedTypeName name="javax.persistence.EntityTransaction"/>
+<fullyQualifiedTypeName name="com.jfsfeb.airlinereservationsystemhibernate.dto.User"/>
+<fullyQualifiedTypeName name="com.jfsfeb.airlinereservationsystemhibernate.dto.FlightDetails"/>
+<fullyQualifiedTypeName name="com.jfsfeb.airlinereservationsystemhibernate.dto.BookingStatus"/>
+</qualifiedTypeNameHistroy>

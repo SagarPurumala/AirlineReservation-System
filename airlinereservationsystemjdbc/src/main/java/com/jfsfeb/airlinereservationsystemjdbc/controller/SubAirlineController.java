@@ -18,7 +18,6 @@ public class SubAirlineController {
 
 public static void airlineOperations() {
 	
-	int checkId = 0;
 	String checkName = null;
 	long checkMobile = 0;
 	String checkEmail = null;
@@ -35,37 +34,35 @@ public static void airlineOperations() {
 			try {
 				log.info(
 						"<----------------------<<< WELCOME TO AIRLINE RESERVATION SYSTEM >>>--------------------->");
-				log.info("[1] VIEW ALL FLIGHTDETAILS");
-				log.info("[2] SEARCH FLIGHT BY SOURCE AND DESTINATION");
-				log.info("[3] IF YOUR ARE ALREADY REGISTERED THEN LOGIN");
-				log.info("[4] IF YOUR ARE NEW USER REGISTER");
+				List<FlightDetails> info = service.getFlightDetails();
+				log.info(
+						"<--------------------------------------------------------------------->");
+				log.info(String.format("%-10s %-10s %-10s %-15s %-15s %-15s %-20s %-20s %s","FlightId",
+						"FlightName", "Source", "Destination", "ArrivalDate","ArrivalTime",
+						"DepartureDate","DepartureTime", "NoofSeatAvailable"));
+				for (FlightDetails flightBean : info) {
+					if (flightBean != null) {
+						log.info(String.format("%-10s %-10s %-10s %-15s %-15s %-15s %-20s %-20s %s",
+								flightBean.getFlightId(), flightBean.getFlightName(),
+								flightBean.getSource(), flightBean.getDestination(),
+								java.sql.Date.valueOf(flightBean.getArrivalDate()),
+								java.sql.Time.valueOf(flightBean.getArrivalTime()),
+								java.sql.Date.valueOf(flightBean.getDepartureDate()),
+								java.sql.Time.valueOf(flightBean.getDepartureTime()),
+								flightBean.getNoofseatsavailable()));
+					} else {
+						log.info("No Flight are available in the Flight Details");
+					}
+				}
+				log.info("[1] SEARCH FLIGHT BY SOURCE AND DESTINATION");
+				log.info("[2] LOGIN");
+				log.info("[3] REGISTER(NEW USER)");
 				log.info("<--------------------------------------------------------------------->");
 				int i = scanner.nextInt();
 				
 				switch (i) {
+			
 				case 1:
-					List<FlightDetails> info = service.getFlightDetails();
-					log.info(
-							"<--------------------------------------------------------------------->");
-					log.info(String.format("%-10s %-10s %-10s %-10s %-13s %-15s %-20s %-20s %s","FlightId",
-							"Flight Name", "Source", "Destination", "Arrival Date","Arrival Time",
-							"Departure Date","Departure Time", "NoofSeatAvailable"));
-					for (FlightDetails flightBean : info) {
-						if (flightBean != null) {
-							log.info(String.format("%-10s %-10s %-10s %-10s %-13s %-15s %-20s %-20s %s",
-									flightBean.getFlightId(), flightBean.getFlightName(),
-									flightBean.getSource(), flightBean.getDestination(),
-									java.sql.Date.valueOf(flightBean.getArrivalDate()),
-									java.sql.Time.valueOf(flightBean.getArrivalTime()),
-									java.sql.Date.valueOf(flightBean.getDepartureDate()),
-									java.sql.Time.valueOf(flightBean.getDepartureTime()),
-									flightBean.getNoofseatsavailable()));
-						} else {
-							log.info("No Flight are available in the Flight Details");
-						}
-					}
-					break;
-				case 2:
 					log.info("Search flight by Source : ");
 					String source1 = scanner.next();
 					log.info("Search flight by Destination : ");
@@ -77,12 +74,12 @@ public static void airlineOperations() {
 							.searchFlightBySourceAndDestination(source1, destination1);
 					log.info(
 							"<<--------------------------------------------------------------------->>");
-					log.info(String.format("%-10s %-10s %-10s %-10s %-13s %-15s %-20s %-20s %s","FlightId",
+					log.info(String.format("%-10s %-10s %-10s %-15s %-15s %-15s %-20s %-20s %s","FlightId",
 							"Flight Name", "Source", "Destination", "Arrival Date","Arrival Time",
 							"Departure Date","Departure Time", "NoofSeatAvailable"));
 					for (FlightDetails flightBean : flightSourceToDestination) {
 						if (flightBean != null) {
-							log.info(String.format("%-10s %-10s %-10s %-10s %-13s %-15s %-20s %-20s %s",
+							log.info(String.format("%-10s %-10s %-10s %-15s %-15s %-15s %-20s %-20s %s",
 									flightBean.getFlightId(), flightBean.getFlightName(),
 									flightBean.getSource(), flightBean.getDestination(),
 									java.sql.Date.valueOf(flightBean.getArrivalDate()),
@@ -95,7 +92,7 @@ public static void airlineOperations() {
 						}
 					}
 					break;
-				case 3:
+				case 2:
 					log.info("Enter registered email to login : ");
 					email = scanner.next();
 					log.info("Enter registered Password to login : ");
@@ -119,10 +116,9 @@ public static void airlineOperations() {
 						log.info(e.getMessage());
 					}
 					break;
-				case 4:
+				case 3:
 					   try {
-							log.info("Enter ID to Register : ");
-							checkId = scanner.nextInt();
+							
 							log.info("Enter Name to Register : ");
 							checkName = scanner.next();
 							log.info("Enter MobileNumber to Register : ");
@@ -131,10 +127,13 @@ public static void airlineOperations() {
 							checkEmail = scanner.next();
 							log.info("Enter Password :");
 							checkPassword = scanner.next();
-							log.info("Enter Role :");
-							role = scanner.next();
+							role = "user";
+							int userId = (int) (Math.random() * 10000);
+							if (userId <= 1000) {
+								userId = userId + 1000;
+							}
 							User bean = new User();
-							bean.setId(checkId);
+							bean.setId(userId);
 							bean.setName(checkName);
 							bean.setMobileNumber(checkMobile);
 							bean.setEmailId(checkEmail);
@@ -144,6 +143,7 @@ public static void airlineOperations() {
 							boolean check = service.register(bean);
 							if (check) {
 								log.info("You have registered Successfully");
+								log.info("Your registered UserId :"+userId);
 							} else {
 								log.info("Already registered");
 							}
@@ -161,11 +161,11 @@ public static void airlineOperations() {
 
 				default:
 					log.info("Invalid Choice");
-					log.error("Choice must be 1 or 2 or 3 or 4");
+					log.error("Invalid entry please choose from above options");
 					break;
 				}
 			} catch (InputMismatchException e) { //// if we give string in 1 n 2 n 3 n 4
-				log.error("Invalid entry please provide 1 or 2 or 3 or 4");
+				log.error("Invalid entry please choose from above options");
 				scanner.nextLine();
 			}
 			catch (ARSException e) {
