@@ -151,10 +151,10 @@ public class AdminController {
 						}
 					} while (!flag);
 					do {
-						log.info("Enter  Flight Arrival Time(HOURS,MIN,SECS) : ");
+						log.info("Enter  Flight Arrival Time(HOURS,MIN) : ");
 
 						try {
-							arrivalTime = LocalTime.of(scanner.nextInt(), scanner.nextInt(), scanner.nextInt());
+							arrivalTime = LocalTime.of(scanner.nextInt(), scanner.nextInt());
 
 							flag = true;
 						} catch (InputMismatchException e) {
@@ -182,10 +182,10 @@ public class AdminController {
 						}
 					} while (!flag);
 					do {
-						log.info("Enter  Flight departure Time(HOURS,MIN,SECS) : ");
+						log.info("Enter  Flight departure Time(HOURS,MIN) : ");
 
 						try {
-							departureTime = LocalTime.of(scanner.nextInt(), scanner.nextInt(), scanner.nextInt());
+							departureTime = LocalTime.of(scanner.nextInt(), scanner.nextInt());
 							flag = true;
 						} catch (InputMismatchException e) {
 							flag = false;
