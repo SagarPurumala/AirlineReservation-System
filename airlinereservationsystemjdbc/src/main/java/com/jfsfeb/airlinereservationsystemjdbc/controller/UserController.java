@@ -227,7 +227,7 @@ public class UserController {
 									bookingStatus.setFlightId(flightId2);
 									try {
 										BookingDetails request = service1.bookRequest(bookingStatus);
-										log.info("Request placed to Airline Management ");
+										
 										log.info(
 												"<--------------------------------------------------------------------->");
 										log.info(String.format("%-10s %-10s %-10s %s", "TicketId", "FlightId", "UserID",
@@ -235,6 +235,7 @@ public class UserController {
 										;
 										log.info(String.format("%-10s %-10s %-10s %s", request.getTicketId(),
 												request.getFlightId(), request.getId(), request.getNoofseatsbooked()));
+										log.info("Request placed to Airline Management ");
 									} catch (Exception e) {
 										log.info("Invalid Request of booking");
 									}

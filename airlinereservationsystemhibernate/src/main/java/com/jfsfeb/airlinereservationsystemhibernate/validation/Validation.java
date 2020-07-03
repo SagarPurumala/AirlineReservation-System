@@ -18,14 +18,14 @@ public class Validation {
 	}
 
 	public boolean validatedName(String name) throws ARSException {
-		String nameRegEx = "^(?=.{4,20}$)(?![_.-])(?!.*[.]{2})[a-zA-Z._-]+(?<![_.-])";
+		String nameRegEx =  "^[A-Za-z\\s]{3,}[\\.]{0,1}[A-Za-z\\s]{0,}$" ;
 		boolean result = false;
 		Pattern pattern = Pattern.compile(nameRegEx);
 		Matcher matcher = pattern.matcher(name);
 		if (matcher.matches()) {
 			result = true;
 		} else {
-			throw new ARSException("Invalid Name! Name should have atleast 4 characters");
+			throw new ARSException("Name should contain atleast 3 characters and only alphabets");
 		}
 		return result;
 	}

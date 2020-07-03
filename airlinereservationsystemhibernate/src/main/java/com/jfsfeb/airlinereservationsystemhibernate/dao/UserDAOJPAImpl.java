@@ -129,6 +129,7 @@ public class UserDAOJPAImpl implements UserDAO{
 							transaction.begin();
 							manager.persist(bookingStatus);
 							transaction.commit();
+							return bookingStatus;
 						}
 					}else {
 						throw new ARSException("Invalid Request, User ID Not Found");

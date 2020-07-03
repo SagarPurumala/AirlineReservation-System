@@ -198,20 +198,20 @@ public class UserDAOJDBCImple implements UserDAO {
 									}
 								}
 							}catch (Exception e) {
-								throw new ARSException(e.getMessage());
+								throw new ARSException("user Details not found");
 							}
 						} catch (Exception e) {
-							throw new ARSException(e.getMessage());
+							throw new ARSException("user Details not found");
 						}
 					}else {
 						throw new ARSException("Flight Id not Found");
 					}
 				}
 			}catch (Exception e) {
-				throw new ARSException(e.getMessage());
+				throw new ARSException("flight details not found");
 			}
 		} catch (ARSException e) {
-			throw new ARSException(e.getMessage());
+			throw new ARSException("flight details not found");
 		} catch (Exception e) {
 			throw new ARSException(e.getMessage());
 		}
