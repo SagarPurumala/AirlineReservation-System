@@ -193,14 +193,22 @@ public class UserDAOJDBCImple implements UserDAO {
 											throw new ARSException("Can't request flight");
 										}
 
+									}else {
+										throw new ARSException("user Id not Found");
 									}
 								}
+							}catch (Exception e) {
+								throw new ARSException(e.getMessage());
 							}
 						} catch (Exception e) {
 							throw new ARSException(e.getMessage());
 						}
+					}else {
+						throw new ARSException("Flight Id not Found");
 					}
 				}
+			}catch (Exception e) {
+				throw new ARSException(e.getMessage());
 			}
 		} catch (ARSException e) {
 			throw new ARSException(e.getMessage());
@@ -253,15 +261,19 @@ public class UserDAOJDBCImple implements UserDAO {
 				PreparedStatement pstmt = conn.prepareStatement(dbConnector.getQuery("cancelTicket"));) {
 			pstmt.setInt(1, ticketId);
 			int result = pstmt.executeUpdate();
+			
 			if (result != 0) {
+				
 				return true;
+			
 			}
 
 		} catch (Exception e) {
 			throw new ARSException(e.getMessage());
 
 		}
-		throw new  ARSException("Ticked Id is not Present in the Airline Reservation System");
+		return true;
+		//throw new  ARSException("Ticked Id is not Present in the Airline Reservation System");
 	
 	}
 
