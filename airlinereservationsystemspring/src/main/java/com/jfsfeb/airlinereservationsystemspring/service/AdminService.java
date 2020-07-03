@@ -2,7 +2,7 @@ package com.jfsfeb.airlinereservationsystemspring.service;
 
 import java.util.List;
 
-import com.jfsfeb.airlinereservationsystemspring.bean.BookingStatus;
+import com.jfsfeb.airlinereservationsystemspring.bean.BookingDetails;
 import com.jfsfeb.airlinereservationsystemspring.bean.FlightDetails;
 
 
@@ -22,7 +22,7 @@ public interface AdminService {
 
 	List<FlightDetails> getFlightDetails();
 
-	List<BookingStatus> getBookingStatus();
+	List<BookingDetails> getBookingStatus();
 	
 	boolean validateFlightID(int flightid);
 	

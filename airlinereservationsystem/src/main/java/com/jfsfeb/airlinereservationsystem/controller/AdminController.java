@@ -107,9 +107,7 @@ public class AdminController {
 									log.info("[5]  REMOVE FLIGHT");
 									log.info("[6]  VIEW ALL FLIGHTDETAILS");
 									log.info("[7] ISSUED BOOKING STATUS");
-									// log.info("[8] VIEW ALL USER");
-
-									log.info("[9] LOGOUT");
+									log.info("[8] LOGOUT");
 									log.info("<--------------------------------------------------------------------->");
 									int choice1 = scanner.nextInt();
 									switch (choice1) {
@@ -387,16 +385,16 @@ public class AdminController {
 											}
 										}
 										break;
-									case 9:
+									case 8:
 										AdminController.adminOperations();
 
 									default:
-										log.info("Invalid Choice please provide 1 or 2 or 3 or 4 or 5 or 6  or 7 or 9");
+										log.info("Invalid entry please choose above option");
 										break;
 									}
 
 								} catch (InputMismatchException e) {
-									log.error("Invalid entry please provide 1 or 2 or 3 or 4 or 5 or 6  or 7 or 9");
+									log.error("Invalid entry please choose above option");
 									scanner.nextLine();
 								} catch (ARSException e) {
 									log.info(e.getMessage());
@@ -417,11 +415,11 @@ public class AdminController {
 					break;
 
 				default:
-					log.info("Invalid Choice please provide 1 or 2 or 3");
+					log.info("Invalid entry please choose above option");
 					break;
 				}
 			} catch (InputMismatchException e) {
-				log.error("Invalid entry please provide 1 or 2 or 3");
+				log.error("Invalid entry please choose above option");
 				scanner.nextLine();
 			}
 

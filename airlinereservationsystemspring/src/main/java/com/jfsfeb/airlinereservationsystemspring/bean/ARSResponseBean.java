@@ -15,4 +15,5 @@ public class ARSResponseBean {
 	private boolean error;
 	private String message;
 	private List data;
+	private User user;
 }

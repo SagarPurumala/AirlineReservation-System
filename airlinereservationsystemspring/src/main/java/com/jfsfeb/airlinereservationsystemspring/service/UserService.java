@@ -2,7 +2,7 @@ package com.jfsfeb.airlinereservationsystemspring.service;
 
 import java.util.List;
 
-import com.jfsfeb.airlinereservationsystemspring.bean.BookingStatus;
+import com.jfsfeb.airlinereservationsystemspring.bean.BookingDetails;
 import com.jfsfeb.airlinereservationsystemspring.bean.FlightDetails;
 
 public interface UserService {
@@ -15,7 +15,7 @@ public interface UserService {
 
 	List<FlightDetails> getFlightDetails();
 
-	BookingStatus bookRequest(BookingStatus bookingStatus);
+	BookingDetails bookRequest(BookingDetails bookingStatus);
 	
 	List<FlightDetails> searchFlightBySourceAndDestination(String source,String destination);
 }

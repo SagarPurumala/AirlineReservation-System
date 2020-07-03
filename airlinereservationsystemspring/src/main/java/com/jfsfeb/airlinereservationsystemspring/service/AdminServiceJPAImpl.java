@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.jfsfeb.airlinereservationsystemspring.bean.BookingStatus;
+import com.jfsfeb.airlinereservationsystemspring.bean.BookingDetails;
 import com.jfsfeb.airlinereservationsystemspring.bean.FlightDetails;
 import com.jfsfeb.airlinereservationsystemspring.dao.AdminDAO;
 import com.jfsfeb.airlinereservationsystemspring.exception.ARSException;
@@ -69,7 +69,7 @@ public class AdminServiceJPAImpl implements AdminService{
 	}
 
 	@Override
-	public List<BookingStatus> getBookingStatus() {
+	public List<BookingDetails> getBookingStatus() {
 		return dao.getBookingStatus();
 	}
 

@@ -10,7 +10,7 @@ import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 
-import com.jfsfeb.airlinereservationsystemspring.bean.BookingStatus;
+import com.jfsfeb.airlinereservationsystemspring.bean.BookingDetails;
 import com.jfsfeb.airlinereservationsystemspring.bean.FlightDetails;
 import com.jfsfeb.airlinereservationsystemspring.bean.User;
 import com.jfsfeb.airlinereservationsystemspring.exception.ARSException;
@@ -106,7 +106,7 @@ public class UserDAOJPAImpl implements UserDAO{
 	}
 
 	@Override
-	public BookingStatus bookRequest(BookingStatus bookingStatus) {
+	public BookingDetails bookRequest(BookingDetails bookingStatus) {
 		EntityManager manager = null;
 		EntityTransaction transaction = null;  
 		FlightDetails flightDetails=new FlightDetails();

@@ -32,11 +32,11 @@ public class SubAirlineMain {
 
 				default:
 					log.info("Invalid Choice");
-					log.error("Choice must be 1 or 2 ");
+					log.error("Invalid entry please choose above option");
 					break;
 				}
 			} catch (InputMismatchException e) { //// if we give string in 1 n 2
-				log.error("Invalid entry please provide 1 or 2");
+				log.error("Invalid entry please choose above option");
 				scanner.nextLine();
 			} catch (Exception e) {
 				log.error("Invalid Credentials");

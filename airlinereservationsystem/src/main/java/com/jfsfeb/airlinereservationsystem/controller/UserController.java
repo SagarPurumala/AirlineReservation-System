@@ -315,11 +315,11 @@ public class UserController {
 												case 2:
 													SubAirlineMain.airlineOperations();
 												default:
-													log.error("Invalid entry please provide 1 or 2 ");
+													log.error("Invalid entry please choose above option");
 													break;
 												}
 											} catch (InputMismatchException e) {
-												log.error("Invalid entry please provide 1 or 2 ");
+												log.error("Invalid entry please choose above option");
 												scanner.nextLine();
 											} catch (ARSException e) {
 												log.info(e.getMessage());
@@ -330,11 +330,11 @@ public class UserController {
 										UserController.userOperations();
 
 									default:
-										log.error("Invalid entry please provide 1 or 2 or 3 or 4 or 5 or 6 or 7");
+										log.error("Invalid entry please choose above option");
 										break;
 									}
 								} catch (InputMismatchException e) {
-									System.err.println("Invalid entry please provide 1 or 2 or 3 or 4 or 5 or 6 or 7");
+									System.err.println("Invalid entry please choose above option");
 									scanner.nextLine();
 								} catch (ARSException e) {
 									log.info(e.getMessage());
@@ -352,11 +352,11 @@ public class UserController {
 
 				default:
 					log.info("Invalid Choice");
-					log.error("Choice must be 1 or 2 or 3");
+					log.error("Invalid entry please choose above option");
 					break;
 				}
 			} catch (InputMismatchException e) { // if we give string in 1 n 2 n 3
-				log.error("Invalid entry please provide 1 or 2 or 3");
+				log.error("Invalid entry please choose above option");
 				scanner.nextLine();
 			}
 		} while (true);

@@ -2,7 +2,7 @@ package com.jfsfeb.airlinereservationsystemspring.dao;
 
 import java.util.List;
 
-import com.jfsfeb.airlinereservationsystemspring.bean.BookingStatus;
+import com.jfsfeb.airlinereservationsystemspring.bean.BookingDetails;
 import com.jfsfeb.airlinereservationsystemspring.bean.FlightDetails;
 
 
@@ -20,6 +20,6 @@ public interface AdminDAO {
 
 	List<FlightDetails> getFlightDetails();
 	
-	List<BookingStatus> getBookingStatus();
+	List<BookingDetails> getBookingStatus();
 
 }

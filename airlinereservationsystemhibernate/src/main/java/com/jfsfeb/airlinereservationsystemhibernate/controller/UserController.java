@@ -222,6 +222,7 @@ public static void userOperations() {
 
 								BookingStatus bookingStatus = new BookingStatus();
 								bookingStatus.setNoofseatsbooked(seats);
+								
 								bookingStatus.setTicketId(bookingId);
 								bookingStatus.setId(userId2);
 								bookingStatus.setFlightId(flightId2);

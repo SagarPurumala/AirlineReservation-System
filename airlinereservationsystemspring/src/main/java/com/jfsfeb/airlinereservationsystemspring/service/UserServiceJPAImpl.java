@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.jfsfeb.airlinereservationsystemspring.bean.BookingStatus;
+import com.jfsfeb.airlinereservationsystemspring.bean.BookingDetails;
 import com.jfsfeb.airlinereservationsystemspring.bean.FlightDetails;
 import com.jfsfeb.airlinereservationsystemspring.dao.UserDAO;
 import com.jfsfeb.airlinereservationsystemspring.validation.Validation;
@@ -47,7 +47,7 @@ public class UserServiceJPAImpl implements UserService {
 	}
 
 	@Override
-	public BookingStatus bookRequest(BookingStatus bookingStatus) {
+	public BookingDetails bookRequest(BookingDetails bookingStatus) {
 		if (bookingStatus != null) {
 			return dao.bookRequest(bookingStatus);
 		}

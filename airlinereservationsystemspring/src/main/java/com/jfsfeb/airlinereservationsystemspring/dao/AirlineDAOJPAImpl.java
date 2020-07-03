@@ -19,7 +19,7 @@ public class AirlineDAOJPAImpl implements AirlineDAO{
 	@PersistenceUnit
 	EntityManagerFactory factory;
 	@Override
-	public boolean register(User admin) {
+	public boolean register(User user) {
 		EntityManager manager = null;
 		EntityTransaction transaction = null;
 		try {
@@ -27,7 +27,7 @@ public class AirlineDAOJPAImpl implements AirlineDAO{
 			manager = factory.createEntityManager();
 			transaction = manager.getTransaction();
 			transaction.begin();
-			manager.persist(admin);
+			manager.persist(user);
 			transaction.commit();
 			return true;
 		} catch (Exception e) {

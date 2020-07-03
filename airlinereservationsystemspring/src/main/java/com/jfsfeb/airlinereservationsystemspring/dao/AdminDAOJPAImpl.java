@@ -10,7 +10,7 @@ import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 
-import com.jfsfeb.airlinereservationsystemspring.bean.BookingStatus;
+import com.jfsfeb.airlinereservationsystemspring.bean.BookingDetails;
 import com.jfsfeb.airlinereservationsystemspring.bean.FlightDetails;
 import com.jfsfeb.airlinereservationsystemspring.exception.ARSException;
 
@@ -149,13 +149,13 @@ public class AdminDAOJPAImpl implements AdminDAO{
 	}
 
 	@Override
-	public List<BookingStatus> getBookingStatus() {
+	public List<BookingDetails> getBookingStatus() {
 		EntityManager manager = null;
 		
 		manager = factory.createEntityManager();
-		String jpql = "select b from BookingStatus b";
-		TypedQuery<BookingStatus> query = manager.createQuery(jpql, BookingStatus.class);
-		List<BookingStatus> recordlist = query.getResultList();
+		String jpql = "select b from BookingDetails b";
+		TypedQuery<BookingDetails> query = manager.createQuery(jpql, BookingDetails.class);
+		List<BookingDetails> recordlist = query.getResultList();
 		manager.close();
 		
 		return recordlist;

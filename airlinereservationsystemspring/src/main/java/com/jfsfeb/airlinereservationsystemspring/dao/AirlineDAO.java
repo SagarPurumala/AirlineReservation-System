@@ -8,7 +8,7 @@ import com.jfsfeb.airlinereservationsystemspring.bean.User;
 
 
 public interface AirlineDAO {
-	public boolean register(User admin);
+	public boolean register(User user);
 	public User authenticate(String email, String password);
 	public List<FlightDetails> getFlightDetails();
 	public List<FlightDetails> searchFlightBySourceAndDestination(String source, String destination);

@@ -398,12 +398,12 @@ public class AdminController {
 					SubAirlineController.airlineOperations();
 
 				default:
-					log.info("Invalid Choice please provide 1 or 2 or 3 or 4 or 5 or 6  or 7 or 8");
+					log.info("Invalid entry please choose above option");
 					break;
 				}
 
 			} catch (InputMismatchException e) {
-				log.error("Invalid entry please provide 1 or 2 or 3 or 4 or 5 or 6  or 7 or 8");
+				log.error("Invalid entry please choose above option");
 				scanner.nextLine();
 			} catch (ARSException e) {
 				log.info(e.getMessage());

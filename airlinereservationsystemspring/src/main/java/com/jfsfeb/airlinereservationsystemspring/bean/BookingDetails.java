@@ -12,7 +12,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name="booking_status")
-public class BookingStatus implements Serializable{
+public class BookingDetails implements Serializable{
 	@Id
 	@Column(name="ticket_id")
 	private int ticketId;
