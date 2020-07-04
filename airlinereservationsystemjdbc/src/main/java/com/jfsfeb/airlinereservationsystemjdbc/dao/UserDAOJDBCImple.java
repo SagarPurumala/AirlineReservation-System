@@ -24,7 +24,7 @@ public class UserDAOJDBCImple implements UserDAO {
 				PreparedStatement pstmt = conn.prepareStatement(dbConnector.getQuery("searchFlightByName"));) {
 			pstmt.setString(1, flightname);
 			try (ResultSet resultSet = pstmt.executeQuery();) {
-				if (resultSet.next()) {
+				while (resultSet.next()) {
 					flight = new FlightDetails();
 					flight.setFlightId(resultSet.getInt("flight_Id"));
 					flight.setFlightName(resultSet.getString("flight_name"));
@@ -59,7 +59,7 @@ public class UserDAOJDBCImple implements UserDAO {
 				PreparedStatement pstmt = conn.prepareStatement(dbConnector.getQuery("searchFlightBySource"));) {
 			pstmt.setString(1, source);
 			try (ResultSet resultSet = pstmt.executeQuery();) {
-				if (resultSet.next()) {
+				while (resultSet.next()) {
 					flight = new FlightDetails();
 					flight.setFlightId(resultSet.getInt("flight_Id"));
 					flight.setFlightName(resultSet.getString("flight_name"));
@@ -94,7 +94,7 @@ public class UserDAOJDBCImple implements UserDAO {
 				PreparedStatement pstmt = conn.prepareStatement(dbConnector.getQuery("searchFlightByDestination"));) {
 			pstmt.setString(1, destination);
 			try (ResultSet resultSet = pstmt.executeQuery();) {
-				if (resultSet.next()) {
+				while (resultSet.next()) {
 					flight = new FlightDetails();
 					flight.setFlightId(resultSet.getInt("flight_Id"));
 					flight.setFlightName(resultSet.getString("flight_name"));

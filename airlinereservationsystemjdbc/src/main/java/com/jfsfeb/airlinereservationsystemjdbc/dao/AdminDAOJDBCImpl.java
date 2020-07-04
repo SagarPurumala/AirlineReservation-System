@@ -18,7 +18,6 @@ public class AdminDAOJDBCImpl implements AdminDAO{
    
 	JdbcUtility dbConnector=new JdbcUtility();
 	
-
 	@Override
 	public boolean addFlights(FlightDetails flightDetails) {
 		try (Connection conn = dbConnector.getConnection();
@@ -32,8 +31,6 @@ public class AdminDAOJDBCImpl implements AdminDAO{
 			pstmt.setTime(7, java.sql.Time.valueOf(flightDetails.getArrivalTime()));
 			pstmt.setDate(8, java.sql.Date.valueOf(flightDetails.getDepartureDate()));
 			pstmt.setTime(9, java.sql.Time.valueOf(flightDetails.getDepartureTime()));
-			
-
 			pstmt.executeUpdate();
 
 		} catch (Exception e) {
@@ -67,7 +64,7 @@ public class AdminDAOJDBCImpl implements AdminDAO{
 				PreparedStatement pstmt = conn.prepareStatement(dbConnector.getQuery("searchFlightByName"));) {
 			pstmt.setString(1, flightname);
 			try (ResultSet resultSet = pstmt.executeQuery();) {
-				if (resultSet.next()) {
+				while (resultSet.next()) {
 					flight=new FlightDetails(); 
 					flight.setFlightId(resultSet.getInt("flight_Id"));
 					flight.setFlightName(resultSet.getString("flight_name"));
@@ -81,13 +78,18 @@ public class AdminDAOJDBCImpl implements AdminDAO{
 					flight.setDepartureDate(resultSet.getDate("departuredate").toLocalDate());
 					flight.setDepartureTime(resultSet.getTime("departuretime").toLocalTime());
                     searchList.add(flight);
+					
+				}
+				if (searchList.isEmpty()) {
+					throw new ARSException("Flight is Not Found in the Airline  with the Given Flight Name");
+				} else {
 					return searchList;
 				}
 			}
 		} catch (Exception e) {
 			throw new ARSException(e.getMessage());
 		}
-		throw new ARSException("Flight is Not Found in the Airline  with the Given Flight Name");
+		
 	}
 
 	@Override
@@ -98,7 +100,7 @@ public class AdminDAOJDBCImpl implements AdminDAO{
 				PreparedStatement pstmt = conn.prepareStatement(dbConnector.getQuery("searchFlightBySource"));) {
 			pstmt.setString(1, source);
 			try (ResultSet resultSet = pstmt.executeQuery();) {
-				if (resultSet.next()) {
+				while (resultSet.next()) {
 					flight=new FlightDetails(); 
 					flight.setFlightId(resultSet.getInt("flight_Id"));
 					flight.setFlightName(resultSet.getString("flight_name"));
@@ -110,13 +112,18 @@ public class AdminDAOJDBCImpl implements AdminDAO{
 					flight.setDepartureDate(resultSet.getDate("departuredate").toLocalDate());
 					flight.setDepartureTime(resultSet.getTime("departuretime").toLocalTime());
                     searchList.add(flight);
+					
+				}
+				if (searchList.isEmpty()) {
+					throw new ARSException("Flight is Not Found in the Airline  with the Given Flight Source");
+				} else {
 					return searchList;
 				}
 			}
 		} catch (Exception e) {
 			throw new ARSException(e.getMessage());
 		}
-		throw new ARSException("Flight is Not Found in the Airline  with the Given Flight Source");
+	
 		
 	}
 
@@ -128,7 +135,7 @@ public class AdminDAOJDBCImpl implements AdminDAO{
 				PreparedStatement pstmt = conn.prepareStatement(dbConnector.getQuery("searchFlightByDestination"));) {
 			pstmt.setString(1, destination);
 			try (ResultSet resultSet = pstmt.executeQuery();) {
-				if (resultSet.next()) {
+				while (resultSet.next()) {
 					flight=new FlightDetails(); 
 					flight.setFlightId(resultSet.getInt("flight_Id"));
 					flight.setFlightName(resultSet.getString("flight_name"));
@@ -140,13 +147,18 @@ public class AdminDAOJDBCImpl implements AdminDAO{
 					flight.setDepartureDate(resultSet.getDate("departuredate").toLocalDate());
 					flight.setDepartureTime(resultSet.getTime("departuretime").toLocalTime());
                     searchList.add(flight);
+					
+				}
+				if (searchList.isEmpty()) {
+					throw new ARSException("Flight is Not Found in the Airline  with the Given Flight Destination");
+				} else {
 					return searchList;
 				}
 			}
 		} catch (Exception e) {
 			throw new ARSException(e.getMessage());
 		}
-		throw new ARSException("Flight is Not Found in the Airline  with the Given Flight Destination");
+		
 	}
 	
 

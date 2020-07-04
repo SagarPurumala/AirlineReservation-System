@@ -16,4 +16,5 @@ public class ARSResponseBean {
 	private String message;
 	private List data;
 	private User user;
+	private BookingDetails bookingDetails;
 }

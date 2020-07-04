@@ -59,15 +59,15 @@ public class AirlineController {
 			response.setData(flightList);
 		} else {
 			response.setError(true);
-			response.setMessage("No Users Found in the Library");
+			response.setMessage("No Users Found in the Airline");
 		}
 
 		return response;
 	}
 
-	@GetMapping(path = "/searchFlighBySource", produces = { MediaType.APPLICATION_JSON_VALUE,
+	@GetMapping(path = "/searchFlighBySourceDestination", produces = { MediaType.APPLICATION_JSON_VALUE,
 			MediaType.APPLICATION_XML_VALUE })
-	public void searchFlighBySource(@PathVariable(name = "source") String source, String destination) {
+	public void searchFlighBySourceDestination(@PathVariable(name = "source") String source,@PathVariable(name = "destination") String destination) {
 		List<FlightDetails> flightList = airlineService.searchFlightBySourceAndDestination(source, destination);
 
 		ARSResponseBean responseBean = new ARSResponseBean();
@@ -77,7 +77,7 @@ public class AirlineController {
 
 		} else {
 			responseBean.setError(true);
-			responseBean.setMessage("No flight available from" + source);
+			responseBean.setMessage("No flight available for" + source+"and"+destination);
 		}
 	}
 }

@@ -222,12 +222,12 @@ public class AdminController {
 					bean3.setSource(source);
 					List<FlightDetails> flightSource1 = service.searchFlightBySource(source);
 					log.info("<--------------------------------------------------------------------->");
-					log.info(String.format("%-10s %-10s %-10s %-10s %-13s %-15s %-20s %-20s %s", "FlightId",
+					log.info(String.format("%-10s %-10s %-10s %-15s %-15s %-15s %-20s %-20s %s", "FlightId",
 							"Flight Name", "Source", "Destination", "Arrival Date", "Arrival Time", "DepartureDate",
 							"Departure Time", "NoofSeatAvailable"));
 					for (FlightDetails flightBean : flightSource1) {
 						if (flightBean != null) {
-							log.info(String.format("%-10s %-10s %-10s %-10s %-13s %-15s %-20s %-20s %s",
+							log.info(String.format("%-10s %-10s %-10s %-15s %-15s %-15s %-20s %-20s %s",
 									flightBean.getFlightId(), flightBean.getFlightName(), flightBean.getSource(),
 									flightBean.getDestination(), java.sql.Date.valueOf(flightBean.getArrivalDate()),
 									java.sql.Time.valueOf(flightBean.getArrivalTime()),
@@ -247,12 +247,12 @@ public class AdminController {
 					bean4.setDestination(destination);
 					List<FlightDetails> flightDestination1 = service.searchFlightByDestination(destination);
 					log.info("<<--------------------------------------------------------------------->>");
-					log.info(String.format("%-10s %-10s %-10s %-10s %-13s %-15s %-20s %-20s %s", "FlightId",
+					log.info(String.format("%-10s %-10s %-10s %-15s %-15s %-15s %-20s %-20s %s", "FlightId",
 							"Flight Name", "Source", "Destination", "Arrival Date", "Arrival Time", "DepartureDate",
 							"Departure Time", "NoofSeatAvailable"));
 					for (FlightDetails flightBean : flightDestination1) {
 						if (flightBean != null) {
-							log.info(String.format("%-10s %-10s %-10s %-10s %-13s %-15s %-20s %-20s %s",
+							log.info(String.format("%-10s %-10s %-10s %-15s %-15s %-15s %-20s %-20s %s",
 									flightBean.getFlightId(), flightBean.getFlightName(), flightBean.getSource(),
 									flightBean.getDestination(), java.sql.Date.valueOf(flightBean.getArrivalDate()),
 									java.sql.Time.valueOf(flightBean.getArrivalTime()),
@@ -273,12 +273,12 @@ public class AdminController {
 
 					List<FlightDetails> fname = service.searchFlightByName(name);
 					log.info("<--------------------------------------------------------------------->");
-					log.info(String.format("%-10s %-10s %-10s %-10s %-13s %-15s %-20s %-20s %s", "FlightId",
+					log.info(String.format("%-10s %-10s %-10s %-15s %-15s %-15s %-20s %-20s %s", "FlightId",
 							"Flight Name", "Source", "Destination", "Arrival Date", "Arrival Time", "DepartureDate",
 							"Departure Time", "NoofSeatAvailable"));
 					for (FlightDetails flightBean : fname) {
 						if (flightBean != null) {
-							log.info(String.format("%-10s %-10s %-10s %-10s %-13s %-15s %-20s %-20s %s",
+							log.info(String.format("%-10s %-10s %-10s %-15s %-15s %-15s %-20s %-20s %s",
 									flightBean.getFlightId(), flightBean.getFlightName(), flightBean.getSource(),
 									flightBean.getDestination(), java.sql.Date.valueOf(flightBean.getArrivalDate()),
 									java.sql.Time.valueOf(flightBean.getArrivalTime()),
@@ -318,12 +318,12 @@ public class AdminController {
 				case 6:
 					List<FlightDetails> info = service.getFlightDetails();
 					log.info("<--------------------------------------------------------------------->");
-					log.info(String.format("%-10s %-10s %-10s %-10s %-13s %-15s %-20s %-20s %s", "FlightId",
+					log.info(String.format("%-10s %-10s %-10s %-15s %-15s %-15s %-20s %-20s %s", "FlightId",
 							"Flight Name", "Source", "Destination", "Arrival Date", "Arrival Time", "Departure Date",
 							"Departure Time", "NoofSeatAvailable"));
 					for (FlightDetails flightBean : info) {
 						if (flightBean != null) {
-							log.info(String.format("%-10s %-10s %-10s %-10s %-13s %-15s %-20s %-20s %s",
+							log.info(String.format("%-10s %-10s %-10s %-15s %-15s %-15s %-20s %-20s %s",
 									flightBean.getFlightId(), flightBean.getFlightName(), flightBean.getSource(),
 									flightBean.getDestination(), java.sql.Date.valueOf(flightBean.getArrivalDate()),
 									java.sql.Time.valueOf(flightBean.getArrivalTime()),

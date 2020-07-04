@@ -5,10 +5,8 @@ import java.util.List;
 import com.jfsfeb.airlinereservationsystemspring.bean.BookingDetails;
 import com.jfsfeb.airlinereservationsystemspring.bean.FlightDetails;
 
-
-
 public interface UserDAO {
-	
+
 	List<FlightDetails> searchFlightByName(String flightname);
 
 	List<FlightDetails> searchFlightBySource(String source);
@@ -16,8 +14,12 @@ public interface UserDAO {
 	List<FlightDetails> searchFlightByDestination(String destination);
 
 	List<FlightDetails> getFlightDetails();
-	
+
 	BookingDetails bookRequest(BookingDetails bookingStatus);
-	
-	List<FlightDetails> searchFlightBySourceAndDestination(String source,String destination);
+
+	List<FlightDetails> searchFlightBySourceAndDestination(String source, String destination);
+
+	boolean cancelTicket(int ticketId);
+
+	List<BookingDetails> getTicketDetails(int userId);
 }

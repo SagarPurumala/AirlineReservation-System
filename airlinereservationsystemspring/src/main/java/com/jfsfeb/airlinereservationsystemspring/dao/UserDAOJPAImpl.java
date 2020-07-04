@@ -16,29 +16,29 @@ import com.jfsfeb.airlinereservationsystemspring.bean.User;
 import com.jfsfeb.airlinereservationsystemspring.exception.ARSException;
 
 @Repository
-public class UserDAOJPAImpl implements UserDAO{
+public class UserDAOJPAImpl implements UserDAO {
 	@PersistenceUnit
 	EntityManagerFactory factory;
-	
+
 	@Override
 	public List<FlightDetails> searchFlightByName(String flightname) {
 		EntityManager manager = null;
 		try {
-			
+
 			manager = factory.createEntityManager();
 			String jpql = "Select f from FlightDetails f where flightName=:name";
 			TypedQuery<FlightDetails> query = manager.createQuery(jpql, FlightDetails.class);
-			  query.setParameter("name",flightname);
+			query.setParameter("name", flightname);
 			List<FlightDetails> recordList = query.getResultList();
-			for (int i = 0; i < recordList.size()-1; i++) {
+			for (int i = 0; i < recordList.size() - 1; i++) {
 				recordList.get(i);
 			}
 			manager.close();
-			
+
 			return recordList;
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			
+
 		}
 
 		return null;
@@ -48,21 +48,21 @@ public class UserDAOJPAImpl implements UserDAO{
 	public List<FlightDetails> searchFlightBySource(String source) {
 		EntityManager manager = null;
 		try {
-			
+
 			manager = factory.createEntityManager();
 			String jpql = "Select f from FlightDetails f where source=:source";
 			TypedQuery<FlightDetails> query = manager.createQuery(jpql, FlightDetails.class);
-			  query.setParameter("source",source);
+			query.setParameter("source", source);
 			List<FlightDetails> recordList = query.getResultList();
-			for (int i = 0; i < recordList.size()-1; i++) {
+			for (int i = 0; i < recordList.size() - 1; i++) {
 				recordList.get(i);
 			}
 			manager.close();
-			
+
 			return recordList;
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			
+
 		}
 
 		return null;
@@ -72,21 +72,21 @@ public class UserDAOJPAImpl implements UserDAO{
 	public List<FlightDetails> searchFlightByDestination(String destination) {
 		EntityManager manager = null;
 		try {
-			
+
 			manager = factory.createEntityManager();
 			String jpql = "Select f from FlightDetails f where destination=:destination";
 			TypedQuery<FlightDetails> query = manager.createQuery(jpql, FlightDetails.class);
-			  query.setParameter("destination",destination);
+			query.setParameter("destination", destination);
 			List<FlightDetails> recordList = query.getResultList();
-			for (int i = 0; i < recordList.size()-1; i++) {
+			for (int i = 0; i < recordList.size() - 1; i++) {
 				recordList.get(i);
 			}
 			manager.close();
-			
+
 			return recordList;
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			
+
 		}
 
 		return null;
@@ -95,50 +95,50 @@ public class UserDAOJPAImpl implements UserDAO{
 	@Override
 	public List<FlightDetails> getFlightDetails() {
 		EntityManager manager = null;
-		
+
 		manager = factory.createEntityManager();
 		String jpql = "select f from FlightDetails f";
 		TypedQuery<FlightDetails> query = manager.createQuery(jpql, FlightDetails.class);
 		List<FlightDetails> recordlist = query.getResultList();
 		manager.close();
-		
+
 		return recordlist;
 	}
 
 	@Override
-	public BookingDetails bookRequest(BookingDetails bookingStatus) {
+	public BookingDetails bookRequest(BookingDetails BookingDetails) {
 		EntityManager manager = null;
-		EntityTransaction transaction = null;  
-		FlightDetails flightDetails=new FlightDetails();
-		User user=new User();
-		int flightId=0;
-		int userId=0;
+		EntityTransaction transaction = null;
+		FlightDetails flightDetails = new FlightDetails();
+		User user = new User();
+		int flightId = 0;
+		int userId = 0;
 		try {
-			
+
 			manager = factory.createEntityManager();
 			transaction = manager.getTransaction();
 			transaction.begin();
-			flightDetails = manager.find(FlightDetails.class, bookingStatus.getFlightId());
+			flightDetails = manager.find(FlightDetails.class, BookingDetails.getFlightId());
 
 			if (flightDetails != null) {
-				flightId=flightDetails.getFlightId();
+				flightId = flightDetails.getFlightId();
 				transaction.commit();
-				if(flightId==bookingStatus.getFlightId()) {
+				if (flightId == BookingDetails.getFlightId()) {
 					transaction.begin();
-					user = manager.find(User.class, bookingStatus.getId());
-					if(user!=null) {
-						userId=user.getId();
+					user = manager.find(User.class, BookingDetails.getId());
+					if (user != null) {
+						userId = user.getId();
 						transaction.commit();
-						if(userId==bookingStatus.getId()) {
+						if (userId == BookingDetails.getId()) {
 							transaction.begin();
-							manager.persist(bookingStatus);
+							manager.persist(BookingDetails);
 							transaction.commit();
 						}
-					}else {
+					} else {
 						throw new ARSException("Invalid Request, User ID Not Found");
 					}
 				}
-				
+
 			} else {
 				throw new ARSException("Invalid Request, Flight ID Not Found");
 			}
@@ -146,9 +146,9 @@ public class UserDAOJPAImpl implements UserDAO{
 			throw new ARSException(e.getMessage());
 		} finally {
 			manager.close();
-			
+
 		}
-		
+
 		return null;
 	}
 
@@ -156,20 +156,62 @@ public class UserDAOJPAImpl implements UserDAO{
 	public List<FlightDetails> searchFlightBySourceAndDestination(String source, String destination) {
 		EntityManager manager = null;
 		try {
-			
+
 			manager = factory.createEntityManager();
 			String jpql = "Select f from FlightDetails f where source=:source and destination=:destination";
 			TypedQuery<FlightDetails> query = manager.createQuery(jpql, FlightDetails.class);
-			 query.setParameter("source",source);
-			  query.setParameter("destination",destination);
+			query.setParameter("source", source);
+			query.setParameter("destination", destination);
 			List<FlightDetails> recordList = query.getResultList();
-			for (int i = 0; i < recordList.size()-1; i++) {
+			for (int i = 0; i < recordList.size() - 1; i++) {
 				recordList.get(i);
 			}
 			manager.close();
-			
+
 			return recordList;
-		}catch (Exception e) {
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public boolean cancelTicket(int ticketId) {
+		EntityManager manager = null;
+		EntityTransaction transaction = null;
+		try {
+			manager = factory.createEntityManager();
+			transaction = manager.getTransaction();
+			transaction.begin();
+			BookingDetails BookingDetails = manager.find(BookingDetails.class, ticketId);
+			manager.remove(BookingDetails);
+			transaction.commit();
+			return true;
+		} catch (Exception e) {
+			transaction.rollback();
+			throw new ARSException("TicketId Can't Be Removed or Deleted from Booking Details");
+		} finally {
+			manager.close();
+		}
+	}
+
+	@Override
+	public List<BookingDetails> getTicketDetails(int userId) {
+		EntityManager manager = null;
+		try {
+
+			manager = factory.createEntityManager();
+			String jpql = "Select f from BookingDetails f where f.id=:id";
+			TypedQuery<BookingDetails> query = manager.createQuery(jpql, BookingDetails.class);
+			query.setParameter("id", userId);
+			List<BookingDetails> recordList = query.getResultList();
+			for (int i = 0; i < recordList.size() - 1; i++) {
+				recordList.get(i);
+			}
+			manager.close();
+
+			return recordList;
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;

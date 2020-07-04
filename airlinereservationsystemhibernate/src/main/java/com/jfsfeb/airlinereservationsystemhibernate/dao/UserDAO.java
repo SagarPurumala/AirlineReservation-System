@@ -23,4 +23,6 @@ public interface UserDAO {
 	boolean cancelTicket(int ticketId);
 
 	List<BookingStatus> getTicketDetails(int userId);
+	
+	
 }
