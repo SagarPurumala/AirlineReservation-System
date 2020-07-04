@@ -14,7 +14,7 @@ public class ARSResponseBean {
  
 	private boolean error;
 	private String message;
-	private List data;
+	private List<?> data;
 	private User user;
 	private BookingDetails bookingDetails;
 }
