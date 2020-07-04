@@ -11,7 +11,7 @@ import lombok.Data;
 @SuppressWarnings("serial")
 @Data
 @Entity
-@Table(name="booking_status")
+@Table(name="bookingstatus")
 public class BookingDetails implements Serializable{
 	@Id
 	@Column(name="ticket_id")

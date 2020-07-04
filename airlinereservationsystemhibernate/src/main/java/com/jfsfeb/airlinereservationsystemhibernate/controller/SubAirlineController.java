@@ -65,6 +65,7 @@ public class SubAirlineController {
 					bean6.setDestination(destination1);
 					List<FlightDetails> flightSourceToDestination = service.searchFlightBySourceAndDestination(source1,
 							destination1);
+					if(flightSourceToDestination!=null) {
 					log.info("<<--------------------------------------------------------------------->>");
 					log.info(String.format("%-10s %-10s %-10s %-15s %-15s %-15s %-20s %-20s %s", "FlightId",
 							"Flight Name", "Source", "Destination", "Arrival Date", "Arrival Time", "Departure Date",
@@ -79,8 +80,10 @@ public class SubAirlineController {
 									java.sql.Time.valueOf(flightBean.getDepartureTime()),
 									flightBean.getNoofseatsavailable()));
 						} else {
-							log.info("No Flights are available with this Destination");
+							log.info("No Flights are available with this Source and Destination");
 						}
+					}}else {
+						log.info("No Flights are available with this Source and Destination");
 					}
 					break;
 				case 2:

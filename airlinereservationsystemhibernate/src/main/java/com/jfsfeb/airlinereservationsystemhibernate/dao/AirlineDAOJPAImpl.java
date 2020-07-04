@@ -38,6 +38,7 @@ public class AirlineDAOJPAImpl implements AirlineDAO{
 	@Override
 	public User authenticate(String email, String password) {
 		EntityManager manager = null;
+		try {
 		factory = Persistence.createEntityManagerFactory("TestPersistence");
 		manager = factory.createEntityManager();
 		String jpql = "select u from  User u where u.emailId = :emailId and u.password =:password";
@@ -48,7 +49,10 @@ public class AirlineDAOJPAImpl implements AirlineDAO{
 			return query.getSingleResult();
 		} catch (Exception e) {
 			throw new ARSException("Invalid Login Credentials, Please Enter Correctly");
-		} finally {
+		} 
+		}catch (Exception e) {
+			throw new ARSException("Invalid Login Credentials, Please Enter Correctly");
+		}finally {
 			manager.close();
 			factory.close();
 		}
