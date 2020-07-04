@@ -52,8 +52,6 @@ public class AdminController {
 
 				case 1:
                   try {
-					log.info("Enter ID to Register as ADMIN : ");
-					checkId = scanner.nextInt();
 					log.info("Enter Name to Register : ");
 					checkName = scanner.next();
 					log.info("Enter MobileNumber to Register : ");
@@ -62,6 +60,10 @@ public class AdminController {
 					checkEmail = scanner.next();
 					log.info("Enter Password :");
 					checkPassword = scanner.next();
+					checkId = (int) (Math.random() * 10000);
+					if (checkId <= 1000) {
+						checkId = checkId + 1000;
+					}
 					AdminInfo bean = new AdminInfo();
 					bean.setId(checkId);
 					bean.setName(checkName);
@@ -71,7 +73,7 @@ public class AdminController {
 
 					boolean check = service.registerAdmin(bean);
 					if (check) {
-						log.info("You have registered Successfully");
+						log.info("You have registered Successfully with Id: "+checkId);
 					} else {
 						log.info("Already registered");
 					}
@@ -189,7 +191,7 @@ public class AdminController {
 											}
 										} while (!flag);
 										do {
-											log.info("Enter  Flight Arrival Date Time : ");
+											log.info("Enter  Flight Arrival Date Time(Year,month,day,hours,minutes) : ");
 
 											try {
 												arrivalDateTime = LocalDateTime.of(scanner.nextInt(), scanner.nextInt(),
@@ -206,7 +208,7 @@ public class AdminController {
 											}
 										} while (!flag);
 										do {
-											log.info("Enter  Flight departure Date Time : ");
+											log.info("Enter  Flight departure Date Time(Year,month,day,hours,minutes) : ");
 
 											try {
 												departureDateTime = LocalDateTime.of(scanner.nextInt(),

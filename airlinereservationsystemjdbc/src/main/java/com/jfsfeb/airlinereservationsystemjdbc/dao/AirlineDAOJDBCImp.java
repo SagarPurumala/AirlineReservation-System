@@ -17,9 +17,9 @@ public class AirlineDAOJDBCImp implements AirlineDAO{
 	JdbcUtility dbConnector=new JdbcUtility();
 	@Override
 	public boolean register(User admin) {
-		try {
+		try (
 			Connection conn = dbConnector.getConnection();
-			PreparedStatement pstmt = conn.prepareStatement(dbConnector.getQuery("addUser"));
+			PreparedStatement pstmt = conn.prepareStatement(dbConnector.getQuery("addUser"));){
 			
 			pstmt.setInt(1, admin.getId());
 			pstmt.setString(2, admin.getName());
@@ -40,13 +40,13 @@ public class AirlineDAOJDBCImp implements AirlineDAO{
 	public User authenticate(String email, String password) {
 		  User user = new User();
 
-			try {
+			try(
 				Connection conn = dbConnector.getConnection();
-				PreparedStatement pstmt = conn.prepareStatement(dbConnector.getQuery("loginCheck"));
+				PreparedStatement pstmt = conn.prepareStatement(dbConnector.getQuery("loginCheck"));){
 				pstmt.setString(1, email);
 				pstmt.setString(2, password);
-				try  {
-					ResultSet rs = pstmt.executeQuery();
+				try(
+					ResultSet rs = pstmt.executeQuery();){
 					while (rs.next()) {
 						user.setEmailId(rs.getString("email_id"));
 						user.setPassword(rs.getString("password"));

@@ -52,7 +52,7 @@ public class Validation {
 			
 		} else {
 			
-			throw new ARSException("Enter The Proper Email ID (eg:sagar@gmail.com)");
+			throw new ARSException("Enter The Proper Email ID (eg:john@gmail.com)");
 		}
 		return result;
 	}

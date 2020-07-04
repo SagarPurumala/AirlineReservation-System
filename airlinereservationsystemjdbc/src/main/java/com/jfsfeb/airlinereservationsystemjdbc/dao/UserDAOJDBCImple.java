@@ -261,19 +261,16 @@ public class UserDAOJDBCImple implements UserDAO {
 				PreparedStatement pstmt = conn.prepareStatement(dbConnector.getQuery("cancelTicket"));) {
 			pstmt.setInt(1, ticketId);
 			int result = pstmt.executeUpdate();
-			
 			if (result != 0) {
-				
 				return true;
-			
 			}
 
 		} catch (Exception e) {
 			throw new ARSException(e.getMessage());
 
 		}
-		return true;
-		//throw new  ARSException("Ticked Id is not Present in the Airline Reservation System");
+		
+		return false;
 	
 	}
 

@@ -276,7 +276,7 @@ public class UserController {
 							if (remove) {
 								log.info("The Cancel ticket Id = " + ticketId);
 							} else {
-								log.info("The Ticked Id is not removed = " + ticketId);
+								log.info("The Ticked Id is not present in Airline Reservation system = " + ticketId);
 							}
 						}
 					} catch (InputMismatchException e) {

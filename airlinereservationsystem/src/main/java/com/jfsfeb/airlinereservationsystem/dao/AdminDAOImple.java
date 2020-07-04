@@ -79,7 +79,7 @@ public class AdminDAOImple implements AdminDAO{
 			}
 		}
 		if (searchList.size() == 0) {
-			throw new ARSException("Flight not found");
+			throw new ARSException("Flight not found with given flightname");
 		} else {
 			return searchList;
 		}
@@ -97,7 +97,7 @@ public class AdminDAOImple implements AdminDAO{
 			}
 		}
 		if (searchList.size() == 0) {
-			throw new ARSException("Flight not found");
+			throw new ARSException("No flight with given Source");
 		} else {
 			return searchList;
 		}
@@ -116,7 +116,7 @@ public class AdminDAOImple implements AdminDAO{
 			}
 		}
 		if (searchList.size() == 0) {
-			throw new ARSException("Flight not found");
+			throw new ARSException("No flight with given Source");
 		} else {
 			return searchList;
 		}

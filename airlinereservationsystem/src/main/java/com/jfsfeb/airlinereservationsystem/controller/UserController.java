@@ -11,19 +11,18 @@ import com.jfsfeb.airlinereservationsystem.exception.ARSException;
 import com.jfsfeb.airlinereservationsystem.factory.AirlineFactory;
 import com.jfsfeb.airlinereservationsystem.service.UserService;
 
-
 import lombok.extern.log4j.Log4j;
 
 @Log4j
 public class UserController {
 	public static void userOperations() {
-		
+
 		int checkId = 0;
 		String checkName = null;
 		long checkMobile = 0;
 		String checkEmail = null;
 		String checkPassword = null;
-		
+
 		@SuppressWarnings("resource")
 		Scanner scanner = new Scanner(System.in);
 		UserService service1 = AirlineFactory.getUserServiceImplInstance();
@@ -38,44 +37,46 @@ public class UserController {
 				switch (choice) {
 				case 1:
 					try {
-					log.info("Enter ID to Register as USER : ");
-					checkId = scanner.nextInt();
 
-					log.info("Enter Name to Register : ");
-					checkName = scanner.next();
+						log.info("Enter Name to Register : ");
+						checkName = scanner.next();
 
-					log.info("Enter MobileNumber to Register : ");
-					checkMobile = scanner.nextLong();
+						log.info("Enter MobileNumber to Register : ");
+						checkMobile = scanner.nextLong();
 
-					log.info("Enter Email to Register : ");
-					checkEmail = scanner.next();
+						log.info("Enter Email to Register : ");
+						checkEmail = scanner.next();
 
-					log.info("Enter Password :");
-					checkPassword = scanner.next();
+						log.info("Enter Password :");
+						checkPassword = scanner.next();
 
-					UserInfo bean1 = new UserInfo();
-					bean1.setUserId(checkId);
-					bean1.setUserName(checkName);
-					bean1.setMobileNumber(checkMobile);
-					bean1.setEmailId(checkEmail);
-					bean1.setPassword(checkPassword);
-
-					boolean check = service1.registerUser(bean1);
-					if (check) {
-						log.info("Registered Successfully");
-					} else {
-						log.info("Already registered");
-					}
-					break;
-					 }catch (InputMismatchException e) {
-		      				log.error("Invalid entry ");
-		    				scanner.nextLine();
-		    				break;
-		    			}
-		                  catch (ARSException e) {
-							log.info(e.getMessage());
-							break;
+						checkId = (int) (Math.random() * 10000);
+						if (checkId <= 1000) {
+							checkId = checkId + 1000;
 						}
+
+						UserInfo bean1 = new UserInfo();
+						bean1.setUserId(checkId);
+						bean1.setUserName(checkName);
+						bean1.setMobileNumber(checkMobile);
+						bean1.setEmailId(checkEmail);
+						bean1.setPassword(checkPassword);
+
+						boolean check = service1.registerUser(bean1);
+						if (check) {
+							log.info("Registered Successfully with UserId :" + checkId);
+						} else {
+							log.info("Already registered");
+						}
+						break;
+					} catch (InputMismatchException e) {
+						log.error("Invalid entry ");
+						scanner.nextLine();
+						break;
+					} catch (ARSException e) {
+						log.info(e.getMessage());
+						break;
+					}
 
 				case 2:
 					log.info("Enter registered email to login : ");

@@ -48,7 +48,7 @@ public class UserDAOImple implements UserDAO {
 			}
 		}
 		if (searchList.size() == 0) {
-			throw new ARSException("Flight not found");
+			throw new ARSException("FlightName not found in airline reservation system");
 		} else {
 			return searchList;
 		}
@@ -66,7 +66,7 @@ public class UserDAOImple implements UserDAO {
 			}
 		}
 		if (searchList.size() == 0) {
-			throw new ARSException("Flight not found");
+			throw new ARSException("No flight with given Source ");
 		} else {
 			return searchList;
 		}
@@ -84,7 +84,7 @@ public class UserDAOImple implements UserDAO {
 			}
 		}
 		if (searchList.size() == 0) {
-			throw new ARSException("Flight not found");
+			throw new ARSException("No flight with given destination");
 		} else {
 			return searchList;
 		}
@@ -151,7 +151,7 @@ public class UserDAOImple implements UserDAO {
 			}
 		}
 		if (searchList.size() == 0) {
-			throw new ARSException("Flight not found");
+			throw new ARSException("No flight with given Source and destination");
 		} else {
 			return searchList;
 		}

@@ -147,6 +147,7 @@ public class AdminDAOJPAImpl implements AdminDAO{
 	@Override
 	public List<BookingStatus> getBookingStatus() {
 		EntityManager manager = null;
+		try {
 		factory = Persistence.createEntityManagerFactory("TestPersistence");
 		manager = factory.createEntityManager();
 		String jpql = "select b from BookingStatus b";
@@ -155,6 +156,11 @@ public class AdminDAOJPAImpl implements AdminDAO{
 		manager.close();
 		factory.close();
 		return recordlist;
+		}catch (Exception e) {
+			
+			throw new ARSException("Booking Status not found");
+		}
+		
 	}
 
 }

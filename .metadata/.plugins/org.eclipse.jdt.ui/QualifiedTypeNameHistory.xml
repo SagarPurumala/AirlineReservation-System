@@ -32,4 +32,5 @@
 <fullyQualifiedTypeName name="com.jfsfeb.airlinereservationsystemhibernate.dto.BookingStatus"/>
 <fullyQualifiedTypeName name="com.jfsfeb.airlinereservationsystemspring.validation.Validation"/>
 <fullyQualifiedTypeName name="com.jfsfeb.airlinereservationsystemspring.bean.User"/>
+<fullyQualifiedTypeName name="com.jfsfeb.airlinereservationsystemspring.service.UserService"/>
 </qualifiedTypeNameHistroy>
